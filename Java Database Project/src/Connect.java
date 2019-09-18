@@ -20,10 +20,22 @@ public class Connect {
 		password = input.next();
 		
 		//Using the JDBC Driver we will connect to the MySQL database
-		Class.forName("JDBCDriverClass");
-		Connection connection = DriverManager.getConnection
-				("jdbc:mysql://localhost/test", username, password );
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (SQLException | ClassNotFoundException e) {
+			
+			System.out.println(e);
+		}
 		
+		try {
+			Connection connection = DriverManager.getConnection
+					("jdbc:mysql://localhost/test", username, password );
+		} catch (SQLException e) {
+			
+			System.out.println(e);
+		}
+		
+		//This part is not finished
 		//Make a statement and carry out statement to make a new user
 		Statement statement = connection.createStatement();
 		statement.executeUpdate("create user '"
@@ -31,7 +43,6 @@ public class Connect {
 		System.out.println("Account created");
 		
 		
-		//This part is not finished
 		//ResultSet resultSet = statement.executeQuery();
 
 		connection.close();
