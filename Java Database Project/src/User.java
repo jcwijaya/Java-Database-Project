@@ -3,9 +3,10 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class User {
-	private String firstName;
-	private String lastName;
+	private String firstName;	//First name of customer
+	private String lastName;	//Last name of customer
 	
+	//Main method
 	public static void main(String[] args) {
 		User customer = new User();
 		customer.inputName();
