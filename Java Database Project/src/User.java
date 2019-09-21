@@ -3,7 +3,7 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class User {
-	private int customerId;				//Unique customer id
+	private int customerId;		//Unique customer id
 	private String firstName;	//First name of customer
 	private String lastName;	//Last name of customer
 	private String phoneNumber;	
