@@ -2,20 +2,13 @@
 import java.sql.*;
 import java.util.Scanner;
 
+//This file contains the User class
 public class User {
-	private int customerId;				//Unique customer id
+	private int customerId;		//Unique customer id
 	private String firstName;	//First name of customer
 	private String lastName;	//Last name of customer
 	private String phoneNumber;	
 	private String email;
-	
-	//Main method
-	public static void main(String[] args) {
-		User customer = new User();
-		customer.inputUserInfo();
-		
-		return;
-	}
 	
 	//This method asks the user for their name and assigns
 	//the strings to firstName and lastName
@@ -51,7 +44,7 @@ public class User {
 	private Connection connect() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			return DriverManager.getConnection("jdbc:mysql://localhost:3306/test?autoReconnect=true&useSSL=false", "root", "#mtsujava" );
+			return DriverManager.getConnection("jdbc:mysql://localhost:3306/test?autoReconnect=true&useSSL=false", "root", "#mtsujava2" );
 		}
 		catch(SQLException | ClassNotFoundException exception) {
 			System.out.println(exception);
@@ -63,7 +56,7 @@ public class User {
 	private void insertData() {
 		try {
 			Connection conn = connect();
-			PreparedStatement stmt = conn.prepareStatement("INSERT INTO user" +
+			PreparedStatement stmt = conn.prepareStatement("INSERT INTO customers " +
 			"(customerId, firstName, lastName, phoneNumber, email) VALUES(?, ?, ?, ?, ?);");
 			stmt.setInt(1, customerId);
 			stmt.setString(2, firstName);
@@ -84,3 +77,4 @@ public class User {
 	
 
 }
+
