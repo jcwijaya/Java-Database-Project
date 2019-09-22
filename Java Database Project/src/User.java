@@ -2,7 +2,7 @@
 import java.sql.*;
 import java.util.Scanner;
 
-//This file contains the User class.
+//This file contains the User class
 public class User {
 	private int customerId;		//Unique customer id
 	private String firstName;	//First name of customer
