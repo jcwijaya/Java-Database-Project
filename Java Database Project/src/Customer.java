@@ -128,6 +128,33 @@ public class Customer {
 		}
 	}
 	
+	public static void searchEmail(Connection conn, String emailAddress) {
+		int count = 0;
+		
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where email = ?");
+			preparedStmt.setString(1, emailAddress);
+			
+			ResultSet result = preparedStmt.executeQuery();
+			while(result.next()) {
+				System.out.printf("%-15d%-15s%-15s%-15s%-15s%n",
+						result.getInt("customerId"), result.getString("firstName"),
+						result.getString("lastName"), result.getString("phoneNumber"),
+						result.getString("email"));
+				count ++;
+			}
+			
+			//if the ResultSet is empty, print message
+			if(count == 0) {
+				System.out.println("Customer not found.");
+			}
+			
+		}
+		catch(SQLException e) {
+			System.out.println(e);
+		}
+	}
+	
 	//This method prints out entire customers table
 	//Takes in a Connection
 	public static void displayTable(Connection conn) {
@@ -169,7 +196,7 @@ public class Customer {
 	public static Connection connect() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			return DriverManager.getConnection("jdbc:mysql://192.168.1.101:3306/test?autoReconnect=true&useSSL=false", "customer1", "#mtsu" );
+			return DriverManager.getConnection("jdbc:mysql://192.168.1.101/test?autoReconnect=true&useSSL=false", "customer1", "#mtsu" );
 		}
 		catch(SQLException | ClassNotFoundException exception) {
 			System.out.println(exception);
@@ -187,6 +214,8 @@ public class Customer {
 			stmt.setString(3, lastName);
 			stmt.setString(4, phoneNumber);
 			stmt.setString(5, email); 
+			
+			stmt.executeUpdate();
 		}
 		catch(SQLException exception) {
 			System.out.println(exception);
