@@ -46,6 +46,8 @@ public class Customer {
 		return id; 
 	}
 	
+	//This method searches the database for a customer with
+	//the passed in customerId
 	public static void searchCustomerId(Connection conn, int id) {
 		int count = 0;
 		
@@ -74,6 +76,8 @@ public class Customer {
 		}
 	}
 	
+	//This method searches for customers with a first and last name
+	//matching the passed in parameters.
 	public static void searchName(Connection conn, String first, String last) {
 		int count = 0;
 		
@@ -101,6 +105,8 @@ public class Customer {
 		}
 	}
 	
+	//This method searches for customers with a phone number
+	//matching the passed in number
 	public static void searchPhoneNumber(Connection conn, String number) {
 		int count = 0;
 		
@@ -128,6 +134,8 @@ public class Customer {
 		}
 	}
 	
+	//This method searches for customers with an email
+	//matching the passed in emailAdress
 	public static void searchEmail(Connection conn, String emailAddress) {
 		int count = 0;
 		
@@ -155,7 +163,79 @@ public class Customer {
 		}
 	}
 	
-	//This method prints out entire customers table
+	//This method displays the entire customers table in
+	//ascending order by first name, then by last name
+	public static void displayAscFirstName(Connection conn) {
+		try {
+			Statement statement = conn.createStatement();
+			
+			boolean hasResult = statement.execute("SELECT * FROM customers ORDER BY firstName, lastName ASC");
+			
+			if(hasResult == true) {
+				ResultSet result = statement.getResultSet();
+				ResultSetMetaData meta = result.getMetaData();
+				
+				//Find number of columns in table
+				int columnCount = meta.getColumnCount();
+				
+				//use loop to print column names
+				for(int i = 1; i <= columnCount; i++) {
+					//print out column names (later can give labels)
+					System.out.printf("%-15s", meta.getColumnLabel(i));
+				}
+				System.out.println();
+				
+				//print out the table
+				while(result.next()) {
+					System.out.printf("%-15d%-15s%-15s%-15s%-15s%n",
+							result.getInt("customerId"), result.getString("firstName"),
+							result.getString("lastName"), result.getString("phoneNumber"),
+							result.getString("email"));
+				}
+			}
+		}
+		catch(SQLException e) {
+			System.out.println(e);
+		}
+	}
+	
+	//This method displays the entire customers table 
+	//by ascending last name, then by first name
+	public static void displayAscLastName(Connection conn) {
+		try {
+			Statement statement = conn.createStatement();
+			
+			boolean hasResult = statement.execute("SELECT * FROM customers ORDER BY lastName, firstName ASC");
+			
+			if(hasResult == true) {
+				ResultSet result = statement.getResultSet();
+				ResultSetMetaData meta = result.getMetaData();
+				
+				//Find number of columns in table
+				int columnCount = meta.getColumnCount();
+				
+				//use loop to print column names
+				for(int i = 1; i <= columnCount; i++) {
+					//print out column names (later can give labels)
+					System.out.printf("%-15s", meta.getColumnLabel(i));
+				}
+				System.out.println();
+				
+				//print out the table
+				while(result.next()) {
+					System.out.printf("%-15d%-15s%-15s%-15s%-15s%n",
+							result.getInt("customerId"), result.getString("firstName"),
+							result.getString("lastName"), result.getString("phoneNumber"),
+							result.getString("email"));
+				}
+			}
+		}
+		catch(SQLException e) {
+			System.out.println(e);
+		}
+	}
+	
+	//This method prints out entire customers table in order of entry
 	//Takes in a Connection
 	public static void displayTable(Connection conn) {
 		try {
