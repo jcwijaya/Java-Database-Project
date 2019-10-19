@@ -1,4 +1,9 @@
-
+/*
+ * Jessica Wijaya
+ * Course: CSCI 3033
+ * Assignment: WebMart database management system
+ * This file contains the Employee class 
+ */
 import java.sql.*;
 import java.util.Scanner;
 
@@ -28,6 +33,24 @@ public class Customer {
 		saveData(conn);
 		
 		input.close();
+	}
+	
+	//This method inserts a new record into Customer table
+	private void saveData(Connection conn) {
+		try {
+			PreparedStatement stmt = conn.prepareStatement("INSERT INTO customers " +
+			"(customerId, firstName, lastName, phoneNumber, email) VALUES(?, ?, ?, ?, ?);");
+			stmt.setInt(1, customerId);
+			stmt.setString(2, firstName);
+			stmt.setString(3, lastName);
+			stmt.setString(4, phoneNumber);
+			stmt.setString(5, email); 
+				
+			stmt.executeUpdate();
+			}
+		catch(SQLException exception) {
+			System.out.println(exception);
+		}
 	}
 	
 	//This method reads customer into from a
@@ -193,6 +216,7 @@ public class Customer {
 			return false;
 		}
 	}
+	
 //*****DATABASE SEARCH METHODS*******
 	//This method searches the database for a customer with
 	//the passed in customerId
@@ -451,26 +475,6 @@ public class Customer {
 			return null;
 		}
 	}
-	
-	//This method inserts firstName and lastName into user table
-	private void saveData(Connection conn) {
-		try {
-			PreparedStatement stmt = conn.prepareStatement("INSERT INTO customers " +
-			"(customerId, firstName, lastName, phoneNumber, email) VALUES(?, ?, ?, ?, ?);");
-			stmt.setInt(1, customerId);
-			stmt.setString(2, firstName);
-			stmt.setString(3, lastName);
-			stmt.setString(4, phoneNumber);
-			stmt.setString(5, email); 
-			
-			stmt.executeUpdate();
-		}
-		catch(SQLException exception) {
-			System.out.println(exception);
-		}
-	}
-		
-
 	
 
 }

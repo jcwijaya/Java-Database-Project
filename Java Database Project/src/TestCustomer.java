@@ -1,3 +1,9 @@
+/*
+ * Jessica Wijaya
+ * Course: CSCI 3033
+ * Assignment: WebMart database management system
+ * This file contains the Employee class 
+ */
 import java.sql.*;
 import java.util.Scanner;
 //This program tests the Customer class.
@@ -7,7 +13,7 @@ public class TestCustomer{
 			Connection conn = Customer.connect();
 			//Customer customer = new Customer();
 			//customer.inputCustomerInfo(conn);
-			Customer.displayTable(conn);
+			Customer.getTable(conn);
 			
 			Scanner input = new Scanner(System.in);
 			System.out.print("Phone number to search: ");
