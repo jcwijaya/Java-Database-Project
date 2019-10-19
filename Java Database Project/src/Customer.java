@@ -48,20 +48,24 @@ public class Customer {
 	}
 	
 //******DATABASE SET METHODS******
-	/*To update you must:
-	 * 1. Find the record using customerId.
-	 * use conditional statements to determine method of search(by id, name, phone, etc.)
-	 * 2. update it
-	*/
-	public static void setCustomerId(Connection conn, int newId, int oldId) {
+	/*These methods find the customer record by given customerId
+	 * and update the data fields if the record is found 
+	 * Need to add input validation!
+	 */
+	
+	public static void setCustomerId(Connection conn, int oldId, int newId) {
 		try {
 			//Search for customer record, if successful, update it
-			
-			PreparedStatement stmt = conn.prepareStatement("UPDATE customers SET customerId = ? WHERE customerId = ?");
-			stmt.setInt(1, newId);
-			stmt.setInt(2, oldId);
-			
-			stmt.executeUpdate();
+			if(hasCustomerId(conn, oldId) == true) {
+				PreparedStatement stmt = conn.prepareStatement("UPDATE customers SET customerId = ? WHERE customerId = ?");
+				stmt.setInt(1, newId);
+				stmt.setInt(2, oldId);
+				
+				stmt.executeUpdate();
+			}
+			else {
+				System.out.println("Customer not found.");
+			}
 			
 		}
 		catch(SQLException e) {
@@ -69,16 +73,62 @@ public class Customer {
 		}
 	}
 	
-	public static void setName() {
-		
+	public static void setName(Connection conn, int id, String first, String last) {
+		try {
+			//Search for customer record, if successful, update it
+			if(hasCustomerId(conn, id) == true) {
+				PreparedStatement stmt = conn.prepareStatement("UPDATE customers SET firstName = ?, lastName = ? WHERE customerId = ?");
+				stmt.setString(1, first);
+				stmt.setString(2, last);
+				stmt.setInt(3, id);
+				stmt.executeUpdate();
+			}
+			else {
+				System.out.println("Customer not found.");
+			}
+			
+		}
+		catch(SQLException e) {
+			System.out.println(e);
+		}
 	}
 	
-	public static void setPhoneNumber() {
-		
+	public static void setPhoneNumber(Connection conn, int id, String number) {
+		try {
+			//Search for customer record, if successful, update it
+			if(hasCustomerId(conn, id) == true) {
+				PreparedStatement stmt = conn.prepareStatement("UPDATE customers SET phoneNumber = ? WHERE customerId = ?");
+				stmt.setString(1, number);
+				stmt.setInt(2, id);
+				stmt.executeUpdate();
+			}
+			else {
+				System.out.println("Customer not found.");
+			}
+			
+		}
+		catch(SQLException e) {
+			System.out.println(e);
+		}
 	}
 	
-	public static void setEmail() {
-		
+	public static void setEmail(Connection conn, int id, String emailAddress) {
+		try {
+			//Search for customer record, if successful, update it
+			if(hasCustomerId(conn, id) == true) {
+				PreparedStatement stmt = conn.prepareStatement("UPDATE customers SET email = ? WHERE customerId = ?");
+				stmt.setString(1, emailAddress);
+				stmt.setInt(2, id);
+				stmt.executeUpdate();
+			}
+			else {
+				System.out.println("Customer not found.");
+			}
+			
+		}
+		catch(SQLException e) {
+			System.out.println(e);
+		}
 	}
 	
 //******DATABASE GET METHODS******
