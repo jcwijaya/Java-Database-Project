@@ -16,7 +16,8 @@ public class TestCustomer{
 			Customer.getTable(conn);
 			
 			Scanner input = new Scanner(System.in);
-			System.out.print("Phone number to search: ");
+			System.out.print("Enter ID: ");
+			System.out.print("Enter new ID: ");
 			String number = input.next();
 			Customer.searchPhoneNumber(conn, number);
 			System.out.println(Customer.hasPhoneNumber(conn, number));

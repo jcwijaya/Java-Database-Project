@@ -6,6 +6,7 @@
  */
 import java.sql.*;
 import java.util.Scanner;
+import java.util.Random;
 
 //This file contains the Customer class
 public class Customer {
@@ -29,7 +30,7 @@ public class Customer {
 		phoneNumber = input.next();
 		System.out.print("Email: ");
 		email = input.next();
-		customerId = createId();
+		customerId = createId(conn);
 		saveData(conn);
 		
 		input.close();
@@ -62,12 +63,38 @@ public class Customer {
 	}
 	
 	//This method returns a unique id number for each new customer
-	public int createId() {
-		//Search database user table for already taken id numbers
+	public int createId(Connection conn) {
+		//Randomly generate a 6 digit id
+		Random rand = new Random(System.currentTimeMillis());
+		int id = (int)(rand.nextDouble() * 1000000 + 100000);
+		boolean match = true;
 		
-		int id=0;
-		
-		return id; 
+		try {
+			//Compare the id with the ones in database to ensure uniqueness
+			Statement statement = conn.createStatement();
+			
+			//Use loop to keep generating id's until you get a unique one
+			while(match) {
+				match = false;
+				id = (int)(rand.nextDouble() * 1000000 + 100000);
+				ResultSet result = statement.executeQuery("SELECT * FROM customers");
+					
+				//Use loop to compare id with ones in database
+				while(result.next()) {
+					if(id == result.getInt("customerId")) {
+						match = true;
+						break;
+					}
+				}
+			}
+			
+			return id;
+		}
+		catch(SQLException e) {
+			System.out.println(e);
+			return 000000;
+		}
+		 
 	}
 	
 //******DATABASE SET METHODS******
@@ -160,7 +187,7 @@ public class Customer {
 	
 	public static boolean hasCustomerId(Connection conn, int id) {
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where customerId = ?");
+			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers WHERE customerId = ?");
 			preparedStmt.setInt(1, id);
 			
 			ResultSet result = preparedStmt.executeQuery();
@@ -176,7 +203,7 @@ public class Customer {
 	
 	public static boolean hasName(Connection conn, String first, String last) {
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where firstName = ? and lastName = ?");
+			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers WHERE firstName = ? AND lastName = ?");
 			preparedStmt.setString(1, first);
 			preparedStmt.setString(2, last);
 			
