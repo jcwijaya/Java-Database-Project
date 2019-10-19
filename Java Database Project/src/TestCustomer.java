@@ -9,12 +9,12 @@ public class TestCustomer{
 			//customer.inputCustomerInfo(conn);
 			Customer.displayTable(conn);
 			
-			/*
 			Scanner input = new Scanner(System.in);
-			System.out.print("First and last name to search: ");
-			String first = input.next();
-			String last = input.next();
-			Customer.searchName(conn, first, last);
+			System.out.print("Phone number to search: ");
+			String number = input.next();
+			Customer.searchPhoneNumber(conn, number);
+			System.out.println(Customer.hasPhoneNumber(conn, number));
+			input.close();
 			/*
 			System.out.print("Phone number to search: ");
 			String number = input.next();
@@ -24,8 +24,8 @@ public class TestCustomer{
 			String emailAddress = input.next();
 			Customer.searchEmail(conn, emailAddress);
 			*/
-			System.out.println();
-			Customer.displayAscLastName(conn);
+			//System.out.println();
+			//Customer.displayAscLastName(conn);
 			//input.close();
 			System.out.println("Program end");
 			return;

@@ -131,24 +131,6 @@ public class Customer {
 		}
 	}
 	
-//******DATABASE GET METHODS******
-	/*
-	public static int getCustomerId(Connection conn) {
-		
-	}
-	
-	public static String getName() {
-		
-	}
-	
-	public static String getPhoneNumber() {
-		
-	}
-	
-	public static String getEmail() {
-		
-	}
-	*/
 //******DATABASE BOOLEAN HAS METHODS******
 	//These methods check whether the given data field is found in the customers table
 	//and return a boolean value
@@ -329,10 +311,10 @@ public class Customer {
 		}
 	}
 	
-//******DATABASE DISPLAY METHODS******
+//******DATABASE GET METHODS******
 	//This method displays the entire customers table in
 	//ascending order by first name, then by last name
-	public static void displayAscFirstName(Connection conn) {
+	public static void getTableAscFirstName(Connection conn) {
 		try {
 			Statement statement = conn.createStatement();
 			
@@ -368,7 +350,7 @@ public class Customer {
 	
 	//This method displays the entire customers table 
 	//by ascending last name, then by first name
-	public static void displayAscLastName(Connection conn) {
+	public static void getTableAscLastName(Connection conn) {
 		try {
 			Statement statement = conn.createStatement();
 			
@@ -404,7 +386,7 @@ public class Customer {
 	
 	//This method prints out entire customers table in order of entry
 	//Takes in a Connection
-	public static void displayTable(Connection conn) {
+	public static void getTable(Connection conn) {
 		try {
 			Statement statement = conn.createStatement();
 			
@@ -437,6 +419,24 @@ public class Customer {
 			System.out.println(e);
 		}
 	}
+	
+	/*
+	public static int getCustomerId(Connection conn) {
+		
+	}
+	
+	public static String getName() {
+		
+	}
+	
+	public static String getPhoneNumber() {
+		
+	}
+	
+	public static String getEmail() {
+		
+	}
+	*/
 	
 //******DATABASE CONNECT & SAVE METHODS******
 	//This method creates a connection to the database
