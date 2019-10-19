@@ -10,6 +10,7 @@ public class Customer {
 	private String phoneNumber;	
 	private String email;
 	
+//******DATABASE INSERT METHODS******
 	//This method asks the user for their info and assigns
 	//the info to data fields. Then it inserts into database
 	public void inputCustomerInfo(Connection conn) {
@@ -46,6 +47,121 @@ public class Customer {
 		return id; 
 	}
 	
+//******DATABASE SET METHODS******
+	/*To update you must:
+	 * 1. Find the record using customerId.
+	 * use conditional statements to determine method of search(by id, name, phone, etc.)
+	 * 2. update it
+	*/
+	public static void setCustomerId(Connection conn, int newId, int oldId) {
+		try {
+			//Search for customer record, if successful, update it
+			
+			PreparedStatement stmt = conn.prepareStatement("UPDATE customers SET customerId = ? WHERE customerId = ?");
+			stmt.setInt(1, newId);
+			stmt.setInt(2, oldId);
+			
+			stmt.executeUpdate();
+			
+		}
+		catch(SQLException e) {
+			System.out.println(e);
+		}
+	}
+	
+	public static void setName() {
+		
+	}
+	
+	public static void setPhoneNumber() {
+		
+	}
+	
+	public static void setEmail() {
+		
+	}
+	
+//******DATABASE GET METHODS******
+	/*
+	public static int getCustomerId(Connection conn) {
+		
+	}
+	
+	public static String getName() {
+		
+	}
+	
+	public static String getPhoneNumber() {
+		
+	}
+	
+	public static String getEmail() {
+		
+	}
+	*/
+//******DATABASE BOOLEAN HAS METHODS******
+	//These methods check whether the given data field is found in the customers table
+	//and return a boolean value
+	
+	public static boolean hasCustomerId(Connection conn, int id) {
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where customerId = ?");
+			preparedStmt.setInt(1, id);
+			
+			ResultSet result = preparedStmt.executeQuery();
+			
+			return result.next();
+			
+			}
+			catch(SQLException e) {
+				System.out.println(e);
+				return false;
+			}
+	}
+	
+	public static boolean hasName(Connection conn, String first, String last) {
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where firstName = ? and lastName = ?");
+			preparedStmt.setString(1, first);
+			preparedStmt.setString(2, last);
+			
+			ResultSet result = preparedStmt.executeQuery();
+			return result.next();
+		}
+		catch(SQLException e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+	
+	public static boolean hasPhoneNumber(Connection conn, String number) {
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where phoneNumber = ?");
+			preparedStmt.setString(1, number);
+			
+			ResultSet result = preparedStmt.executeQuery();
+			return result.next();
+		}
+		catch(SQLException e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+	
+	public static boolean hasEmail(Connection conn, String emailAddress) {
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where email = ?");
+			preparedStmt.setString(1, emailAddress);
+			
+			ResultSet result = preparedStmt.executeQuery();
+			return result.next();
+		}
+		catch(SQLException e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+//*****DATABASE SEARCH METHODS*******
 	//This method searches the database for a customer with
 	//the passed in customerId
 	public static void searchCustomerId(Connection conn, int id) {
@@ -163,6 +279,7 @@ public class Customer {
 		}
 	}
 	
+//******DATABASE DISPLAY METHODS******
 	//This method displays the entire customers table in
 	//ascending order by first name, then by last name
 	public static void displayAscFirstName(Connection conn) {
@@ -271,12 +388,13 @@ public class Customer {
 		}
 	}
 	
+//******DATABASE CONNECT & SAVE METHODS******
 	//This method creates a connection to the database
 	//and returns a Connection object
 	public static Connection connect() {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			return DriverManager.getConnection("jdbc:mysql://192.168.1.101/test?autoReconnect=true&useSSL=false", "customer1", "#mtsu" );
+		try {										 
+			Class.forName("com.mysql.jdbc.Driver");   
+			return DriverManager.getConnection("jdbc:mysql://localhost/test?autoReconnect=true&useSSL=false", "customer1", "#mtsu" );
 		}
 		catch(SQLException | ClassNotFoundException exception) {
 			System.out.println(exception);

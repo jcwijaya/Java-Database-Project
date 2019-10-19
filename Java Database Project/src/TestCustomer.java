@@ -15,7 +15,7 @@ public class TestCustomer{
 			String first = input.next();
 			String last = input.next();
 			Customer.searchName(conn, first, last);
-			
+			/*
 			System.out.print("Phone number to search: ");
 			String number = input.next();
 			Customer.searchPhoneNumber(conn, number);
@@ -25,7 +25,7 @@ public class TestCustomer{
 			Customer.searchEmail(conn, emailAddress);
 			*/
 			System.out.println();
-			Customer.displayAscFirstName(conn);
+			Customer.displayAscLastName(conn);
 			//input.close();
 			System.out.println("Program end");
 			return;
