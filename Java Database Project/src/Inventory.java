@@ -23,7 +23,8 @@ public class Inventory {
 //******DATABASE GET METHODS******	
 	
 public static ArrayList<Inventory> getTable() {
-	 
+	 ArrayList<Inventory> list = new ArrayList<Inventory>();
+	 return list;
 }
 //******DATABASE BOOLEAN HAS METHODS******
 //******DATABASE CONNECT METHOD******

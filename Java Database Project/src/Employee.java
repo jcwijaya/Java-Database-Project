@@ -16,7 +16,75 @@ public class Employee {
 	private String phoneNumber;	
 	private String email;
 	
-//******DATABASE INSERT METHODS*****
+//******CONSTRUCTORS******
+	Employee(){
+		employeeId = 0;
+		password = "";
+		firstName = "";
+		lastName = "";
+		phoneNumber = "";
+		email = "";
+	}
+	
+	Employee(int id, String pass, String first, String last, String number, String emailAddress){
+		employeeId = id;
+		password = pass;
+		firstName = first;
+		lastName = last;
+		phoneNumber = number;
+		email = emailAddress;
+	}
+
+//******INSTANCE METHODS******
+	public void setEmployeeId(int id) {
+		employeeId = id;
+	}
+		
+	public int getEmployeeId() {
+		return employeeId;
+	}
+	
+	public void setPassword(String pass) {
+		password = pass;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+		
+	public void setFirstName(String first) {
+		firstName = first;
+	}
+		
+	public String getFirstName() {
+		return firstName;
+	}
+		
+	public void setLastName(String last) {
+		lastName = last;
+	}
+		
+	public String getLastName() {
+		return lastName;
+	}
+		
+	public void setPhoneNumber(String number) {
+		phoneNumber = number;
+	}
+		
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+		
+	public void setEmail(String emailAddress) {
+		email = emailAddress;
+	}
+		
+	public String getEmail() {
+		return email;
+	}
+			
+//******MISC METHODS*****
 //Methods to insert new records into table
 	
 	//This method asks the user for their info and assigns
@@ -76,12 +144,13 @@ public class Employee {
 		return id; 
 	}
 	
-//******DATABASE SET METHODS******
+//******DATABASE UPDATE METHODS******
 //Methods to update the table
-	public static void setEmployeeId(Connection conn, int oldId, int newId) {
+	public static void updateEmployeeId(int oldId, int newId) {
 		try {
+			Connection conn = connect();
 			//Search for customer record, if successful, update it
-			if(hasEmployeeId(conn, oldId) == true) {
+			if(hasEmployeeId(oldId) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET employeeId = ? WHERE employeeId = ?");
 				stmt.setInt(1, newId);
 				stmt.setInt(2, oldId);
@@ -98,10 +167,11 @@ public class Employee {
 		}
 	}
 	
-	public static void setPassword(Connection conn, int id, int newPass) {
+	public static void updatePassword(int id, int newPass) {
 		try {
+			Connection conn = connect();
 			//Search for customer record, if successful, update it
-			if(hasEmployeeId(conn, id) == true) {
+			if(hasEmployeeId(id) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET password = ? WHERE employeeId = ?");
 				stmt.setInt(1, newPass);
 				stmt.setInt(2, id);
@@ -118,10 +188,11 @@ public class Employee {
 		}
 	}
 	
-	public static void setName(Connection conn, int id, String first, String last) {
+	public static void updateName(int id, String first, String last) {
 		try {
+			Connection conn = connect();
 			//Search for customer record, if successful, update it
-			if(hasEmployeeId(conn, id) == true) {
+			if(hasEmployeeId(id) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET firstName = ?, lastName = ? WHERE employeeId = ?");
 				stmt.setString(1, first);
 				stmt.setString(2, last);
@@ -138,10 +209,11 @@ public class Employee {
 		}
 	}
 	
-	public static void setPhoneNumber(Connection conn, int id, String number) {
+	public static void updatePhoneNumber(int id, String number) {
 		try {
+			Connection conn = connect();
 			//Search for customer record, if successful, update it
-			if(hasEmployeeId(conn, id) == true) {
+			if(hasEmployeeId(id) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET phoneNumber = ? WHERE employeeId = ?");
 				stmt.setString(1, number);
 				stmt.setInt(2, id);
@@ -157,10 +229,11 @@ public class Employee {
 		}
 	}
 	
-	public static void setEmail(Connection conn, int id, String emailAddress) {
+	public static void updateEmail(int id, String emailAddress) {
 		try {
+			Connection conn = connect();
 			//Search for customer record, if successful, update it
-			if(hasEmployeeId(conn, id) == true) {
+			if(hasEmployeeId(id) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET email = ? WHERE employeeId = ?");
 				stmt.setString(1, emailAddress);
 				stmt.setInt(2, id);
@@ -419,8 +492,9 @@ public class Employee {
 	
 //******DATABASE BOOLEAN HAS METHODS******
 //Methods that show whether something can be found in the table
-	public static boolean hasEmployeeId(Connection conn, int id) {
+	public static boolean hasEmployeeId(int id) {
 		try {
+			Connection conn = connect();
 			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM employees where employeeId = ?");
 			preparedStmt.setInt(1, id);
 			
@@ -435,8 +509,9 @@ public class Employee {
 			}
 	}
 	
-	public static boolean hasLogin(Connection conn, int id, String pass) {
+	public static boolean hasLogin(int id, String pass) {
 		try {
+			Connection conn = connect();
 			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM employees WHERE employeeId = ? AND password = ?");
 			preparedStmt.setInt(1, id);
 			preparedStmt.setString(2,  pass);
@@ -452,8 +527,9 @@ public class Employee {
 			}
 	}
 	
-	public static boolean hasName(Connection conn, String first, String last) {
+	public static boolean hasName(String first, String last) {
 		try {
+			Connection conn = connect();
 			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM employees WHERE firstName = ? AND lastName = ?");
 			preparedStmt.setString(1, first);
 			preparedStmt.setString(2, last);
@@ -467,8 +543,9 @@ public class Employee {
 		}
 	}
 	
-	public static boolean hasPhoneNumber(Connection conn, String number) {
+	public static boolean hasPhoneNumber(String number) {
 		try {
+			Connection conn = connect();
 			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM employees where phoneNumber = ?");
 			preparedStmt.setString(1, number);
 			
@@ -481,8 +558,9 @@ public class Employee {
 		}
 	}
 	
-	public static boolean hasEmail(Connection conn, String emailAddress) {
+	public static boolean hasEmail(String emailAddress) {
 		try {
+			Connection conn = connect();
 			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM employees where email = ?");
 			preparedStmt.setString(1, emailAddress);
 			

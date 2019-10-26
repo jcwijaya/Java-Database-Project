@@ -17,6 +17,22 @@ public class Customer {
 	private String phoneNumber;	
 	private String email;
 	
+//******CONSTRUCTORS******
+	Customer(){
+		customerId = 0;
+		firstName = "";
+		lastName = "";
+		phoneNumber = "";
+		email = "";
+	}
+	Customer(int id, String first, String last, String number, String emailAddress){
+		customerId = id;
+		firstName = first;
+		lastName = last;
+		phoneNumber = number;
+		email = emailAddress;
+	}
+	
 //******INSTANCE METHODS******
 	public void setCustomerId(int id) {
 		customerId = id;
@@ -72,7 +88,7 @@ public class Customer {
 		phoneNumber = input.next();
 		System.out.print("Email: ");
 		email = input.next();
-		customerId = createId(conn);
+		customerId = createId();
 		saveData(conn);
 		
 		input.close();
@@ -105,13 +121,14 @@ public class Customer {
 	}
 	
 	//This method returns a unique id number for each new customer
-	public int createId(Connection conn) {
+	public static int createId() {
 		//Randomly generate a 6 digit id
 		Random rand = new Random(System.currentTimeMillis());
-		int id = (int)(rand.nextDouble() * 1000000 + 100000);
+		int id = (int)(rand.nextDouble() * 100000 + 100000);
 		boolean match = true;
 		
 		try {
+			Connection conn = connect();
 			//Compare the id with the ones in database to ensure uniqueness
 			Statement statement = conn.createStatement();
 			
@@ -324,19 +341,13 @@ public class Customer {
 		preparedStmt.setInt(1, id);
 		
 		ResultSet result = preparedStmt.executeQuery();
-		Customer c = new Customer();
+		
 		//customerId should be unique and only have one record in ResultSet
 		//Use loop to go through ResultSet
 		while(result.next()){
-			//Put a row into object
-			c.setCustomerId(result.getInt("customerId"));					
-			c.setFirstName(result.getString("firstName"));
-			c.setLastName(result.getString("lastName"));
-			c.setPhoneNumber(result.getString("phoneNumber"));
-			c.setEmail(result.getString("email"));
-				
-			//Insert object into list
-			list.add(c);
+			//Create and insert object into list
+			list.add(new Customer(result.getInt("customerId"), result.getString("firstName"), result.getString("lastName"),
+					result.getString("phoneNumber"), result.getString("email")));
 		}
 		
 		}
@@ -356,19 +367,12 @@ public class Customer {
 		preparedStmt.setString(1, first);
 		
 		ResultSet result = preparedStmt.executeQuery();
-		Customer c = new Customer();
 		
 		//Use loop to go through ResultSet
 		while(result.next()){
-			//Put a row into object
-			c.setCustomerId(result.getInt("customerId"));					
-			c.setFirstName(result.getString("firstName"));
-			c.setLastName(result.getString("lastName"));
-			c.setPhoneNumber(result.getString("phoneNumber"));
-			c.setEmail(result.getString("email"));
-				
-			//Insert object into list
-			list.add(c);
+			//Create and insert object into list
+			list.add(new Customer(result.getInt("customerId"), result.getString("firstName"), result.getString("lastName"),
+					result.getString("phoneNumber"), result.getString("email")));
 		}
 		
 		}
@@ -386,19 +390,11 @@ public class Customer {
 		preparedStmt.setString(1, last);
 		
 		ResultSet result = preparedStmt.executeQuery();
-		Customer c = new Customer();
-		
 		//Use loop to go through ResultSet
 		while(result.next()){
-			//Put a row into object
-			c.setCustomerId(result.getInt("customerId"));					
-			c.setFirstName(result.getString("firstName"));
-			c.setLastName(result.getString("lastName"));
-			c.setPhoneNumber(result.getString("phoneNumber"));
-			c.setEmail(result.getString("email"));
-				
-			//Insert object into list
-			list.add(c);
+			//Create and insert object into list
+			list.add(new Customer(result.getInt("customerId"), result.getString("firstName"), result.getString("lastName"),
+					result.getString("phoneNumber"), result.getString("email")));
 		}
 		
 		}
@@ -418,20 +414,13 @@ public class Customer {
 		preparedStmt.setString(1, number);
 		
 		ResultSet result = preparedStmt.executeQuery();
-		Customer c = new Customer();
 		
 		//Use loop to go through ResultSet
-		while(result.next()){
-			//Put a row into object
-			c.setCustomerId(result.getInt("customerId"));					
-			c.setFirstName(result.getString("firstName"));
-			c.setLastName(result.getString("lastName"));
-			c.setPhoneNumber(result.getString("phoneNumber"));
-			c.setEmail(result.getString("email"));
-				
-			//Insert object into list
-			list.add(c);
-		}
+				while(result.next()){
+					//Create and insert object into list
+					list.add(new Customer(result.getInt("customerId"), result.getString("firstName"), result.getString("lastName"),
+							result.getString("phoneNumber"), result.getString("email")));
+				}
 		
 		}
 		catch(SQLException e) {
@@ -450,19 +439,12 @@ public class Customer {
 		preparedStmt.setString(1, emailAddress);
 		
 		ResultSet result = preparedStmt.executeQuery();
-		Customer c = new Customer();
 		
 		//Use loop to go through ResultSet
 		while(result.next()){
-			//Put a row into object
-			c.setCustomerId(result.getInt("customerId"));					
-			c.setFirstName(result.getString("firstName"));
-			c.setLastName(result.getString("lastName"));
-			c.setPhoneNumber(result.getString("phoneNumber"));
-			c.setEmail(result.getString("email"));
-				
-			//Insert object into list
-			list.add(c);
+			//Create and insert object into list
+			list.add(new Customer(result.getInt("customerId"), result.getString("firstName"), result.getString("lastName"),
+					result.getString("phoneNumber"), result.getString("email")));
 		}
 		
 		}
@@ -485,20 +467,14 @@ public class Customer {
 			
 			if(hasResult == true) {
 				ResultSet result = statement.getResultSet();
-				Customer c = new Customer();
 				
 				//Use loop to go through ResultSet rows
 				while(result.next()){
-					//Put a row into object
-					c.setCustomerId(result.getInt("customerId"));
-					c.setFirstName(result.getString("firstName"));
-					c.setLastName(result.getString("lastName"));
-					c.setPhoneNumber(result.getString("phoneNumber"));
-					c.setEmail(result.getString("email"));
-					
-					//Insert object into list
-					list.add(c);
+					//Create and insert object into list
+					list.add(new Customer(result.getInt("customerId"), result.getString("firstName"), result.getString("lastName"),
+							result.getString("phoneNumber"), result.getString("email")));
 				}
+				
 			}
 		}
 		catch(SQLException e) {
@@ -520,20 +496,14 @@ public class Customer {
 			
 			if(hasResult == true) {
 				ResultSet result = statement.getResultSet();
-				Customer c = new Customer();
 				
 				//Use loop to go through ResultSet rows
 				while(result.next()){
-					//Put a row into object
-					c.setCustomerId(result.getInt("customerId"));
-					c.setFirstName(result.getString("firstName"));
-					c.setLastName(result.getString("lastName"));
-					c.setPhoneNumber(result.getString("phoneNumber"));
-					c.setEmail(result.getString("email"));
-					
-					//Insert object into list
-					list.add(c);
+					//Create and insert object into list
+					list.add(new Customer(result.getInt("customerId"), result.getString("firstName"), result.getString("lastName"),
+							result.getString("phoneNumber"), result.getString("email")));
 				}
+				
 			}
 		}
 		catch(SQLException e) {
@@ -554,41 +524,13 @@ public class Customer {
 			
 			if(hasResult == true) {
 				ResultSet result = statement.getResultSet();
-				Customer c = new Customer();
 				
 				//Use loop to go through ResultSet rows
 				while(result.next()){
-					//Put a row into object
-					c.setCustomerId(result.getInt("customerId"));
-					c.setFirstName(result.getString("firstName"));
-					c.setLastName(result.getString("lastName"));
-					c.setPhoneNumber(result.getString("phoneNumber"));
-					c.setEmail(result.getString("email"));
-					
-					//Insert object into list
-					list.add(c);
+					//Create and insert object into list
+					list.add(new Customer(result.getInt("customerId"), result.getString("firstName"), result.getString("lastName"),
+							result.getString("phoneNumber"), result.getString("email")));
 				}
-				
-				//ResultSetMetaData meta = result.getMetaData();
-			/* Edit: Instead put table info into list and return list
-				//Find number of columns in table
-				int columnCount = meta.getColumnCount();
-				
-				//use loop to print column names
-				for(int i = 1; i <= columnCount; i++) {
-					//print out column names (later can give labels)
-					System.out.printf("%-15s", meta.getColumnLabel(i));
-				}
-				System.out.println();
-				
-				//print out the table
-				while(result.next()) {
-					System.out.printf("%-15d%-15s%-15s%-15s%-15s%n",
-							result.getInt("customerId"), result.getString("firstName"),
-							result.getString("lastName"), result.getString("phoneNumber"),
-							result.getString("email"));
-				}
-			*/
 			}
 		}
 		catch(SQLException e) {
@@ -612,6 +554,25 @@ public class Customer {
 		}
 	}
 	
-
+	/* Syntax for ResultSetMetaData
+	 * ResultSetMetaData meta = result.getMetaData();
+		//Find number of columns in table
+		int columnCount = meta.getColumnCount();
+		
+		//use loop to print column names
+		for(int i = 1; i <= columnCount; i++) {
+			//print out column names (later can give labels)
+			System.out.printf("%-15s", meta.getColumnLabel(i));
+		}
+		System.out.println();
+		
+		//print out the table
+		while(result.next()) {
+			System.out.printf("%-15d%-15s%-15s%-15s%-15s%n",
+					result.getInt("customerId"), result.getString("firstName"),
+					result.getString("lastName"), result.getString("phoneNumber"),
+					result.getString("email"));
+		}
+	*/
 }
 

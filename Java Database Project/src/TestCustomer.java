@@ -4,21 +4,41 @@
  * Assignment: WebMart database management system
  * This file contains the Employee class 
  */
-import java.sql.*;
+//import java.sql.*;
+//import java.util.Scanner;
+import java.util.ArrayList;
 import java.util.Scanner;
+
 //This program tests the Customer class.
 public class TestCustomer{
 	//Main method
 		public static void main(String[] args) {
-			Connection conn = Customer.connect();
-			//Customer customer = new Customer();
-			//customer.inputCustomerInfo(conn);
-			Customer.getTable(conn);
+			//Customer c = new Customer();
+			ArrayList<Customer> list = new ArrayList<Customer>();
+			list = Customer.getTableAscLastName();
+			System.out.println(list.size());
+			//print table
+			for(int i=0; i < list.size(); i++){
+				System.out.printf("%-15d%-15s%-15s%-15s%-15s%n",
+					list.get(i).getCustomerId(), list.get(i).getFirstName(), list.get(i).getLastName(), 
+					list.get(i).getPhoneNumber(), list.get(i).getEmail());
+			}
 			
 			Scanner input = new Scanner(System.in);
 			System.out.print("Enter ID: ");
-			System.out.print("Enter new ID: ");
-			String number = input.next();
+			int oldId = input.nextInt();
+			int newId = Customer.createId();
+			Customer.updateCustomerId(oldId, newId);
+			list = Customer.getTableAscLastName();
+			System.out.println(list.size());
+			//print table
+			for(int i=0; i < list.size(); i++){
+				System.out.printf("%-15d%-15s%-15s%-15s%-15s%n",
+					list.get(i).getCustomerId(), list.get(i).getFirstName(), list.get(i).getLastName(), 
+					list.get(i).getPhoneNumber(), list.get(i).getEmail());
+			}
+			input.close();
+			/*
 			Customer.searchPhoneNumber(conn, number);
 			System.out.println(Customer.hasPhoneNumber(conn, number));
 			input.close();
