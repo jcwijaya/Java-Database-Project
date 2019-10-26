@@ -13,7 +13,9 @@ import java.util.Scanner;
 public class TestCustomer{
 	//Main method
 		public static void main(String[] args) {
-			//Customer c = new Customer();
+			//Display customer table by ascending last name and enter
+			//in an ID to change email
+			/*
 			ArrayList<Customer> list = new ArrayList<Customer>();
 			list = Customer.getTableAscLastName();
 			System.out.println(list.size());
@@ -25,10 +27,11 @@ public class TestCustomer{
 			}
 			
 			Scanner input = new Scanner(System.in);
-			System.out.print("Enter ID: ");
+			System.out.print("Enter ID to change email: ");
 			int oldId = input.nextInt();
-			int newId = Customer.createId();
-			Customer.updateCustomerId(oldId, newId);
+			System.out.print("New email: ");
+			String address = input.next();
+			Customer.updateEmail(oldId, address);
 			list = Customer.getTableAscLastName();
 			System.out.println(list.size());
 			//print table
@@ -38,23 +41,33 @@ public class TestCustomer{
 					list.get(i).getPhoneNumber(), list.get(i).getEmail());
 			}
 			input.close();
-			/*
-			Customer.searchPhoneNumber(conn, number);
-			System.out.println(Customer.hasPhoneNumber(conn, number));
-			input.close();
-			/*
-			System.out.print("Phone number to search: ");
-			String number = input.next();
-			Customer.searchPhoneNumber(conn, number);
-			
-			System.out.print("Email to search: ");
-			String emailAddress = input.next();
-			Customer.searchEmail(conn, emailAddress);
 			*/
-			//System.out.println();
-			//Customer.displayAscLastName(conn);
-			//input.close();
+			
+			//Insert new records into employees table
+			Scanner input = new Scanner(System.in);
+			
+			Employee e = new Employee();
+			e.setEmployeeId(Employee.createId());
+			System.out.print("First Name: ");
+			e.setFirstName(input.next());
+			System.out.print("Last Name: ");
+			e.setLastName(input.next());
+			System.out.print("Phone Number: ");
+			e.setPhoneNumber(input.next());
+			System.out.print("Email: ");
+			e.setEmail(input.next());
+			
+			ArrayList<Employee> list = new ArrayList<Employee>();
+			list = Employee.getTable();
+			System.out.println(list.size());
+			//print table
+			for(int i=0; i < list.size(); i++){
+				System.out.printf("%-15d%-15s%-15s%-15s%-15s%-15s%n",
+					list.get(i).getEmployeeId(), list.get(i).getPassword(), list.get(i).getFirstName(), list.get(i).getLastName(), 
+					list.get(i).getPhoneNumber(), list.get(i).getEmail());
+			}
 			System.out.println("Program end");
+			input.close();
 			return;
 		}
 }

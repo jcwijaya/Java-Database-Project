@@ -6,6 +6,8 @@
  */
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Employee {
@@ -89,7 +91,7 @@ public class Employee {
 	
 	//This method asks the user for their info and assigns
 		//the info to data fields. Then it inserts into database
-	public void inputCustomerInfo(Connection conn) {
+	public void inputEmployeeInfo(Connection conn) {
 		Scanner input = new Scanner(System.in);
 		System.out.println("Please enter your name.");
 		System.out.print("First name: ");
@@ -131,25 +133,71 @@ public class Employee {
 	//text file and inserts it into the database
 	//Pre-condition: Must check for duplicate entries
 	//Maybe create a method to check database for duplicates in future
-	public void readCustomerInfo() {
+	public void readEmployeeInfo() {
 			
 	}
 		
 	//This method returns a unique id number for each new employee
-	public int createId() {
-		//Search database employee table for already taken id numbers
-			
-		int id=0;
-			
-		return id; 
+	public static int createId() {
+		//Randomly generate a 6 digit id
+			Random rand = new Random(System.currentTimeMillis());
+			int id = (int)(rand.nextDouble() * 100000 + 100000);
+			boolean match = true;
+				
+			try {
+				Connection conn = connect();
+				//Compare the id with the ones in database to ensure uniqueness
+				Statement statement = conn.createStatement();
+					
+				//Use loop to keep generating id's until you get a unique one
+				while(match) {
+					match = false;
+					id = (int)(rand.nextDouble() * 1000000 + 100000);
+					ResultSet result = statement.executeQuery("SELECT * FROM employees");
+							
+					//Use loop to compare id with ones in database
+					while(result.next()) {
+						if(id == result.getInt("employeeId")) {
+							match = true;
+							break;
+						}
+					}
+				}
+					
+				return id;
+			}
+			catch(SQLException e) {
+				System.out.println(e);
+				return 000000;
+			}
 	}
 	
-//******DATABASE UPDATE METHODS******
+//******DATABASE UPDATE & INSERT METHODS******
+	//Inserts the data fields of this object into database
+	public void insert() {
+		try {
+			Connection conn = connect();
+			PreparedStatement stmt = conn.prepareStatement("INSERT INTO employees " +
+			"(employeeId, password, firstName, lastName, phoneNumber, email) VALUES(?, ?, ?, ?, ?, ?);");
+			stmt.setInt(1, employeeId);
+			stmt.setString(2, password);
+			stmt.setString(3, firstName);
+			stmt.setString(4, lastName);
+			stmt.setString(5, phoneNumber); 
+			stmt.setString(6, email); 
+			
+			stmt.executeUpdate();
+			}
+		catch(SQLException exception) {
+			System.out.println(exception);
+		}
+	}
+	
 //Methods to update the table
 	public static void updateEmployeeId(int oldId, int newId) {
 		try {
 			Connection conn = connect();
-			//Search for customer record, if successful, update it
+			//Search for employee record, if successful, update it
 			if(hasEmployeeId(oldId) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET employeeId = ? WHERE employeeId = ?");
 				stmt.setInt(1, newId);
@@ -170,7 +218,7 @@ public class Employee {
 	public static void updatePassword(int id, int newPass) {
 		try {
 			Connection conn = connect();
-			//Search for customer record, if successful, update it
+			//Search for employee record, if successful, update it
 			if(hasEmployeeId(id) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET password = ? WHERE employeeId = ?");
 				stmt.setInt(1, newPass);
@@ -188,15 +236,36 @@ public class Employee {
 		}
 	}
 	
-	public static void updateName(int id, String first, String last) {
+	public static void updateFirstName(int id, String first) {
 		try {
 			Connection conn = connect();
-			//Search for customer record, if successful, update it
+			//Search for employee record, if successful, update it
 			if(hasEmployeeId(id) == true) {
-				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET firstName = ?, lastName = ? WHERE employeeId = ?");
+				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET firstName = ? WHERE employeeId = ?");
 				stmt.setString(1, first);
-				stmt.setString(2, last);
-				stmt.setInt(3, id);
+				stmt.setInt(2, id);
+	
+				stmt.executeUpdate();
+			}
+			else {
+				System.out.println("Employee not found.");
+			}
+			
+		}
+		catch(SQLException e) {
+			System.out.println(e);
+		}
+	}
+	
+	public static void updateLastName(int id, String last) {
+		try {
+			Connection conn = connect();
+			//Search for employee record, if successful, update it
+			if(hasEmployeeId(id) == true) {
+				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET lastName = ? WHERE employeeId = ?");
+				stmt.setString(1, last);
+				stmt.setInt(2, id);
+	
 				stmt.executeUpdate();
 			}
 			else {
@@ -212,7 +281,7 @@ public class Employee {
 	public static void updatePhoneNumber(int id, String number) {
 		try {
 			Connection conn = connect();
-			//Search for customer record, if successful, update it
+			//Search for employee record, if successful, update it
 			if(hasEmployeeId(id) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET phoneNumber = ? WHERE employeeId = ?");
 				stmt.setString(1, number);
@@ -232,7 +301,7 @@ public class Employee {
 	public static void updateEmail(int id, String emailAddress) {
 		try {
 			Connection conn = connect();
-			//Search for customer record, if successful, update it
+			//Search for employee record, if successful, update it
 			if(hasEmployeeId(id) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET email = ? WHERE employeeId = ?");
 				stmt.setString(1, emailAddress);
@@ -240,7 +309,7 @@ public class Employee {
 				stmt.executeUpdate();
 			}
 			else {
-				System.out.println("Customer not found.");
+				System.out.println("Employee not found.");
 			}
 			
 		}
@@ -249,246 +318,217 @@ public class Employee {
 		}
 	}
 	
-//******DATABASE GET METHODS******
+//******DATABASE GET TABLE METHODS******
 //Methods to display and return all or parts of the table
 	
-	public static void getTableAscFirstName(Connection conn) {
+	//This returns a list of Employee objects in
+	//ascending order by first name, then by last name
+	public static ArrayList<Employee> getTableAscFirstName() {
+		ArrayList<Employee> list = new ArrayList<Employee>();
 		try {
+			Connection conn = connect();
 			Statement statement = conn.createStatement();
-			
+				
 			boolean hasResult = statement.execute("SELECT * FROM employees ORDER BY firstName, lastName ASC");
-			
+				
 			if(hasResult == true) {
 				ResultSet result = statement.getResultSet();
-				ResultSetMetaData meta = result.getMetaData();
-				
-				//Find number of columns in table
-				int columnCount = meta.getColumnCount();
-				
-				//use loop to print column names
-				for(int i = 1; i <= columnCount; i++) {
-					//print out column names (later can give labels)
-					System.out.printf("%-15s", meta.getColumnLabel(i));
+					
+				//Use loop to go through ResultSet rows
+				while(result.next()){
+					//Create and insert object into list
+					list.add(new Employee(result.getInt("employeeId"), result.getString("password"), result.getString("firstName"), 
+							result.getString("lastName"), result.getString("phoneNumber"), result.getString("email")));
 				}
-				System.out.println();
 				
-				//print out the table
-				while(result.next()) {
-					System.out.printf("%-15d%-15s%-15s%-15s%-15s%-15s%n",
-							result.getInt("employeeId"), result.getString("password"),
-							result.getString("firstName"), result.getString("lastName"), 
-							result.getString("phoneNumber"), result.getString("email"));
-				}
 			}
 		}
 		catch(SQLException e) {
 			System.out.println(e);
 		}
+			
+		return list;
 	}
-	
-	//This method displays the entire customers table 
-	//by ascending last name, then by first name
-	public static void getTableAscLastName(Connection conn) {
-		try {
-			Statement statement = conn.createStatement();
-			
-			boolean hasResult = statement.execute("SELECT * FROM employees ORDER BY lastName, firstName ASC");
-			
-			if(hasResult == true) {
-				ResultSet result = statement.getResultSet();
-				ResultSetMetaData meta = result.getMetaData();
-				
-				//Find number of columns in table
-				int columnCount = meta.getColumnCount();
-				
-				//use loop to print column names
-				for(int i = 1; i <= columnCount; i++) {
-					//print out column names (later can give labels)
-					System.out.printf("%-15s", meta.getColumnLabel(i));
-				}
-				System.out.println();
-				
-				//print out the table
-				while(result.next()) {
-					System.out.printf("%-15d%-15s%-15s%-15s%-15s%-15s%n",
-							result.getInt("employeeId"), result.getString("password"),
-							result.getString("firstName"), result.getString("lastName"), 
-							result.getString("phoneNumber"), result.getString("email"));
-				}
-			}
-		}
-		catch(SQLException e) {
-			System.out.println(e);
-		}
-	}
-	
-	//This method prints out entire customers table in order of entry
-	//Takes in a Connection
-	public static void getTable(Connection conn) {
-		try {
-			Statement statement = conn.createStatement();
-			
-			boolean hasResult = statement.execute("SELECT * FROM employees");
-			
-			if(hasResult == true) {
-				ResultSet result = statement.getResultSet();
-				ResultSetMetaData meta = result.getMetaData();
-				
-				//Find number of columns in table
-				int columnCount = meta.getColumnCount();
-				
-				//use loop to print column names
-				for(int i = 1; i <= columnCount; i++) {
-					//print out column names (later can give labels)
-					System.out.printf("%-15s", meta.getColumnLabel(i));
-				}
-				System.out.println();
-				
-				//print out the table
-				while(result.next()) {
-					System.out.printf("%-15d%-15s%-15s%-15s%-15s%-15s%n",
-							result.getInt("employeeId"), result.getString("password"), 
-							result.getString("firstName"), result.getString("lastName"), 
-							result.getString("phoneNumber"), result.getString("email"));
-				}
-			}
-		}
-		catch(SQLException e) {
-			System.out.println(e);
-		}
-	}
-	
-	public static void searchEmployeeId(Connection conn, int id) {
-		int count = 0;
 		
-	try {
-		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM employees WHERE employeeId = ?");
+	//This method returns list of Employee table 
+	//by ascending last name, then by first name
+	public static ArrayList<Employee> getTableAscLastName() {
+		ArrayList<Employee> list = new ArrayList<Employee>();
+		try {
+			Connection conn = connect();
+			Statement statement = conn.createStatement();
+				
+			boolean hasResult = statement.execute("SELECT * FROM employees ORDER BY lastName, firstName ASC");
+				
+			if(hasResult == true) {
+				ResultSet result = statement.getResultSet();
+					
+				//Use loop to go through ResultSet rows
+				while(result.next()){
+					//Create and insert object into list
+					list.add(new Employee(result.getInt("employeeId"), result.getString("password"), result.getString("firstName"), 
+							result.getString("lastName"), result.getString("phoneNumber"), result.getString("email")));
+				}
+					
+			}
+		}
+		catch(SQLException e) {
+			System.out.println(e);
+		}
+			
+		return list;
+	}
+		
+	//This method returns list of Employee objects in order of entry
+	public static ArrayList<Employee> getTable() {
+		ArrayList<Employee> list = new ArrayList<Employee>();
+		try {
+			Connection conn = connect();
+			Statement statement = conn.createStatement();
+				
+			boolean hasResult = statement.execute("SELECT * FROM employees");
+				
+			if(hasResult == true) {
+				ResultSet result = statement.getResultSet();
+					
+				//Use loop to go through ResultSet rows
+				while(result.next()){
+					//Create and insert object into list
+					list.add(new Employee(result.getInt("employeeId"), result.getString("password"), result.getString("firstName"), 
+							result.getString("lastName"), result.getString("phoneNumber"), result.getString("email")));
+				}
+			}
+		}
+		catch(SQLException e) {
+			System.out.println(e);
+		}
+			
+		return list;
+	}
+	
+//******DATABASE SEARCH METHODS******
+//These methods take in a data field as parameter
+// and returns ArrayList of Employee objects that match the parameter
+	public static ArrayList<Employee> searchEmployeeId(int id) {
+		ArrayList<Employee> list = new ArrayList<Employee>();
+		try {
+		Connection conn = connect();
+		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM employees where employeeId = ?");
 		preparedStmt.setInt(1, id);
 		
 		ResultSet result = preparedStmt.executeQuery();
-		//employeeId should be unique and only print one record
-		while(result.next()) {
-			System.out.printf("%-15d%-15s%-15s%-15s%-15s%-15s%n",
-					result.getInt("employeeId"), result.getString("password"), 
-					result.getString("firstName"), result.getString("lastName"), 
-					result.getString("phoneNumber"), result.getString("email"));
-			count++;
-			}
 		
-		//if the ResultSet is empty, print message
-		if(count == 0) {
-			System.out.println("Employee not found");
+		//employeeId should be unique and only have one record in ResultSet
+		//Use loop to go through ResultSet
+		while(result.next()){
+			//Create and insert object into list
+			list.add(new Employee(result.getInt("employeeId"), result.getString("password"), result.getString("firstName"), 
+					result.getString("lastName"), result.getString("phoneNumber"), result.getString("email")));
 		}
 		
-	}
+		}
 		catch(SQLException e) {
 			System.out.println(e);
 		}
+		return list;
 	}
 	
-	//This method searches for employees with a first and last name
-	//matching the passed in parameters.
-	public static void searchName(Connection conn, String first, String last) {
-		int count = 0;
-		
+	//This method searches for employees with a first name
+	//matching the passed in parameter.
+	public static ArrayList<Employee> searchFirstName(String first) {
+		ArrayList<Employee> list = new ArrayList<Employee>();
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM employees WHERE firstName = ? and lastName = ?");
-			preparedStmt.setString(1, first);
-			preparedStmt.setString(2, last);
-			
-			ResultSet result = preparedStmt.executeQuery();
-			while(result.next()) {
-				System.out.printf("%-15d%-15s%-15s%-15s%-15s%-15s%n",
-						result.getInt("employeeId"), result.getString("password"),
-						result.getString("firstName"), result.getString("lastName"), 
-						result.getString("phoneNumber"), result.getString("email"));
-				count ++;
-			}
-			
-			//if the ResultSet is empty, print message
-			if(count == 0) {
-				System.out.println("Employee not found.");
-			}
+		Connection conn = connect();
+		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM employees where firstName = ?");
+		preparedStmt.setString(1, first);
+		
+		ResultSet result = preparedStmt.executeQuery();
+		
+		//Use loop to go through ResultSet
+		while(result.next()){
+			//Create and insert object into list
+			list.add(new Employee(result.getInt("employeeId"),result.getString("password"), result.getString("firstName"), 
+					result.getString("lastName"), result.getString("phoneNumber"), result.getString("email")));
+		}
+		
 		}
 		catch(SQLException e) {
 			System.out.println(e);
 		}
+		return list;
+	}
+	
+	public static ArrayList<Employee> searchLastName(String last) {
+		ArrayList<Employee> list = new ArrayList<Employee>();
+		try {
+		Connection conn = connect();
+		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM employees where lastName = ?");
+		preparedStmt.setString(1, last);
+		
+		ResultSet result = preparedStmt.executeQuery();
+		//Use loop to go through ResultSet
+		while(result.next()){
+			//Create and insert object into list
+			list.add(new Employee(result.getInt("employeeId"), result.getString("password"), result.getString("firstName"), 
+					result.getString("lastName"), result.getString("phoneNumber"), result.getString("email")));
+		}
+		
+		}
+		catch(SQLException e) {
+			System.out.println(e);
+		}
+		return list;
 	}
 	
 	//This method searches for employees with a phone number
 	//matching the passed in number
-	public static void searchPhoneNumber(Connection conn, String number) {
-		int count = 0;
-		
+	public static ArrayList<Employee> searchPhoneNumber(String number) {
+		ArrayList<Employee> list = new ArrayList<Employee>();
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM employees WHERE phoneNumber = ?");
-			preparedStmt.setString(1, number);
+		Connection conn = connect();
+		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM employees where phoneNumber = ?");
+		preparedStmt.setString(1, number);
 			
-			ResultSet result = preparedStmt.executeQuery();
-			while(result.next()) {
-				System.out.printf("%-15d%-15s%-15s%-15s%-15s%-15s%n",
-						result.getInt("employeeId"), result.getString("password"),
-						result.getString("firstName"), result.getString("lastName"), 
-						result.getString("phoneNumber"), result.getString("email"));
-				count ++;
-			}
+		ResultSet result = preparedStmt.executeQuery();
 			
-			//if the ResultSet is empty, print message
-			if(count == 0) {
-				System.out.println("Employee not found.");
-			}
+		//Use loop to go through ResultSet
+				while(result.next()){
+					//Create and insert object into list
+					list.add(new Employee(result.getInt("customerId"), result.getString("password"), result.getString("firstName"), 
+							result.getString("lastName"), result.getString("phoneNumber"), result.getString("email")));
+				}
 			
 		}
 		catch(SQLException e) {
 			System.out.println(e);
 		}
+		return list;
 	}
 	
-	//This method searches for customers with an email
+	//This method searches for employees with an email
 	//matching the passed in emailAdress
-	public static void searchEmail(Connection conn, String emailAddress) {
-		int count = 0;
-		
+	public static ArrayList<Employee> searchEmail(String emailAddress) {
+		ArrayList<Employee> list = new ArrayList<Employee>();
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM employees WHERE email = ?");
-			preparedStmt.setString(1, emailAddress);
-			
-			ResultSet result = preparedStmt.executeQuery();
-			while(result.next()) {
-				System.out.printf("%-15d%-15s%-15s%-15s%-15s%-15s%n",
-						result.getInt("employeeId"), result.getString("password"),
-						result.getString("firstName"), result.getString("lastName"), 
-						result.getString("phoneNumber"), result.getString("email"));
-				count ++;
-			}
-			
-			//if the ResultSet is empty, print message
-			if(count == 0) {
-				System.out.println("Employee not found.");
-			}
-			
+		Connection conn = connect();
+		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM employees where email = ?");
+		preparedStmt.setString(1, emailAddress);
+		
+		ResultSet result = preparedStmt.executeQuery();
+		
+		//Use loop to go through ResultSet
+		while(result.next()){
+			//Create and insert object into list
+			list.add(new Employee(result.getInt("employeeId"), result.getString("password"), result.getString("firstName"), 
+					result.getString("lastName"), result.getString("phoneNumber"), result.getString("email")));
+		}
+		
 		}
 		catch(SQLException e) {
 			System.out.println(e);
 		}
+		return list;
 	}
-	/*
-	public static int getEmployeeId(Connection conn) {
-		
-	}
-	
-	public static String getName() {
-		
-	}
-	
-	public static String getPhoneNumber() {
-		
-	}
-	
-	public static String getEmail() {
-		
-	}
-	*/
 	
 //******DATABASE BOOLEAN HAS METHODS******
 //Methods that show whether something can be found in the table

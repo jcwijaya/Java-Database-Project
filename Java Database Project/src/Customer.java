@@ -202,15 +202,34 @@ public class Customer {
 		}
 	}
 	
-	public static void updateName(int id, String first, String last) {
+	public static void updateFirstName(int id, String first) {
 		try {
 			Connection conn = connect();
 			//Search for customer record, if successful, update it
 			if(hasCustomerId(id) == true) {
-				PreparedStatement stmt = conn.prepareStatement("UPDATE customers SET firstName = ?, lastName = ? WHERE customerId = ?");
+				PreparedStatement stmt = conn.prepareStatement("UPDATE customers SET firstName = ? WHERE customerId = ?");
 				stmt.setString(1, first);
-				stmt.setString(2, last);
-				stmt.setInt(3, id);
+				stmt.setInt(2, id);
+				stmt.executeUpdate();
+			}
+			else {
+				System.out.println("Customer not found.");
+			}
+			
+		}
+		catch(SQLException e) {
+			System.out.println(e);
+		}
+	}
+	
+	public static void updateLastName(int id, String last) {
+		try {
+			Connection conn = connect();
+			//Search for customer record, if successful, update it
+			if(hasCustomerId(id) == true) {
+				PreparedStatement stmt = conn.prepareStatement("UPDATE customers SET lastName = ? WHERE customerId = ?");
+				stmt.setString(1, last);
+				stmt.setInt(2, id);
 				stmt.executeUpdate();
 			}
 			else {
