@@ -315,201 +315,237 @@ public class Customer {
 	
 //*****DATABASE SEARCH METHODS*******
 	//This method searches the database for a customer with
-	//the passed in customerId
-	public static void searchCustomerId(int id) {
-		int count = 0;
-		
+	//the passed in customerId and returns Customer object
+	public static ArrayList<Customer> searchCustomerId(int id) {
+		ArrayList<Customer> list = new ArrayList<Customer>();
 		try {
 		Connection conn = connect();
 		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where customerId = ?");
 		preparedStmt.setInt(1, id);
 		
 		ResultSet result = preparedStmt.executeQuery();
-		//customerId should be unique and only print one record
-		while(result.next()) {
-			System.out.printf("%-15d%-15s%-15s%-15s%-15s%n",
-					result.getInt("customerId"), result.getString("firstName"),
-					result.getString("lastName"), result.getString("phoneNumber"),
-					result.getString("email"));
-			count++;
-			}
-		
-		//if the ResultSet is empty, print message
-		if(count == 0) {
-			System.out.println("Customer not found");
+		Customer c = new Customer();
+		//customerId should be unique and only have one record in ResultSet
+		//Use loop to go through ResultSet
+		while(result.next()){
+			//Put a row into object
+			c.setCustomerId(result.getInt("customerId"));					
+			c.setFirstName(result.getString("firstName"));
+			c.setLastName(result.getString("lastName"));
+			c.setPhoneNumber(result.getString("phoneNumber"));
+			c.setEmail(result.getString("email"));
+				
+			//Insert object into list
+			list.add(c);
 		}
 		
 		}
 		catch(SQLException e) {
 			System.out.println(e);
 		}
+		return list;
 	}
 	
 	//This method searches for customers with a first and last name
 	//matching the passed in parameters.
-	public static void searchName(String first, String last) {
-		int count = 0;
-		
+	public static ArrayList<Customer> searchFirstName(String first) {
+		ArrayList<Customer> list = new ArrayList<Customer>();
 		try {
-			Connection conn = connect();
-			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where firstName = ? and lastName = ?");
-			preparedStmt.setString(1, first);
-			preparedStmt.setString(2, last);
-			
-			ResultSet result = preparedStmt.executeQuery();
-			while(result.next()) {
-				System.out.printf("%-15d%-15s%-15s%-15s%-15s%n",
-						result.getInt("customerId"), result.getString("firstName"),
-						result.getString("lastName"), result.getString("phoneNumber"),
-						result.getString("email"));
-				count ++;
-			}
-			
-			//if the ResultSet is empty, print message
-			if(count == 0) {
-				System.out.println("Customer not found.");
-			}
+		Connection conn = connect();
+		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where firstName = ?");
+		preparedStmt.setString(1, first);
+		
+		ResultSet result = preparedStmt.executeQuery();
+		Customer c = new Customer();
+		
+		//Use loop to go through ResultSet
+		while(result.next()){
+			//Put a row into object
+			c.setCustomerId(result.getInt("customerId"));					
+			c.setFirstName(result.getString("firstName"));
+			c.setLastName(result.getString("lastName"));
+			c.setPhoneNumber(result.getString("phoneNumber"));
+			c.setEmail(result.getString("email"));
+				
+			//Insert object into list
+			list.add(c);
+		}
+		
 		}
 		catch(SQLException e) {
 			System.out.println(e);
 		}
+		return list;
+	}
+	
+	public static ArrayList<Customer> searchLastName(String last) {
+		ArrayList<Customer> list = new ArrayList<Customer>();
+		try {
+		Connection conn = connect();
+		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where lastName = ?");
+		preparedStmt.setString(1, last);
+		
+		ResultSet result = preparedStmt.executeQuery();
+		Customer c = new Customer();
+		
+		//Use loop to go through ResultSet
+		while(result.next()){
+			//Put a row into object
+			c.setCustomerId(result.getInt("customerId"));					
+			c.setFirstName(result.getString("firstName"));
+			c.setLastName(result.getString("lastName"));
+			c.setPhoneNumber(result.getString("phoneNumber"));
+			c.setEmail(result.getString("email"));
+				
+			//Insert object into list
+			list.add(c);
+		}
+		
+		}
+		catch(SQLException e) {
+			System.out.println(e);
+		}
+		return list;
 	}
 	
 	//This method searches for customers with a phone number
 	//matching the passed in number
-	public static void searchPhoneNumber(String number) {
-		int count = 0;
-		
+	public static ArrayList<Customer> searchPhoneNumber(String number) {
+		ArrayList<Customer> list = new ArrayList<Customer>();
 		try {
-			Connection conn = connect();
-			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where phoneNumber = ?");
-			preparedStmt.setString(1, number);
-			
-			ResultSet result = preparedStmt.executeQuery();
-			while(result.next()) {
-				System.out.printf("%-15d%-15s%-15s%-15s%-15s%n",
-						result.getInt("customerId"), result.getString("firstName"),
-						result.getString("lastName"), result.getString("phoneNumber"),
-						result.getString("email"));
-				count ++;
-			}
-			
-			//if the ResultSet is empty, print message
-			if(count == 0) {
-				System.out.println("Customer not found.");
-			}
-			
+		Connection conn = connect();
+		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where phoneNumber = ?");
+		preparedStmt.setString(1, number);
+		
+		ResultSet result = preparedStmt.executeQuery();
+		Customer c = new Customer();
+		
+		//Use loop to go through ResultSet
+		while(result.next()){
+			//Put a row into object
+			c.setCustomerId(result.getInt("customerId"));					
+			c.setFirstName(result.getString("firstName"));
+			c.setLastName(result.getString("lastName"));
+			c.setPhoneNumber(result.getString("phoneNumber"));
+			c.setEmail(result.getString("email"));
+				
+			//Insert object into list
+			list.add(c);
+		}
+		
 		}
 		catch(SQLException e) {
 			System.out.println(e);
 		}
+		return list;
 	}
 	
 	//This method searches for customers with an email
 	//matching the passed in emailAdress
-	public static void searchEmail(String emailAddress) {
-		int count = 0;
-		
+	public static ArrayList<Customer> searchEmail(String emailAddress) {
+		ArrayList<Customer> list = new ArrayList<Customer>();
 		try {
-			Connection conn = connect();
-			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where email = ?");
-			preparedStmt.setString(1, emailAddress);
-			
-			ResultSet result = preparedStmt.executeQuery();
-			while(result.next()) {
-				System.out.printf("%-15d%-15s%-15s%-15s%-15s%n",
-						result.getInt("customerId"), result.getString("firstName"),
-						result.getString("lastName"), result.getString("phoneNumber"),
-						result.getString("email"));
-				count ++;
-			}
-			
-			//if the ResultSet is empty, print message
-			if(count == 0) {
-				System.out.println("Customer not found.");
-			}
-			
+		Connection conn = connect();
+		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where email = ?");
+		preparedStmt.setString(1, emailAddress);
+		
+		ResultSet result = preparedStmt.executeQuery();
+		Customer c = new Customer();
+		
+		//Use loop to go through ResultSet
+		while(result.next()){
+			//Put a row into object
+			c.setCustomerId(result.getInt("customerId"));					
+			c.setFirstName(result.getString("firstName"));
+			c.setLastName(result.getString("lastName"));
+			c.setPhoneNumber(result.getString("phoneNumber"));
+			c.setEmail(result.getString("email"));
+				
+			//Insert object into list
+			list.add(c);
+		}
+		
 		}
 		catch(SQLException e) {
 			System.out.println(e);
 		}
+		return list;
 	}
 	
-//******DATABASE GET METHODS******
-	//This method displays the entire customers table in
+//******DATABASE GET TABLE METHODS******
+	//This returns a list of Customer objects in
 	//ascending order by first name, then by last name
-	public static void getTableAscFirstName(Connection conn) {
+	public static ArrayList<Customer> getTableAscFirstName() {
+		ArrayList<Customer> list = new ArrayList<Customer>();
 		try {
+			Connection conn = connect();
 			Statement statement = conn.createStatement();
 			
 			boolean hasResult = statement.execute("SELECT * FROM customers ORDER BY firstName, lastName ASC");
 			
 			if(hasResult == true) {
 				ResultSet result = statement.getResultSet();
-				ResultSetMetaData meta = result.getMetaData();
+				Customer c = new Customer();
 				
-				//Find number of columns in table
-				int columnCount = meta.getColumnCount();
-				
-				//use loop to print column names
-				for(int i = 1; i <= columnCount; i++) {
-					//print out column names (later can give labels)
-					System.out.printf("%-15s", meta.getColumnLabel(i));
-				}
-				System.out.println();
-				
-				//print out the table
-				while(result.next()) {
-					System.out.printf("%-15d%-15s%-15s%-15s%-15s%n",
-							result.getInt("customerId"), result.getString("firstName"),
-							result.getString("lastName"), result.getString("phoneNumber"),
-							result.getString("email"));
+				//Use loop to go through ResultSet rows
+				while(result.next()){
+					//Put a row into object
+					c.setCustomerId(result.getInt("customerId"));
+					c.setFirstName(result.getString("firstName"));
+					c.setLastName(result.getString("lastName"));
+					c.setPhoneNumber(result.getString("phoneNumber"));
+					c.setEmail(result.getString("email"));
+					
+					//Insert object into list
+					list.add(c);
 				}
 			}
 		}
 		catch(SQLException e) {
 			System.out.println(e);
 		}
+		
+		return list;
 	}
 	
-	//This method displays the entire customers table 
+	//This method returns list of Customer table 
 	//by ascending last name, then by first name
-	public static void getTableAscLastName(Connection conn) {
+	public static ArrayList<Customer> getTableAscLastName() {
+		ArrayList<Customer> list = new ArrayList<Customer>();
 		try {
+			Connection conn = connect();
 			Statement statement = conn.createStatement();
 			
 			boolean hasResult = statement.execute("SELECT * FROM customers ORDER BY lastName, firstName ASC");
 			
 			if(hasResult == true) {
 				ResultSet result = statement.getResultSet();
-				ResultSetMetaData meta = result.getMetaData();
+				Customer c = new Customer();
 				
-				//Find number of columns in table
-				int columnCount = meta.getColumnCount();
-				
-				//use loop to print column names
-				for(int i = 1; i <= columnCount; i++) {
-					//print out column names (later can give labels)
-					System.out.printf("%-15s", meta.getColumnLabel(i));
-				}
-				System.out.println();
-				
-				//print out the table
-				while(result.next()) {
-					System.out.printf("%-15d%-15s%-15s%-15s%-15s%n",
-							result.getInt("customerId"), result.getString("firstName"),
-							result.getString("lastName"), result.getString("phoneNumber"),
-							result.getString("email"));
+				//Use loop to go through ResultSet rows
+				while(result.next()){
+					//Put a row into object
+					c.setCustomerId(result.getInt("customerId"));
+					c.setFirstName(result.getString("firstName"));
+					c.setLastName(result.getString("lastName"));
+					c.setPhoneNumber(result.getString("phoneNumber"));
+					c.setEmail(result.getString("email"));
+					
+					//Insert object into list
+					list.add(c);
 				}
 			}
 		}
 		catch(SQLException e) {
 			System.out.println(e);
 		}
+		
+		return list;
 	}
 	
 	//This method returns list of Customer obj in order of entry
-	public static void getTable() {
+	public static ArrayList<Customer> getTable() {
+		ArrayList<Customer> list = new ArrayList<Customer>();
 		try {
 			Connection conn = connect();
 			Statement statement = conn.createStatement();
@@ -518,14 +554,21 @@ public class Customer {
 			
 			if(hasResult == true) {
 				ResultSet result = statement.getResultSet();
-				ArrayList<Customer> list = new ArrayList<Customer>();
 				Customer c = new Customer();
 				
+				//Use loop to go through ResultSet rows
 				while(result.next()){
-					c.setCustomeresult.getInt("customerId"), result.getString("firstName"),
-					result.getString("lastName"), result.getString("phoneNumber"),
-					result.getString("email"));
+					//Put a row into object
+					c.setCustomerId(result.getInt("customerId"));
+					c.setFirstName(result.getString("firstName"));
+					c.setLastName(result.getString("lastName"));
+					c.setPhoneNumber(result.getString("phoneNumber"));
+					c.setEmail(result.getString("email"));
+					
+					//Insert object into list
+					list.add(c);
 				}
+				
 				//ResultSetMetaData meta = result.getMetaData();
 			/* Edit: Instead put table info into list and return list
 				//Find number of columns in table
@@ -551,25 +594,9 @@ public class Customer {
 		catch(SQLException e) {
 			System.out.println(e);
 		}
-	}
-	
-	/*
-	public static int getCustomerId(Connection conn) {
 		
+		return list;
 	}
-	
-	public static String getName() {
-		
-	}
-	
-	public static String getPhoneNumber() {
-		
-	}
-	
-	public static String getEmail() {
-		
-	}
-	*/
 	
 //******DATABASE CONNECT METHOD******
 	//This method creates a connection to the database
