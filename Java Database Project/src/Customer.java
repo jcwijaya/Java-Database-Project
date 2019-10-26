@@ -7,6 +7,7 @@
 import java.sql.*;
 import java.util.Scanner;
 import java.util.Random;
+import java.util.ArrayList;
 
 //This file contains the Customer class
 public class Customer {
@@ -16,7 +17,48 @@ public class Customer {
 	private String phoneNumber;	
 	private String email;
 	
-//******DATABASE INSERT METHODS******
+//******INSTANCE METHODS******
+	public void setCustomerId(int id) {
+		customerId = id;
+	}
+	
+	public int getCustomerId() {
+		return customerId;
+	}
+	
+	public void setFirstName(String first) {
+		firstName = first;
+	}
+	
+	public String getFirstName() {
+		return firstName;
+	}
+	
+	public void setLastName(String last) {
+		lastName = last;
+	}
+	
+	public String getLastName() {
+		return lastName;
+	}
+	
+	public void setPhoneNumber(String number) {
+		phoneNumber = number;
+	}
+	
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+	
+	public void setEmail(String emailAddress) {
+		email = emailAddress;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+//******MISC METHODS******
 	//This method asks the user for their info and assigns
 	//the info to data fields. Then it inserts into database
 	public void inputCustomerInfo(Connection conn) {
@@ -97,16 +139,36 @@ public class Customer {
 		 
 	}
 	
-//******DATABASE SET METHODS******
+//******DATABASE UPDATE & INSERT METHODS******
 	/*These methods find the customer record by given customerId
 	 * and update the data fields if the record is found 
 	 * Need to add input validation!
 	 */
 	
-	public static void setCustomerId(Connection conn, int oldId, int newId) {
+	//Inserts the data fields of this object into database
+	public void insert() {
 		try {
+			Connection conn = connect();
+			PreparedStatement stmt = conn.prepareStatement("INSERT INTO customers " +
+			"(customerId, firstName, lastName, phoneNumber, email) VALUES(?, ?, ?, ?, ?);");
+			stmt.setInt(1, customerId);
+			stmt.setString(2, firstName);
+			stmt.setString(3, lastName);
+			stmt.setString(4, phoneNumber);
+			stmt.setString(5, email); 
+				
+			stmt.executeUpdate();
+			}
+		catch(SQLException exception) {
+			System.out.println(exception);
+		}
+	}
+	
+	public static void updateCustomerId(int oldId, int newId) {
+		try {
+			Connection conn = connect();
 			//Search for customer record, if successful, update it
-			if(hasCustomerId(conn, oldId) == true) {
+			if(hasCustomerId(oldId) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE customers SET customerId = ? WHERE customerId = ?");
 				stmt.setInt(1, newId);
 				stmt.setInt(2, oldId);
@@ -123,10 +185,11 @@ public class Customer {
 		}
 	}
 	
-	public static void setName(Connection conn, int id, String first, String last) {
+	public static void updateName(int id, String first, String last) {
 		try {
+			Connection conn = connect();
 			//Search for customer record, if successful, update it
-			if(hasCustomerId(conn, id) == true) {
+			if(hasCustomerId(id) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE customers SET firstName = ?, lastName = ? WHERE customerId = ?");
 				stmt.setString(1, first);
 				stmt.setString(2, last);
@@ -143,10 +206,11 @@ public class Customer {
 		}
 	}
 	
-	public static void setPhoneNumber(Connection conn, int id, String number) {
+	public static void updatePhoneNumber(int id, String number) {
 		try {
+			Connection conn = connect();
 			//Search for customer record, if successful, update it
-			if(hasCustomerId(conn, id) == true) {
+			if(hasCustomerId(id) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE customers SET phoneNumber = ? WHERE customerId = ?");
 				stmt.setString(1, number);
 				stmt.setInt(2, id);
@@ -162,10 +226,11 @@ public class Customer {
 		}
 	}
 	
-	public static void setEmail(Connection conn, int id, String emailAddress) {
+	public static void updateEmail(int id, String emailAddress) {
 		try {
+			Connection conn = connect();
 			//Search for customer record, if successful, update it
-			if(hasCustomerId(conn, id) == true) {
+			if(hasCustomerId(id) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE customers SET email = ? WHERE customerId = ?");
 				stmt.setString(1, emailAddress);
 				stmt.setInt(2, id);
@@ -185,8 +250,9 @@ public class Customer {
 	//These methods check whether the given data field is found in the customers table
 	//and return a boolean value
 	
-	public static boolean hasCustomerId(Connection conn, int id) {
+	public static boolean hasCustomerId(int id) {
 		try {
+			Connection conn = connect();
 			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers WHERE customerId = ?");
 			preparedStmt.setInt(1, id);
 			
@@ -201,8 +267,9 @@ public class Customer {
 			}
 	}
 	
-	public static boolean hasName(Connection conn, String first, String last) {
+	public static boolean hasName(String first, String last) {
 		try {
+			Connection conn = connect();
 			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers WHERE firstName = ? AND lastName = ?");
 			preparedStmt.setString(1, first);
 			preparedStmt.setString(2, last);
@@ -216,8 +283,9 @@ public class Customer {
 		}
 	}
 	
-	public static boolean hasPhoneNumber(Connection conn, String number) {
+	public static boolean hasPhoneNumber(String number) {
 		try {
+			Connection conn = connect();
 			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where phoneNumber = ?");
 			preparedStmt.setString(1, number);
 			
@@ -230,8 +298,9 @@ public class Customer {
 		}
 	}
 	
-	public static boolean hasEmail(Connection conn, String emailAddress) {
+	public static boolean hasEmail(String emailAddress) {
 		try {
+			Connection conn = connect();
 			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where email = ?");
 			preparedStmt.setString(1, emailAddress);
 			
@@ -247,10 +316,11 @@ public class Customer {
 //*****DATABASE SEARCH METHODS*******
 	//This method searches the database for a customer with
 	//the passed in customerId
-	public static void searchCustomerId(Connection conn, int id) {
+	public static void searchCustomerId(int id) {
 		int count = 0;
 		
 		try {
+		Connection conn = connect();
 		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where customerId = ?");
 		preparedStmt.setInt(1, id);
 		
@@ -277,10 +347,11 @@ public class Customer {
 	
 	//This method searches for customers with a first and last name
 	//matching the passed in parameters.
-	public static void searchName(Connection conn, String first, String last) {
+	public static void searchName(String first, String last) {
 		int count = 0;
 		
 		try {
+			Connection conn = connect();
 			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where firstName = ? and lastName = ?");
 			preparedStmt.setString(1, first);
 			preparedStmt.setString(2, last);
@@ -306,10 +377,11 @@ public class Customer {
 	
 	//This method searches for customers with a phone number
 	//matching the passed in number
-	public static void searchPhoneNumber(Connection conn, String number) {
+	public static void searchPhoneNumber(String number) {
 		int count = 0;
 		
 		try {
+			Connection conn = connect();
 			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where phoneNumber = ?");
 			preparedStmt.setString(1, number);
 			
@@ -335,10 +407,11 @@ public class Customer {
 	
 	//This method searches for customers with an email
 	//matching the passed in emailAdress
-	public static void searchEmail(Connection conn, String emailAddress) {
+	public static void searchEmail(String emailAddress) {
 		int count = 0;
 		
 		try {
+			Connection conn = connect();
 			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where email = ?");
 			preparedStmt.setString(1, emailAddress);
 			
@@ -435,18 +508,26 @@ public class Customer {
 		}
 	}
 	
-	//This method prints out entire customers table in order of entry
-	//Takes in a Connection
-	public static void getTable(Connection conn) {
+	//This method returns list of Customer obj in order of entry
+	public static void getTable() {
 		try {
+			Connection conn = connect();
 			Statement statement = conn.createStatement();
 			
 			boolean hasResult = statement.execute("SELECT * FROM customers");
 			
 			if(hasResult == true) {
 				ResultSet result = statement.getResultSet();
-				ResultSetMetaData meta = result.getMetaData();
+				ArrayList<Customer> list = new ArrayList<Customer>();
+				Customer c = new Customer();
 				
+				while(result.next()){
+					c.setCustomeresult.getInt("customerId"), result.getString("firstName"),
+					result.getString("lastName"), result.getString("phoneNumber"),
+					result.getString("email"));
+				}
+				//ResultSetMetaData meta = result.getMetaData();
+			/* Edit: Instead put table info into list and return list
 				//Find number of columns in table
 				int columnCount = meta.getColumnCount();
 				
@@ -464,6 +545,7 @@ public class Customer {
 							result.getString("lastName"), result.getString("phoneNumber"),
 							result.getString("email"));
 				}
+			*/
 			}
 		}
 		catch(SQLException e) {
@@ -489,7 +571,7 @@ public class Customer {
 	}
 	*/
 	
-//******DATABASE CONNECT & SAVE METHODS******
+//******DATABASE CONNECT METHOD******
 	//This method creates a connection to the database
 	//and returns a Connection object
 	public static Connection connect() {
