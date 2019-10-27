@@ -25,7 +25,7 @@ public class TestCustomer{
 					list.get(i).getCustomerId(), list.get(i).getFirstName(), list.get(i).getLastName(), 
 					list.get(i).getPhoneNumber(), list.get(i).getEmail());
 			}
-			
+			/*
 			Scanner input = new Scanner(System.in);
 			System.out.print("Enter ID to change email: ");
 			int oldId = input.nextInt();
@@ -43,11 +43,13 @@ public class TestCustomer{
 			input.close();
 			*/
 			
-			//Insert new records into employees table
+			
+			//Insert new records into table
+			
 			Scanner input = new Scanner(System.in);
 			
-			Employee e = new Employee();
-			e.setEmployeeId(Employee.createId());
+			Customer e = new Customer();
+			e.setCustomerId(Customer.createId());
 			System.out.print("First Name: ");
 			e.setFirstName(input.next());
 			System.out.print("Last Name: ");
@@ -56,10 +58,22 @@ public class TestCustomer{
 			e.setPhoneNumber(input.next());
 			System.out.print("Email: ");
 			e.setEmail(input.next());
+			//System.out.print("Password: ");
+			//e.setPassword(input.next());
+			e.insert();
 			
+			ArrayList<Customer> list = new ArrayList<Customer>();
+			list = Customer.getTableAscLastName();
+			System.out.println(list.size());
+			//print table
+			for(int i=0; i < list.size(); i++){
+				System.out.printf("%-15d%-15s%-15s%-15s%-15s%n",
+					list.get(i).getCustomerId(), list.get(i).getFirstName(), list.get(i).getLastName(), 
+					list.get(i).getPhoneNumber(), list.get(i).getEmail());
+			}
+			/*
 			ArrayList<Employee> list = new ArrayList<Employee>();
 			list = Employee.getTable();
-			System.out.println(list.size());
 			//print table
 			for(int i=0; i < list.size(); i++){
 				System.out.printf("%-15d%-15s%-15s%-15s%-15s%-15s%n",
@@ -69,5 +83,6 @@ public class TestCustomer{
 			System.out.println("Program end");
 			input.close();
 			return;
+			*/
 		}
 }

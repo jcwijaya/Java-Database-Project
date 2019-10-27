@@ -215,13 +215,13 @@ public class Employee {
 		}
 	}
 	
-	public static void updatePassword(int id, int newPass) {
+	public static void updatePassword(int id, String newPass) {
 		try {
 			Connection conn = connect();
 			//Search for employee record, if successful, update it
 			if(hasEmployeeId(id) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET password = ? WHERE employeeId = ?");
-				stmt.setInt(1, newPass);
+				stmt.setString(1, newPass);
 				stmt.setInt(2, id);
 				
 				stmt.executeUpdate();
