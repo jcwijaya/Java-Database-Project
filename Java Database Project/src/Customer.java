@@ -4,6 +4,8 @@
  * Assignment: WebMart database management system
  * This file contains the Employee class 
  */
+
+
 import java.sql.*;
 import java.util.Scanner;
 import java.util.Random;
@@ -170,7 +172,7 @@ public class Customer {
 			"(customerId, firstName, lastName, phoneNumber, email) VALUES(?, ?, ?, ?, ?);");
 			stmt.setInt(1, customerId);
 			stmt.setString(2, firstName);
-			stmt.setString(3, lastName);
+  			stmt.setString(3, lastName);
 			stmt.setString(4, phoneNumber);
 			stmt.setString(5, email); 
 				
