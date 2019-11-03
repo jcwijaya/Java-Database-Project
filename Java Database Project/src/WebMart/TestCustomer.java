@@ -46,7 +46,7 @@ public class TestCustomer{
 			
 			
 			//Insert new records into table
-			
+			/*
 			Scanner input = new Scanner(System.in);
 			
 			Customer e = new Customer();
@@ -72,7 +72,7 @@ public class TestCustomer{
 					list.get(i).getCustomerId(), list.get(i).getFirstName(), list.get(i).getLastName(), 
 					list.get(i).getPhoneNumber(), list.get(i).getEmail());
 			}
-			/*
+			*/
 			ArrayList<Employee> list = new ArrayList<Employee>();
 			list = Employee.getTable();
 			//print table
@@ -82,8 +82,8 @@ public class TestCustomer{
 					list.get(i).getPhoneNumber(), list.get(i).getEmail());
 			}
 			System.out.println("Program end");
-			input.close();
+			//input.close();
 			return;
-			*/
+			
 		}
 }

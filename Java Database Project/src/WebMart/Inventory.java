@@ -54,7 +54,7 @@ public class Inventory {
 				//Use loop to keep generating id's until you get a unique one
 				while(match) {
 					match = false;
-					id = (int)(rand.nextDouble() * 1000000 + 100000);
+					id = (int)(rand.nextDouble() * 100000 + 100000);
 					ResultSet result = statement.executeQuery("SELECT * FROM inventory");
 								
 					//Use loop to compare id with ones in database

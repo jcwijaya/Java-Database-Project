@@ -16,7 +16,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Jessica Wijaya/Downloads/JavaFX/javafx-sdk-11.0.2/lib/javafx.fxml.jar">
+	<classpathentry kind="lib" path="C:/Users/Jessica Wijaya/Downloads/JavaFX/javafx-sdk-11.0.2/lib/javafx.fxml.jar" sourcepath="C:/Users/Jessica Wijaya/Downloads/JavaFX/javafx-sdk-11.0.2/lib/javafx.fxml.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
