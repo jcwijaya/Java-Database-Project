@@ -1,12 +1,13 @@
 module Test {
-	requires javafx.base;
-	requires javafx.controls;
-	requires javafx.fxml;
-	requires javafx.graphics;
-	requires javafx.media;
-	requires javafx.swing;
-	requires javafx.swt;
-	requires javafx.web;
-	requires java.sql;
+	requires transitive javafx.base;
+	requires transitive javafx.controls;
+	requires transitive javafx.fxml;
+	requires transitive javafx.graphics;
+	requires transitive javafx.media;
+	requires transitive javafx.swing;
+	requires transitive javafx.swt;
+	requires transitive javafx.web;
+	requires transitive java.sql;
+	opens WebMart;
 	exports WebMart;
 }

@@ -6,6 +6,8 @@ package WebMart;
  * This file contains the Inventory class 
  */
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.*;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -28,7 +30,7 @@ public class Inventory {
 		stock = 0;
 	}
 	
-	public Inventory(long code, String aCategory, String name, Double aPrice, int aStock) {
+	public Inventory(Long code, String aCategory, String name, Double aPrice, int aStock) {
 		productCode = code;
 		category = aCategory;
 		productName = name;
@@ -39,6 +41,48 @@ public class Inventory {
 //******INSTANCE METHODS******
 	
 //******MISC METHODS******
+	public static ArrayList<Inventory> ReadFromFile() throws FileNotFoundException {
+		File file = new File("items");
+		Scanner scanner = new Scanner(file);
+		ArrayList<Inventory> list = new ArrayList<Inventory>();
+		
+		String strProductCode;
+		String category;
+		String productName;
+		String strPrice;
+		String strStock;
+		
+		double price;
+		int stock;
+		long productCode;
+		
+		while(scanner.hasNextLine())
+		{
+			scanner.useDelimiter(";");
+			
+			strProductCode = scanner.next();
+			productCode = Long.parseLong(strProductCode.trim());
+			
+			category = scanner.next();
+			
+			productName = scanner.next();
+			
+			strPrice = scanner.next();
+			price = Double.parseDouble(strPrice.trim());
+			
+			strStock = scanner.next();
+			stock = Integer.parseInt(strStock.trim());
+			
+			
+			list.add(new Inventory(productCode, category.trim(), productName.trim(), price, stock));
+		}
+		
+		scanner.close();
+		
+		return list;
+	}
+	
+	
 	//This method returns a unique id number for each new Inventory item
 	public static int createId() {
 		//Randomly generate a 6 digit id

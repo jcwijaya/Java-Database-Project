@@ -1,4 +1,6 @@
 package WebMart;
+import java.io.File;
+import java.io.FileNotFoundException;
 /*
  * Jessica Wijaya
  * Course: CSCI 3033
@@ -10,10 +12,56 @@ package WebMart;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import java.util.Scanner;
+
 //This program tests the Customer class.
 public class TestCustomer{
+	public static void main(String[] args) throws FileNotFoundException {
+		File file = new File("items");
+		Scanner scanner = new Scanner(file);
+		
+		String strProductCode;
+		String category;
+		String productName;
+		String strPrice;
+		String strStock;
+		
+		double price;
+		int stock;
+		Long productCode;
+		
+		
+		
+		while(scanner.hasNext())
+		{
+			scanner.useDelimiter(";");
+			
+			strProductCode = scanner.next();
+			productCode = Long.parseLong(strProductCode.trim());
+			
+			category = scanner.next();
+			
+			productName = scanner.next();
+			
+			strPrice = scanner.next();
+			price = Double.parseDouble(strPrice.trim());
+			
+			strStock = scanner.next();
+			stock = Integer.parseInt(strStock.trim());
+			
+			System.out.println(productCode);
+			System.out.println(category.trim());
+			System.out.println(productName.trim());
+			System.out.println(price);
+			System.out.println(stock);
+			System.out.println();
+			
+		}
+
+	
+	
 	//Main method
-		public static void main(String[] args) {
+		//public static void main(String[] args) {
 			//Display customer table by ascending last name and enter
 			//in an ID to change email
 			/*
@@ -73,6 +121,7 @@ public class TestCustomer{
 					list.get(i).getPhoneNumber(), list.get(i).getEmail());
 			}
 			*/
+			/*
 			ArrayList<Employee> list = new ArrayList<Employee>();
 			list = Employee.getTable();
 			//print table
@@ -82,7 +131,20 @@ public class TestCustomer{
 					list.get(i).getPhoneNumber(), list.get(i).getEmail());
 			}
 			System.out.println("Program end");
+			*/
 			//input.close();
+			/*
+			try {
+				ArrayList<Inventory> list = Inventory.ReadFromFile();
+				
+				for( int i = 0; i<list.size(); i++) {
+					list.get(i).insert();
+				}
+				
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			*/
 			return;
 			
 		}
