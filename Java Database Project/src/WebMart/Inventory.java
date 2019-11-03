@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Inventory {
-	private int productCode;
+	private long productCode;
 	private String category;
 	private String productName;
 	private double price;
@@ -28,7 +28,7 @@ public class Inventory {
 		stock = 0;
 	}
 	
-	public Inventory(int code, String aCategory, String name, Double aPrice, int aStock) {
+	public Inventory(long code, String aCategory, String name, Double aPrice, int aStock) {
 		productCode = code;
 		category = aCategory;
 		productName = name;
@@ -81,7 +81,7 @@ public class Inventory {
 			Connection conn = connect();
 			PreparedStatement stmt = conn.prepareStatement("INSERT INTO inventory " +
 			"(productCode, category, productName, price, stock) VALUES(?, ?, ?, ?, ?);");
-			stmt.setInt(1, productCode);
+			stmt.setLong(1, productCode);
 			stmt.setString(2, category);
 			stmt.setString(3, productName);
 			stmt.setDouble(4, price);
@@ -95,14 +95,14 @@ public class Inventory {
 	}	
 
 //Methods to update the table
-	public static void updateProductCode(int oldCode, int newCode) {
+	public static void updateProductCode(Long oldCode, Long newCode) {
 		try {
 			Connection conn = connect();
 			//Search for Inventory record, if successful, update it
 			if(hasProductCode(oldCode) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE inventory SET productCode = ? WHERE productCode = ?");
-				stmt.setInt(1, newCode);
-				stmt.setInt(2, oldCode);
+				stmt.setLong(1, newCode);
+				stmt.setLong(2, oldCode);
 					
 				stmt.executeUpdate();
 			}
@@ -115,14 +115,14 @@ public class Inventory {
 			System.out.println(e);
 		}
 	}
-	public static void updateCategory(int code, String newCat) {
+	public static void updateCategory(Long code, String newCat) {
 		try {
 			Connection conn = connect();
 			//Search for Inventory record, if successful, update it
 			if(hasProductCode(code) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE inventory SET category = ? WHERE productCode = ?");
 				stmt.setString(1, newCat);
-				stmt.setInt(2, code);
+				stmt.setLong(2, code);
 				
 				stmt.executeUpdate();
 			}
@@ -135,14 +135,14 @@ public class Inventory {
 			System.out.println(e);
 		}
 	}
-	public static void updateProductName(int code, String newName) {
+	public static void updateProductName(Long code, String newName) {
 		try {
 			Connection conn = connect();
 			//Search for Inventory record, if successful, update it
 			if(hasProductCode(code) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE inventory SET productName = ? WHERE productCode = ?");
 				stmt.setString(1, newName);
-				stmt.setInt(2, code);
+				stmt.setLong(2, code);
 				
 				stmt.executeUpdate();
 			}
@@ -156,14 +156,14 @@ public class Inventory {
 		}
 	}
 	
-	public static void updatePrice(int code, String newPrice) {
+	public static void updatePrice(Long code, String newPrice) {
 		try {
 			Connection conn = connect();
 			//Search for Inventory record, if successful, update it
 			if(hasProductCode(code) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE inventory SET price = ? WHERE productCode = ?");
 				stmt.setString(1, newPrice);
-				stmt.setInt(2, code);
+				stmt.setLong(2, code);
 				
 				stmt.executeUpdate();
 			}
@@ -176,14 +176,14 @@ public class Inventory {
 			System.out.println(e);
 		}
 	}
-	public static void updateStock(int code, String newStock) {
+	public static void updateStock(Long code, String newStock) {
 		try {
 			Connection conn = connect();
 			//Search for Inventory record, if successful, update it
 			if(hasProductCode(code) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE inventory SET stock = ? WHERE productCode = ?");
 				stmt.setString(1, newStock);
-				stmt.setInt(2, code);
+				stmt.setLong(2, code);
 				
 				stmt.executeUpdate();
 			}
@@ -214,7 +214,7 @@ public class Inventory {
 				//Use loop to go through ResultSet rows
 				while(result.next()){
 					//Create and insert object into list
-					list.add(new Inventory(result.getInt("productCode"), result.getString("category"), result.getString("productName"), 
+					list.add(new Inventory(result.getLong("productCode"), result.getString("category"), result.getString("productName"), 
 							result.getDouble("price"), result.getInt("stock")));
 				}
 				
@@ -242,7 +242,7 @@ public class Inventory {
 				//Use loop to go through ResultSet rows
 				while(result.next()){
 					//Create and insert object into list
-					list.add(new Inventory(result.getInt("productCode"), result.getString("category"), result.getString("productName"), 
+					list.add(new Inventory(result.getLong("productCode"), result.getString("category"), result.getString("productName"), 
 							result.getDouble("price"), result.getInt("stock")));
 				}
 			}
@@ -269,7 +269,7 @@ public class Inventory {
 				//Use loop to go through ResultSet rows
 				while(result.next()){
 					//Create and insert object into list
-					list.add(new Inventory(result.getInt("productCode"), result.getString("category"), result.getString("productName"), 
+					list.add(new Inventory(result.getLong("productCode"), result.getString("category"), result.getString("productName"), 
 							result.getDouble("price"), result.getInt("stock")));
 				}
 			}
@@ -284,12 +284,12 @@ public class Inventory {
 //******DATABASE SEARCH METHODS******	
 	//These methods take in a data field as parameter
 	// and returns ArrayList of Inventory objects that match the parameter
-	public static ArrayList<Inventory> searchProductCode(int code) {
+	public static ArrayList<Inventory> searchProductCode(Long code) {
 		ArrayList<Inventory> list = new ArrayList<Inventory>();
 		try {
 		Connection conn = connect();
 		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM inventory where productCode = ?");
-		preparedStmt.setInt(1, code);
+		preparedStmt.setLong(1, code);
 			
 		ResultSet result = preparedStmt.executeQuery();
 			
@@ -297,7 +297,7 @@ public class Inventory {
 		//Use loop to go through ResultSet
 		while(result.next()){
 			//Create and insert object into list
-			list.add(new Inventory(result.getInt("productCode"), result.getString("category"), result.getString("productName"), 
+			list.add(new Inventory(result.getLong("productCode"), result.getString("category"), result.getString("productName"), 
 					result.getDouble("price"), result.getInt("stock")));
 		}
 			
@@ -308,19 +308,19 @@ public class Inventory {
 		return list;
 	}
 	
-	public static ArrayList<Inventory> searchCategory(int aCat) {
+	public static ArrayList<Inventory> searchCategory(String aCat) {
 		ArrayList<Inventory> list = new ArrayList<Inventory>();
 		try {
 		Connection conn = connect();
 		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM inventory where category = ?");
-		preparedStmt.setInt(1, aCat);
+		preparedStmt.setString(1, aCat);
 			
 		ResultSet result = preparedStmt.executeQuery();
 			
 		//Use loop to go through ResultSet
 		while(result.next()){
 			//Create and insert object into list
-			list.add(new Inventory(result.getInt("productCode"), result.getString("category"), result.getString("productName"), 
+			list.add(new Inventory(result.getLong("productCode"), result.getString("category"), result.getString("productName"), 
 					result.getDouble("price"), result.getInt("stock")));
 		}
 			
@@ -331,19 +331,19 @@ public class Inventory {
 		return list;
 	}
 	
-	public static ArrayList<Inventory> searchProductName(int name) {
+	public static ArrayList<Inventory> searchProductName(String name) {
 		ArrayList<Inventory> list = new ArrayList<Inventory>();
 		try {
 		Connection conn = connect();
 		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM inventory where productName = ?");
-		preparedStmt.setInt(1, name);
+		preparedStmt.setString(1, name);
 			
 		ResultSet result = preparedStmt.executeQuery();
 			
 		//Use loop to go through ResultSet
 		while(result.next()){
 			//Create and insert object into list
-			list.add(new Inventory(result.getInt("productCode"), result.getString("category"), result.getString("productName"), 
+			list.add(new Inventory(result.getLong("productCode"), result.getString("category"), result.getString("productName"), 
 					result.getDouble("price"), result.getInt("stock")));
 		}
 			
@@ -367,7 +367,7 @@ public class Inventory {
 		//Use loop to go through ResultSet
 		while(result.next()){
 			//Create and insert object into list
-			list.add(new Inventory(result.getInt("productCode"), result.getString("category"), result.getString("productName"), 
+			list.add(new Inventory(result.getLong("productCode"), result.getString("category"), result.getString("productName"), 
 					result.getDouble("price"), result.getInt("stock")));
 		}
 			
@@ -392,7 +392,7 @@ public class Inventory {
 		//Use loop to go through ResultSet
 		while(result.next()){
 			//Create and insert object into list
-			list.add(new Inventory(result.getInt("productCode"), result.getString("category"), result.getString("productName"), 
+			list.add(new Inventory(result.getLong("productCode"), result.getString("category"), result.getString("productName"), 
 					result.getDouble("price"), result.getInt("stock")));
 		}
 			
@@ -404,11 +404,11 @@ public class Inventory {
 	}
 //******DATABASE BOOLEAN HAS METHODS******
 //Methods that show whether something can be found in the table
-	public static boolean hasProductCode(int code) {
+	public static boolean hasProductCode(long code) {
 		try {
 			Connection conn = connect();
 			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM inventory where productCode = ?");
-			preparedStmt.setInt(1, code);
+			preparedStmt.setLong(1, code);
 				
 			ResultSet result = preparedStmt.executeQuery();
 				
