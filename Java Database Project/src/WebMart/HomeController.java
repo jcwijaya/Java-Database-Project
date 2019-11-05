@@ -42,7 +42,7 @@ public class HomeController {
 			customerTable.setItems(customerList);
 		}
 		*/
-		
+	
 
 		public void branchtest() {
 			System.out.println("hello world");
@@ -52,4 +52,5 @@ public class HomeController {
 		public void testmethod() {
   		System.out.print("hello");
 		}
+
 }
