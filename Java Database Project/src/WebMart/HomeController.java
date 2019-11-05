@@ -43,7 +43,13 @@ public class HomeController {
 		}
 		*/
 		
+
 		public void branchtest() {
 			System.out.println("hello world");
+}
+  
+		//Testing here
+		public void testmethod() {
+  		System.out.print("hello");
 		}
 }
