@@ -16,9 +16,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
-public class MainController implements Initializable{
-	//Login screen
+public class MainController implements Initializable {
 	
+	//Login screen
 	public TextField usernameText;
 	public PasswordField passwordText;
 	public Label message;
@@ -60,9 +60,6 @@ public class MainController implements Initializable{
 	@FXML TableColumn<Inventory, Double> price;
 	@FXML TableColumn<Inventory, Integer> stock;
 	
-	//Employees tab
-	
-	//Inventory tab
 	
 	/*This method will use the hasLogin(int id, String pass) method of Employee class to check
 	whether the username and password are found in the database. If it returns
