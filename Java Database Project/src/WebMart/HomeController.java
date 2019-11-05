@@ -43,8 +43,5 @@ public class HomeController {
 		}
 		*/
 		
-		//Testing here
-		public void testmethod() {
-			System.out.print("hello");
-		}
+		
 }
