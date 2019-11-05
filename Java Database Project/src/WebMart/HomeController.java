@@ -42,4 +42,8 @@ public class HomeController {
 			customerTable.setItems(customerList);
 		}
 		*/
+		
+		public void branchtest() {
+			System.out.println("hello world");
+		}
 }
