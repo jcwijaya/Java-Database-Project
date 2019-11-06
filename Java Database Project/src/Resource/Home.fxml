@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -15,7 +16,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                      <Button fx:id="updateCustomer" layoutX="121.0" layoutY="272.0" mnemonicParsing="false" text="Update" />
+                      <Button fx:id="updateCustomer" layoutX="72.0" layoutY="399.0" mnemonicParsing="false" onAction="#submitCustomers" text="Submit to Database" />
                         <TableView fx:id="customerTable" layoutX="244.0" layoutY="-60.0" prefHeight="371.0" prefWidth="456.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
                           <columns>
                             <TableColumn fx:id="customerId" prefWidth="75.0" text="ID" />
@@ -25,7 +26,8 @@
                               <TableColumn fx:id="customerEmail" onEditCommit="#changeEmailCustomer" prefWidth="128.0" text="Email" />
                           </columns>
                         </TableView>
-                        <Button fx:id="insertCustomer" layoutX="131.0" layoutY="325.0" mnemonicParsing="false" text="Insert" />
+                        <Button fx:id="insertCustomer" layoutX="98.0" layoutY="200.0" mnemonicParsing="false" text="Insert" />
+                        <Label fx:id="updateLbl" layoutX="51.0" layoutY="424.0" prefHeight="35.0" prefWidth="161.0" textAlignment="CENTER" />
                      </children>
                   </AnchorPane>
             </content>
