@@ -16,49 +16,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
-public class MainController implements Initializable {
+public class MainController {
 	
 	//Login screen
-	public TextField usernameText;
-	public PasswordField passwordText;
-	public Label message;
-	public Button loginBtn;
-	
-	
-	//Home screen
-	@FXML public TabPane homeTabs;
-	@FXML public Tab customersTab;
-	@FXML public Tab employeesTab;
-	@FXML public Tab inventoryTab;
-	
-	//Customers tab
-	@FXML public Button updateCustomer;
-	@FXML public Button insertCustomer;
-	
-	//Make TableView for Customer class
-	@FXML TableView<Customer> customerTable;
-	@FXML TableColumn<Customer, Integer> customerId;
-	@FXML TableColumn<Customer, String> customerFirst;
-	@FXML TableColumn<Customer, String> customerLast;
-	@FXML TableColumn<Customer, String> customerPhone;
-	@FXML TableColumn<Customer, String> customerEmail;
-	
-	//Make TableView for Employee class
-	@FXML TableView<Employee> employeeTable;
-	@FXML TableColumn<Employee, Integer> employeeId;
-	@FXML TableColumn<Employee, String> password;
-	@FXML TableColumn<Employee, String> employeeFirst;
-	@FXML TableColumn<Employee, String> employeeLast;
-	@FXML TableColumn<Employee, String> employeePhone;
-	@FXML TableColumn<Employee, String> employeeEmail;
-	
-	//Make TableView for Inventory class
-	@FXML TableView<Inventory> inventoryTable;
-	@FXML TableColumn<Inventory, Long> productCode;
-	@FXML TableColumn<Inventory, String> category;
-	@FXML TableColumn<Inventory, String> name;
-	@FXML TableColumn<Inventory, Double> price;
-	@FXML TableColumn<Inventory, Integer> stock;
+	@FXML public TextField usernameText;
+	@FXML public PasswordField passwordText;
+	@FXML public Label message;
+	@FXML public Button loginBtn;
 	
 	
 	/*This method will use the hasLogin(int id, String pass) method of Employee class to check
@@ -83,6 +47,8 @@ public class MainController implements Initializable {
 				homeStage.setTitle("WebMart");
 				homeStage.setScene(homeScene);
 				homeStage.show();
+				Stage loginStage = (Stage) loginBtn.getScene().getWindow();
+				loginStage.close();
 			}
 			else {
 				message.setText("Login Failed.");
@@ -93,40 +59,6 @@ public class MainController implements Initializable {
 		}
 	}
 	
-	//Make ObservableList from getTable method that returns ArrayList
-	public ObservableList<Customer> customerList = FXCollections.observableArrayList(Customer.getTable());
-	public ObservableList<Employee> employeeList = FXCollections.observableArrayList(Employee.getTable());
-	public ObservableList<Inventory> inventoryList = FXCollections.observableArrayList(Inventory.getTable());
-	
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		customerId.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("customerId"));
-		customerFirst.setCellValueFactory(new PropertyValueFactory<Customer, String>("firstName"));
-		customerLast.setCellValueFactory(new PropertyValueFactory<Customer, String>("lastName"));
-		customerPhone.setCellValueFactory(new PropertyValueFactory<Customer, String>("phoneNumber"));
-		customerEmail.setCellValueFactory(new PropertyValueFactory<Customer, String>("email"));
-		
-		customerTable.setItems(customerList);
-		
-		employeeId.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("employeeId"));
-		password.setCellValueFactory(new PropertyValueFactory<Employee, String>("password"));
-		employeeFirst.setCellValueFactory(new PropertyValueFactory<Employee, String>("firstName"));
-		employeeLast.setCellValueFactory(new PropertyValueFactory<Employee, String>("lastName"));
-		employeePhone.setCellValueFactory(new PropertyValueFactory<Employee, String>("phoneNumber"));
-		employeeEmail.setCellValueFactory(new PropertyValueFactory<Employee, String>("email"));
-		
-		employeeTable.setItems(employeeList);
-		
-		productCode.setCellValueFactory(new PropertyValueFactory<Inventory, Long>("productCode"));
-		category.setCellValueFactory(new PropertyValueFactory<Inventory, String>("category"));
-		name.setCellValueFactory(new PropertyValueFactory<Inventory, String>("productName"));
-		price.setCellValueFactory(new PropertyValueFactory<Inventory, Double>("price"));
-		stock.setCellValueFactory(new PropertyValueFactory<Inventory, Integer>("stock"));
-		
-		inventoryTable.setItems(inventoryList);
-		
-	}
-
 	//This function checks if a string only contains digits
 	public boolean isInteger(String aString) {
 		if(aString.trim().isEmpty()) {

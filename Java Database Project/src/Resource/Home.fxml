@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="500" prefWidth="700" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WebMart.MainController">
+<AnchorPane prefHeight="500" prefWidth="700" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WebMart.HomeController">
    <children>
       <TabPane fx:id="homeTabs" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -15,8 +15,8 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                      <Button fx:id="updateCustomer" layoutX="26.0" layoutY="366.0" mnemonicParsing="false" text="Update" />
-                        <TableView fx:id="customerTable" layoutX="199.0" layoutY="-60.0" prefHeight="371.0" prefWidth="501.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+                      <Button fx:id="updateCustomer" layoutX="121.0" layoutY="272.0" mnemonicParsing="false" text="Update" />
+                        <TableView fx:id="customerTable" layoutX="244.0" layoutY="-60.0" prefHeight="371.0" prefWidth="456.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
                           <columns>
                             <TableColumn fx:id="customerId" prefWidth="75.0" text="ID" />
                             <TableColumn fx:id="customerFirst" prefWidth="75.0" text="First Name" />
@@ -25,7 +25,7 @@
                               <TableColumn fx:id="customerEmail" prefWidth="120.0" text="Email" />
                           </columns>
                         </TableView>
-                        <Button fx:id="insertCustomer" layoutX="31.0" layoutY="305.0" mnemonicParsing="false" text="Insert" />
+                        <Button fx:id="insertCustomer" layoutX="131.0" layoutY="325.0" mnemonicParsing="false" text="Insert" />
                      </children>
                   </AnchorPane>
             </content>
@@ -34,7 +34,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="employeeTable" layoutX="387.0" layoutY="235.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+                        <TableView fx:id="employeeTable" layoutX="387.0" layoutY="235.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
                           <columns>
                             <TableColumn fx:id="employeeId" prefWidth="75.0" text="ID" />
                             <TableColumn fx:id="password" prefWidth="75.0" text="Password" />
@@ -51,7 +51,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="inventoryTable" layoutX="439.0" layoutY="235.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+                        <TableView fx:id="inventoryTable" layoutX="439.0" layoutY="235.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
                           <columns>
                             <TableColumn fx:id="productCode" prefWidth="100.0" text="Code" />
                             <TableColumn fx:id="category" prefWidth="75.0" text="Category" />
