@@ -14,6 +14,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 
@@ -26,8 +27,16 @@ public class HomeController implements Initializable {
 		
 		//Customers tab
 		@FXML public Button updateCustomer; //Submits changes to database customers table
-		@FXML public Label updateLbl;
-		@FXML public Button insertCustomer;
+		@FXML public Label updateLbl;	//Displays message is submit is successful
+		
+		//To add new customer
+		@FXML public Button insertCustomer; //Adds a new customer object to customer TableView
+		@FXML public TextField c_firstName; //These textfields will be used to create a new customer
+		@FXML public TextField c_lastName;	//object to be added to customer TableView
+		@FXML public TextField c_phoneNumber;
+		@FXML public TextField c_email;
+		@FXML public Button generateId; //This button calls createId method and displays the ID in a label
+		@FXML public Label generateIdLbl;
 		
 		/*
 		//CustomersTabPane
@@ -260,16 +269,16 @@ public class HomeController implements Initializable {
 			selectedEmployee.setEmail(edittedCell.getNewValue().toString());
 		}
 		
-	/*
-		public void insertCustomer() {
+		public void addCustomer() {
 			Customer customer = new Customer();
+			/*
 			customer.setCustomerId(Customer.createId());
 			customer.setFirstName();
 			customer.setLastName();
 			customer.setPhoneNumber();
 			customer.setEmail();
 			customer.insert();
+			*/
 		}
-	*/
 
 }
