@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -94,11 +95,13 @@ public class HomeController implements Initializable {
 		
 		//Make table editable
 		customerTable.setItems(customerList);
-		/*
 		customerTable.setEditable(true);
-		customerId.setCellFactory(TextFieldTableCell.forTableColumn());
-		*/
+		customerFirst.setCellFactory(TextFieldTableCell.forTableColumn());
+		customerLast.setCellFactory(TextFieldTableCell.forTableColumn());
+		customerPhone.setCellFactory(TextFieldTableCell.forTableColumn());
+		customerEmail.setCellFactory(TextFieldTableCell.forTableColumn());
 		
+		//Initialize Employee Table
 		employeeId.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("employeeId"));
 		password.setCellValueFactory(new PropertyValueFactory<Employee, String>("password"));
 		employeeFirst.setCellValueFactory(new PropertyValueFactory<Employee, String>("firstName"));
@@ -106,8 +109,16 @@ public class HomeController implements Initializable {
 		employeePhone.setCellValueFactory(new PropertyValueFactory<Employee, String>("phoneNumber"));
 		employeeEmail.setCellValueFactory(new PropertyValueFactory<Employee, String>("email"));
 		
+		//Make table editable
 		employeeTable.setItems(employeeList);
+		employeeTable.setEditable(true);
+		password.setCellFactory(TextFieldTableCell.forTableColumn());
+		employeeFirst.setCellFactory(TextFieldTableCell.forTableColumn());
+		employeeLast.setCellFactory(TextFieldTableCell.forTableColumn());
+		employeePhone.setCellFactory(TextFieldTableCell.forTableColumn());
+		employeeEmail.setCellFactory(TextFieldTableCell.forTableColumn());
 		
+		//Initialize Inventory table
 		productCode.setCellValueFactory(new PropertyValueFactory<Inventory, Long>("productCode"));
 		category.setCellValueFactory(new PropertyValueFactory<Inventory, String>("category"));
 		name.setCellValueFactory(new PropertyValueFactory<Inventory, String>("productName"));
@@ -149,6 +160,54 @@ public class HomeController implements Initializable {
 			
 			inventoryTable.setItems(inventoryList);
 		}
+		
+		//These methods are to allow user to double click on a cell
+		//and update its value
+		public void changeFirstNameCustomer(CellEditEvent edittedCell) {
+			Customer selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
+			selectedCustomer.setFirstName(edittedCell.getNewValue().toString());
+		}
+		
+		public void changeLastNameCustomer(CellEditEvent edittedCell) {
+			Customer selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
+			selectedCustomer.setLastName(edittedCell.getNewValue().toString());
+		}
+		
+		public void changePhoneCustomer(CellEditEvent edittedCell) {
+			Customer selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
+			selectedCustomer.setPhoneNumber(edittedCell.getNewValue().toString());
+		}
+		
+		public void changeEmailCustomer(CellEditEvent edittedCell) {
+			Customer selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
+			selectedCustomer.setEmail(edittedCell.getNewValue().toString());
+		}
+		
+		public void changePasswordEmployee(CellEditEvent edittedCell) {
+			Employee selectedEmployee = employeeTable.getSelectionModel().getSelectedItem();
+			selectedEmployee.setPassword(edittedCell.getNewValue().toString());
+		}
+		
+		public void changeFirstNameEmployee(CellEditEvent edittedCell) {
+			Employee selectedEmployee = employeeTable.getSelectionModel().getSelectedItem();
+			selectedEmployee.setFirstName(edittedCell.getNewValue().toString());
+		}
+		
+		public void changeLastNameEmployee(CellEditEvent edittedCell) {
+			Employee selectedEmployee = employeeTable.getSelectionModel().getSelectedItem();
+			selectedEmployee.setLastName(edittedCell.getNewValue().toString());
+		}
+		
+		public void changePhoneEmployee(CellEditEvent edittedCell) {
+			Employee selectedEmployee = employeeTable.getSelectionModel().getSelectedItem();
+			selectedEmployee.setPhoneNumber(edittedCell.getNewValue().toString());
+		}
+		
+		public void changeEmailEmployee(CellEditEvent edittedCell) {
+			Employee selectedEmployee = employeeTable.getSelectionModel().getSelectedItem();
+			selectedEmployee.setEmail(edittedCell.getNewValue().toString());
+		}
+		
 	/*
 		public void insertCustomer() {
 			Customer customer = new Customer();

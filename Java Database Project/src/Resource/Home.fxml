@@ -19,10 +19,10 @@
                         <TableView fx:id="customerTable" layoutX="244.0" layoutY="-60.0" prefHeight="371.0" prefWidth="456.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
                           <columns>
                             <TableColumn fx:id="customerId" prefWidth="75.0" text="ID" />
-                            <TableColumn fx:id="customerFirst" prefWidth="75.0" text="First Name" />
-                              <TableColumn fx:id="customerLast" prefWidth="82.0" text="Last Name" />
-                              <TableColumn fx:id="customerPhone" prefWidth="86.00003051757812" text="Phone" />
-                              <TableColumn fx:id="customerEmail" prefWidth="128.0" text="Email" />
+                            <TableColumn fx:id="customerFirst" onEditCommit="#changeFirstNameCustomer" prefWidth="75.0" text="First Name" />
+                              <TableColumn fx:id="customerLast" onEditCommit="#changeLastNameCustomer" prefWidth="82.0" text="Last Name" />
+                              <TableColumn fx:id="customerPhone" onEditCommit="#changePhoneCustomer" prefWidth="86.00003051757812" text="Phone" />
+                              <TableColumn fx:id="customerEmail" onEditCommit="#changeEmailCustomer" prefWidth="128.0" text="Email" />
                           </columns>
                         </TableView>
                         <Button fx:id="insertCustomer" layoutX="131.0" layoutY="325.0" mnemonicParsing="false" text="Insert" />
@@ -37,11 +37,11 @@
                         <TableView fx:id="employeeTable" layoutX="387.0" layoutY="235.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
                           <columns>
                             <TableColumn fx:id="employeeId" prefWidth="75.0" text="ID" />
-                            <TableColumn fx:id="password" prefWidth="75.0" text="Password" />
-                              <TableColumn fx:id="employeeFirst" prefWidth="75.0" text="First Name" />
-                              <TableColumn fx:id="employeeLast" prefWidth="75.0" text="Last Name" />
-                              <TableColumn fx:id="employeePhone" prefWidth="75.0" text="Phone" />
-                              <TableColumn fx:id="employeeEmail" prefWidth="120.0" text="Email" />
+                            <TableColumn fx:id="password" onEditCommit="#changePasswordEmployee" prefWidth="75.0" text="Password" />
+                              <TableColumn fx:id="employeeFirst" onEditCommit="#changeFirstNameEmployee" prefWidth="75.0" text="First Name" />
+                              <TableColumn fx:id="employeeLast" onEditCommit="#changeLastNameEmployee" prefWidth="75.0" text="Last Name" />
+                              <TableColumn fx:id="employeePhone" onEditCommit="#changePhoneEmployee" prefWidth="75.0" text="Phone" />
+                              <TableColumn fx:id="employeeEmail" onEditCommit="#changeEmailEmployee" prefWidth="120.0" text="Email" />
                           </columns>
                         </TableView>
                      </children></AnchorPane>
