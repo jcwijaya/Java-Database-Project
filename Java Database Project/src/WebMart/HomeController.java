@@ -1,17 +1,20 @@
 package WebMart;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 
@@ -23,8 +26,18 @@ public class HomeController implements Initializable {
 		@FXML public Tab inventoryTab;
 		
 		//Customers tab
-		@FXML public Button updateCustomer;
-		@FXML public Button insertCustomer;
+		@FXML public Button updateCustomer; //Submits changes to database customers table
+		@FXML public Label updateLbl;	//Displays message is submit is successful
+		@FXML public Label messageLbl;  //Shows instructions for user
+		
+		//To add new customer
+		@FXML public Button insertCustomer; //Adds a new customer object to customer TableView
+		@FXML public TextField c_firstName; //These textfields will be used to create a new customer
+		@FXML public TextField c_lastName;	//object to be added to customer TableView
+		@FXML public TextField c_phoneNumber;
+		@FXML public TextField c_email;
+		@FXML public Button generateId; //This button calls createId method and displays the ID in a label
+		@FXML public Label generateIdLbl;
 		
 		/*
 		//CustomersTabPane
@@ -161,26 +174,75 @@ public class HomeController implements Initializable {
 			inventoryTable.setItems(inventoryList);
 		}
 		
+		public void refreshCustomerTable() {
+			//Make ObservableList from getTable method that returns ArrayList
+			ObservableList<Customer> customerList = FXCollections.observableArrayList(Customer.getTable());
+			
+			customerId.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("customerId"));
+			customerFirst.setCellValueFactory(new PropertyValueFactory<Customer, String>("firstName"));
+			customerLast.setCellValueFactory(new PropertyValueFactory<Customer, String>("lastName"));
+			customerPhone.setCellValueFactory(new PropertyValueFactory<Customer, String>("phoneNumber"));
+			customerEmail.setCellValueFactory(new PropertyValueFactory<Customer, String>("email"));
+			
+			customerTable.setItems(customerList);
+			
+		}
+		
+		//Submits changes to customers table in database
+		public void submitCustomers() {
+			ArrayList<Customer> list = new ArrayList<Customer>();
+			ObservableList<Customer> tableList = customerTable.getItems();
+			
+			//Get an ArrayList of objects from the table's ObservableList
+			for(int i = 0; i < tableList.size(); i++) {
+				list.add(tableList.get(i));
+			}
+			
+			//Either insert or update each object into database
+			for(int i = 0; i < list.size(); i++) {
+				//If the customer record is already there, update it
+				if(Customer.hasCustomerId(list.get(i).getCustomerId())) {
+					Customer.updateFirstName(list.get(i).getCustomerId(), list.get(i).getFirstName());
+					Customer.updateLastName(list.get(i).getCustomerId(), list.get(i).getLastName());
+					Customer.updatePhoneNumber(list.get(i).getCustomerId(), list.get(i).getPhoneNumber());
+					Customer.updateEmail(list.get(i).getCustomerId(), list.get(i).getEmail());
+				}
+				//If the customer record is not found, insert it
+				else if(!Customer.hasCustomerId(list.get(i).getCustomerId())) {
+					list.get(i).insert();
+				}
+				
+			}
+			
+			updateLbl.setText("Updated successfully.");
+			refreshCustomerTable();
+		}
+		
 		//These methods are to allow user to double click on a cell
 		//and update its value
 		public void changeFirstNameCustomer(CellEditEvent edittedCell) {
 			Customer selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
 			selectedCustomer.setFirstName(edittedCell.getNewValue().toString());
+			
+			updateLbl.setText("");
 		}
 		
 		public void changeLastNameCustomer(CellEditEvent edittedCell) {
 			Customer selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
 			selectedCustomer.setLastName(edittedCell.getNewValue().toString());
+			updateLbl.setText("");
 		}
 		
 		public void changePhoneCustomer(CellEditEvent edittedCell) {
 			Customer selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
 			selectedCustomer.setPhoneNumber(edittedCell.getNewValue().toString());
+			updateLbl.setText("");
 		}
 		
 		public void changeEmailCustomer(CellEditEvent edittedCell) {
 			Customer selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
 			selectedCustomer.setEmail(edittedCell.getNewValue().toString());
+			updateLbl.setText("");
 		}
 		
 		public void changePasswordEmployee(CellEditEvent edittedCell) {
@@ -208,16 +270,28 @@ public class HomeController implements Initializable {
 			selectedEmployee.setEmail(edittedCell.getNewValue().toString());
 		}
 		
-	/*
-		public void insertCustomer() {
-			Customer customer = new Customer();
-			customer.setCustomerId(Customer.createId());
-			customer.setFirstName();
-			customer.setLastName();
-			customer.setPhoneNumber();
-			customer.setEmail();
-			customer.insert();
+		public void generateIdCustomer() {
+			generateIdLbl.setText(Integer.toString(Customer.createId()));
+			messageLbl.setText("Please enter in these fields to add a customer record.");
 		}
-	*/
+		
+		//This method adds a customer record to customer TableView
+		//It is not committed to database 
+		public void addCustomer() {
+			if(generateIdLbl.getText() != "") {
+				Customer customer = new Customer(Integer.parseInt(generateIdLbl.getText()),
+						c_firstName.getText(), c_lastName.getText(), c_phoneNumber.getText(), c_email.getText());
+				customerTable.getItems().add(customer);
+				
+				generateIdLbl.setText("");
+			}
+			else {
+				messageLbl.setText("Please fill in the ID field.");
+			}
+		}
+		
+		public void removeCustomer() {
+			
+		}
 
 }
