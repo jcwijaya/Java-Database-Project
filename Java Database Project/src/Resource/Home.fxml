@@ -20,9 +20,9 @@
                           <columns>
                             <TableColumn fx:id="customerId" prefWidth="75.0" text="ID" />
                             <TableColumn fx:id="customerFirst" prefWidth="75.0" text="First Name" />
-                              <TableColumn fx:id="customerLast" prefWidth="75.0" text="Last Name" />
-                              <TableColumn fx:id="customerPhone" prefWidth="75.0" text="Phone" />
-                              <TableColumn fx:id="customerEmail" prefWidth="120.0" text="Email" />
+                              <TableColumn fx:id="customerLast" prefWidth="82.0" text="Last Name" />
+                              <TableColumn fx:id="customerPhone" prefWidth="86.00003051757812" text="Phone" />
+                              <TableColumn fx:id="customerEmail" prefWidth="128.0" text="Email" />
                           </columns>
                         </TableView>
                         <Button fx:id="insertCustomer" layoutX="131.0" layoutY="325.0" mnemonicParsing="false" text="Insert" />
@@ -34,7 +34,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="employeeTable" layoutX="387.0" layoutY="235.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+                        <TableView fx:id="employeeTable" layoutX="387.0" layoutY="235.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
                           <columns>
                             <TableColumn fx:id="employeeId" prefWidth="75.0" text="ID" />
                             <TableColumn fx:id="password" prefWidth="75.0" text="Password" />
@@ -51,13 +51,13 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="inventoryTable" layoutX="439.0" layoutY="235.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+                        <TableView fx:id="inventoryTable" layoutX="439.0" layoutY="235.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
                           <columns>
-                            <TableColumn fx:id="productCode" prefWidth="100.0" text="Code" />
-                            <TableColumn fx:id="category" prefWidth="75.0" text="Category" />
-                              <TableColumn fx:id="name" prefWidth="130.0" text="Name" />
-                              <TableColumn fx:id="price" prefWidth="75.0" text="Price" />
-                              <TableColumn fx:id="stock" prefWidth="75.0" text="Amount" />
+                            <TableColumn fx:id="productCode" prefWidth="85.33329772949219" text="Code" />
+                            <TableColumn fx:id="category" prefWidth="106.0" text="Category" />
+                              <TableColumn fx:id="name" prefWidth="138.00003051757812" text="Name" />
+                              <TableColumn fx:id="price" prefWidth="66.6666259765625" text="Price" />
+                              <TableColumn fx:id="stock" prefWidth="75.3333740234375" text="Amount" />
                           </columns>
                         </TableView>
                      </children></AnchorPane>
