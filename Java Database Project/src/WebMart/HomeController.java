@@ -28,6 +28,7 @@ public class HomeController implements Initializable {
 		//Customers tab
 		@FXML public Button updateCustomer; //Submits changes to database customers table
 		@FXML public Label updateLbl;	//Displays message is submit is successful
+		@FXML public Label messageLbl;  //Shows instructions for user
 		
 		//To add new customer
 		@FXML public Button insertCustomer; //Adds a new customer object to customer TableView
@@ -269,16 +270,28 @@ public class HomeController implements Initializable {
 			selectedEmployee.setEmail(edittedCell.getNewValue().toString());
 		}
 		
+		public void generateIdCustomer() {
+			generateIdLbl.setText(Integer.toString(Customer.createId()));
+			messageLbl.setText("Please enter in these fields to add a customer record.");
+		}
+		
+		//This method adds a customer record to customer TableView
+		//It is not committed to database 
 		public void addCustomer() {
-			Customer customer = new Customer();
-			/*
-			customer.setCustomerId(Customer.createId());
-			customer.setFirstName();
-			customer.setLastName();
-			customer.setPhoneNumber();
-			customer.setEmail();
-			customer.insert();
-			*/
+			if(generateIdLbl.getText() != "") {
+				Customer customer = new Customer(Integer.parseInt(generateIdLbl.getText()),
+						c_firstName.getText(), c_lastName.getText(), c_phoneNumber.getText(), c_email.getText());
+				customerTable.getItems().add(customer);
+				
+				generateIdLbl.setText("");
+			}
+			else {
+				messageLbl.setText("Please fill in the ID field.");
+			}
+		}
+		
+		public void removeCustomer() {
+			
 		}
 
 }

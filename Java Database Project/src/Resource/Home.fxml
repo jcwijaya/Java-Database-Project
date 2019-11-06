@@ -9,6 +9,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="500" prefWidth="700" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WebMart.HomeController">
    <children>
@@ -28,18 +29,22 @@
                               <TableColumn fx:id="customerEmail" onEditCommit="#changeEmailCustomer" prefWidth="128.0" text="Email" />
                           </columns>
                         </TableView>
-                        <Label fx:id="generateIdLbl" layoutX="105.0" layoutY="94.0" prefHeight="27.0" prefWidth="115.0" style="-fx-background-color: white;" />
-                        <Button fx:id="generateId" layoutX="17.0" layoutY="95.0" mnemonicParsing="false" text="Generate ID:" />
+                        <Label fx:id="generateIdLbl" layoutX="105.0" layoutY="94.0" prefHeight="27.0" prefWidth="115.0" style="-fx-background-color: white;" textAlignment="CENTER">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Button fx:id="generateId" layoutX="17.0" layoutY="95.0" mnemonicParsing="false" onAction="#generateIdCustomer" text="Generate ID:" />
                         <VBox alignment="CENTER" layoutX="32.0" layoutY="135.0" prefHeight="227.0" prefWidth="199.0" spacing="30.0">
                            <children>
                               <TextField fx:id="c_firstName" promptText="First Name" />
                               <TextField fx:id="c_lastName" promptText="Last Name" />
                               <TextField fx:id="c_phoneNumber" promptText="Phone Number" />
                               <TextField fx:id="c_email" promptText="Email" />
-                              <Button fx:id="insertCustomer" mnemonicParsing="false" text="Add New Customer" />
+                              <Button fx:id="insertCustomer" mnemonicParsing="false" onAction="#addCustomer" text="Add New Customer" />
                            </children>
                         </VBox>
                         <Label fx:id="updateLbl" layoutX="58.0" layoutY="424.0" prefHeight="35.0" prefWidth="161.0" textAlignment="CENTER" />
+                        <Label fx:id="messageLbl" layoutX="18.0" layoutY="40.0" prefHeight="53.0" prefWidth="289.0" text="Please enter in these fields to add a customer record." />
                      </children>
                   </AnchorPane>
             </content>
