@@ -19,7 +19,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                      <Button fx:id="updateCustomer" layoutX="72.0" layoutY="399.0" mnemonicParsing="false" onAction="#submitCustomers" text="Submit to Database" />
+                      <Button fx:id="updateCustomer" layoutX="78.0" layoutY="398.0" mnemonicParsing="false" onAction="#submitCustomers" text="Save to Database" />
                         <TableView fx:id="customerTable" layoutX="244.0" layoutY="-60.0" prefHeight="371.0" prefWidth="456.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
                           <columns>
                             <TableColumn fx:id="customerId" prefWidth="75.0" text="ID" />
@@ -36,7 +36,7 @@
                         <Button fx:id="generateId" layoutX="17.0" layoutY="95.0" mnemonicParsing="false" onAction="#generateIdCustomer" text="Generate ID:" />
                         <VBox alignment="CENTER" layoutX="32.0" layoutY="135.0" prefHeight="227.0" prefWidth="199.0" spacing="30.0">
                            <children>
-                              <TextField fx:id="c_firstName" promptText="First Name" />
+                              <TextField fx:id="c_firstName" promptText="first" />
                               <TextField fx:id="c_lastName" promptText="Last Name" />
                               <TextField fx:id="c_phoneNumber" promptText="Phone Number" />
                               <TextField fx:id="c_email" promptText="Email" />
@@ -53,7 +53,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="employeeTable" layoutX="387.0" layoutY="235.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+                        <TableView fx:id="employeeTable" layoutX="387.0" layoutY="235.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
                           <columns>
                             <TableColumn fx:id="employeeId" prefWidth="75.0" text="ID" />
                             <TableColumn fx:id="password" onEditCommit="#changePasswordEmployee" prefWidth="75.0" text="Password" />
@@ -63,6 +63,24 @@
                               <TableColumn fx:id="employeeEmail" onEditCommit="#changeEmailEmployee" prefWidth="120.0" text="Email" />
                           </columns>
                         </TableView>
+                        <Label fx:id="e_messageLbl" layoutX="23.0" layoutY="67.0" text="Please enter in these fields to add an employee record." />
+                        <VBox alignment="TOP_CENTER" layoutX="20.0" layoutY="135.0" prefHeight="227.0" prefWidth="199.0" spacing="30.0">
+                           <children>
+                              <TextField fx:id="e_firstName" promptText="First Name" />
+                              <TextField fx:id="e_lastName" promptText="Last Name" />
+                              <TextField fx:id="e_phoneNumber" promptText="Phone Number" />
+                              <TextField fx:id="e_email" promptText="Email" />
+                              <Button fx:id="e_insert" mnemonicParsing="false" text="Add New Employee" />
+                           </children>
+                        </VBox>
+                        <Button fx:id="e_generateId" layoutX="20.0" layoutY="100.0" mnemonicParsing="false" text="Generate ID: " />
+                        <Label fx:id="e_generateIdLbl" layoutX="110.0" layoutY="99.0" prefHeight="27.0" prefWidth="115.0" style="-fx-background-color: white;" textAlignment="CENTER">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="e_save" layoutX="65.0" layoutY="395.0" mnemonicParsing="false" text="Save to Database" />
+                        <Label fx:id="e_saveLbl" layoutX="39.0" layoutY="427.0" prefHeight="35.0" prefWidth="161.0" />
                      </children></AnchorPane>
             </content>
           </Tab>
