@@ -293,5 +293,7 @@ public class HomeController implements Initializable {
 		public void removeCustomer() {
 			
 		}
+		
+		//changes by Jessica
 
 }
