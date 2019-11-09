@@ -7,7 +7,6 @@ public class ShoppingCart{
 	private ArrayList<Inventory> cart = new ArrayList<Inventory>();		//A list of Inventory objects made using ArrayList class
 	private int size = 0;												//The number of items in the cart
 	
-	
 	//Takes in an Inventory object as parameter and adds it to the cart
 	public void Add(Inventory item) {
 		cart.add(item);
@@ -30,6 +29,7 @@ public class ShoppingCart{
 			cartItem = cart.get(i);
 			total += cartItem.getPrice();
 		}
+		
 		return total;
 	}
 	
