@@ -9,6 +9,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -27,6 +30,13 @@ public class HomeController implements Initializable {
 		@FXML private Tab customersTab;
 		@FXML private Tab employeesTab;
 		@FXML private Tab inventoryTab;
+		@FXML private MenuBar homeBar;
+		@FXML private Menu userMenu;
+		@FXML private Menu cartMenu;
+		@FXML private MenuItem logout;
+		@FXML private MenuItem viewCart;
+		@FXML private MenuItem addItem;
+		@FXML private MenuItem removeItem;
 		
 //******Customers tab
 		@FXML private Button updateCustomer; //Submits changes to database customers table
@@ -100,6 +110,19 @@ public class HomeController implements Initializable {
 		@FXML public Tab InventoryUpdateTab;
 		@FXML public Tab InventoryDeleteTab;
 		*/
+		
+		@FXML private Label i_messageLbl;
+		@FXML private Button i_save;
+		@FXML private Label i_saveLbl;
+		@FXML private Button i_delete;
+		
+		//To add an inventory item
+		@FXML private Button i_generateId;
+		@FXML private Label i_generateIdLbl;
+		@FXML private TextField i_category;
+		@FXML private TextField i_productName;
+		@FXML private TextField i_price;
+		@FXML private TextField i_stock;
 		
 		//Make TableView for Inventory class
 		@FXML private TableView<Inventory> inventoryTable;

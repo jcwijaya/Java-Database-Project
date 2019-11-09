@@ -49,13 +49,17 @@ public class TestCustomer{
 			strStock = scanner.next();
 			stock = Integer.parseInt(strStock.trim());
 			
+			Inventory item = new Inventory(productCode, category.trim(), productName.trim(), price, stock);
+			item.insert();
+			System.out.println("Insertion successful.");
+			/*
 			System.out.println(productCode);
 			System.out.println(category.trim());
 			System.out.println(productName.trim());
 			System.out.println(price);
 			System.out.println(stock);
 			System.out.println();
-			
+			*/
 		}
 
 	
