@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -17,27 +18,30 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 public class HomeController implements Initializable {
 	//Home screen
-		@FXML public TabPane homeTabs;
-		@FXML public Tab customersTab;
-		@FXML public Tab employeesTab;
-		@FXML public Tab inventoryTab;
+		@FXML private TabPane homeTabs;
+		@FXML private Tab customersTab;
+		@FXML private Tab employeesTab;
+		@FXML private Tab inventoryTab;
 		
-		//Customers tab
-		@FXML public Button updateCustomer; //Submits changes to database customers table
-		@FXML public Label updateLbl;	//Displays message is submit is successful
-		@FXML public Label messageLbl;  //Shows instructions for user
+//******Customers tab
+		@FXML private Button updateCustomer; //Submits changes to database customers table
+		@FXML private Label updateLbl;	//Displays message is submit is successful
+		@FXML private Label messageLbl;  //Shows instructions for user
+		@FXML private Button c_delete;
 		
 		//To add new customer
-		@FXML public Button insertCustomer; //Adds a new customer object to customer TableView
-		@FXML public TextField c_firstName; //These textfields will be used to create a new customer
-		@FXML public TextField c_lastName;	//object to be added to customer TableView
-		@FXML public TextField c_phoneNumber;
-		@FXML public TextField c_email;
-		@FXML public Button generateId; //This button calls createId method and displays the ID in a label
-		@FXML public Label generateIdLbl;
+		@FXML private Button insertCustomer; //Adds a new customer object to customer TableView
+		@FXML private TextField c_firstName; //These textfields will be used to create a new customer
+		@FXML private TextField c_lastName;	//object to be added to customer TableView
+		@FXML private TextField c_phoneNumber;
+		@FXML private TextField c_email;
+		@FXML private Button generateId; //This button calls createId method and displays the ID in a label
+		@FXML private Label generateIdLbl;
 		
 		/*
 		//CustomersTabPane
@@ -49,15 +53,15 @@ public class HomeController implements Initializable {
 		*/
 		
 		//Make TableView for Customer class
-		@FXML public TableView<Customer> customerTable;
-		@FXML public TableColumn<Customer, Integer> customerId;
-		@FXML public TableColumn<Customer, String> customerFirst;
-		@FXML public TableColumn<Customer, String> customerLast;
-		@FXML public TableColumn<Customer, String> customerPhone;
-		@FXML TableColumn<Customer, String> customerEmail;
+		@FXML private TableView<Customer> customerTable;
+		@FXML private TableColumn<Customer, Integer> customerId;
+		@FXML private TableColumn<Customer, String> customerFirst;
+		@FXML private TableColumn<Customer, String> customerLast;
+		@FXML private TableColumn<Customer, String> customerPhone;
+		@FXML private TableColumn<Customer, String> customerEmail;
 		
 		/*
-		//Employees Tab
+//******Employees Tab
 		@FXML public TabPane EmployeesTabPane;
 		@FXML public Tab EmployeesInsertTab;
 		@FXML public Tab EmployeesSearchTab;
@@ -65,17 +69,31 @@ public class HomeController implements Initializable {
 		@FXML public Tab EmployeesDeleteTab;
 		*/
 		
+		@FXML private Label e_messageLbl;
+		@FXML private Button e_save;
+		@FXML private Label e_saveLbl;
+		@FXML private Button e_delete;
+		
+		//To add an employee
+		@FXML private Button e_generateId;
+		@FXML private Label e_generateIdLbl;
+		@FXML private TextField e_firstName;
+		@FXML private TextField e_lastName;
+		@FXML private TextField e_phoneNumber;
+		@FXML private TextField e_email;
+		@FXML private TextField e_password;
+		
 		//Make TableView for Employee class
-		@FXML public TableView<Employee> employeeTable;
-		@FXML public TableColumn<Employee, Integer> employeeId;
-		@FXML public TableColumn<Employee, String> password;
-		@FXML public TableColumn<Employee, String> employeeFirst;
-		@FXML public TableColumn<Employee, String> employeeLast;
-		@FXML public TableColumn<Employee, String> employeePhone;
-		@FXML public TableColumn<Employee, String> employeeEmail;
+		@FXML private TableView<Employee> employeeTable;
+		@FXML private TableColumn<Employee, Integer> employeeId;
+		@FXML private TableColumn<Employee, String> password;
+		@FXML private TableColumn<Employee, String> employeeFirst;
+		@FXML private TableColumn<Employee, String> employeeLast;
+		@FXML private TableColumn<Employee, String> employeePhone;
+		@FXML private TableColumn<Employee, String> employeeEmail;
 		
 		/*
-		//Inventory Tab
+//******Inventory Tab
 		@FXML public TabPane InventoryTabPane;
 		@FXML public Tab InventoryInsertTab;
 		@FXML public Tab InventorySearchTab;
@@ -84,12 +102,12 @@ public class HomeController implements Initializable {
 		*/
 		
 		//Make TableView for Inventory class
-		@FXML public TableView<Inventory> inventoryTable;
-		@FXML public TableColumn<Inventory, Long> productCode;
-		@FXML public TableColumn<Inventory, String> category;
-		@FXML public TableColumn<Inventory, String> name;
-		@FXML public TableColumn<Inventory, Double> price;
-		@FXML public TableColumn<Inventory, Integer> stock;
+		@FXML private TableView<Inventory> inventoryTable;
+		@FXML private TableColumn<Inventory, Long> productCode;
+		@FXML private TableColumn<Inventory, String> category;
+		@FXML private TableColumn<Inventory, String> name;
+		@FXML private TableColumn<Inventory, Double> price;
+		@FXML private TableColumn<Inventory, Integer> stock;
 		
 		@Override
 		public void initialize(URL location, ResourceBundle resources) {
@@ -114,6 +132,9 @@ public class HomeController implements Initializable {
 		customerPhone.setCellFactory(TextFieldTableCell.forTableColumn());
 		customerEmail.setCellFactory(TextFieldTableCell.forTableColumn());
 		
+		//Allow multiple rows to be selected
+		customerTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		
 		//Initialize Employee Table
 		employeeId.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("employeeId"));
 		password.setCellValueFactory(new PropertyValueFactory<Employee, String>("password"));
@@ -131,6 +152,9 @@ public class HomeController implements Initializable {
 		employeePhone.setCellFactory(TextFieldTableCell.forTableColumn());
 		employeeEmail.setCellFactory(TextFieldTableCell.forTableColumn());
 		
+		//Allow multiple rows to be selected
+		employeeTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		
 		//Initialize Inventory table
 		productCode.setCellValueFactory(new PropertyValueFactory<Inventory, Long>("productCode"));
 		category.setCellValueFactory(new PropertyValueFactory<Inventory, String>("category"));
@@ -138,7 +162,17 @@ public class HomeController implements Initializable {
 		price.setCellValueFactory(new PropertyValueFactory<Inventory, Double>("price"));
 		stock.setCellValueFactory(new PropertyValueFactory<Inventory, Integer>("stock"));
 		
+		//Make table editable
 		inventoryTable.setItems(inventoryList);
+		inventoryTable.setEditable(true);
+		category.setCellFactory(TextFieldTableCell.forTableColumn());
+		name.setCellFactory(TextFieldTableCell.forTableColumn());
+		price.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+		stock.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+		
+		//Allow multiple rows to be selected
+		inventoryTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		
 		
 	}
 		//Make refresh for each table individually
@@ -188,6 +222,19 @@ public class HomeController implements Initializable {
 			
 		}
 		
+		public void refreshEmployeeTable() {
+			ObservableList<Employee> employeeList = FXCollections.observableArrayList(Employee.getTable());
+
+			employeeId.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("employeeId"));
+			password.setCellValueFactory(new PropertyValueFactory<Employee, String>("password"));
+			employeeFirst.setCellValueFactory(new PropertyValueFactory<Employee, String>("firstName"));
+			employeeLast.setCellValueFactory(new PropertyValueFactory<Employee, String>("lastName"));
+			employeePhone.setCellValueFactory(new PropertyValueFactory<Employee, String>("phoneNumber"));
+			employeeEmail.setCellValueFactory(new PropertyValueFactory<Employee, String>("email"));
+			
+			employeeTable.setItems(employeeList);
+		}
+		
 		//Submits changes to customers table in database
 		public void submitCustomers() {
 			ArrayList<Customer> list = new ArrayList<Customer>();
@@ -217,6 +264,37 @@ public class HomeController implements Initializable {
 			updateLbl.setText("Updated successfully.");
 			refreshCustomerTable();
 		}
+		
+		//Submits changes to employees table in database
+		public void submitEmployees() {
+			ArrayList<Employee> list = new ArrayList<Employee>();
+			ObservableList<Employee> tableList = employeeTable.getItems();
+			
+			//Get an ArrayList of objects from the table's ObservableList
+			for(int i = 0; i < tableList.size(); i++) {
+				list.add(tableList.get(i));
+			}
+			
+			//Either insert or update each object into database
+			for(int i = 0; i < list.size(); i++) {
+				//If the employee record is already there, update it
+				if(Employee.hasEmployeeId(list.get(i).getEmployeeId())) {
+					Employee.updateFirstName(list.get(i).getEmployeeId(), list.get(i).getFirstName());
+					Employee.updateLastName(list.get(i).getEmployeeId(), list.get(i).getLastName());
+					Employee.updatePhoneNumber(list.get(i).getEmployeeId(), list.get(i).getPhoneNumber());
+					Employee.updateEmail(list.get(i).getEmployeeId(), list.get(i).getEmail());
+					Employee.updatePassword(list.get(i).getEmployeeId(), list.get(i).getPassword());
+				}
+				//If the employee record is not found, insert it
+				else if(!Employee.hasEmployeeId(list.get(i).getEmployeeId())) {
+					list.get(i).insert();
+				}
+			}
+			
+			e_saveLbl.setText("Updated successfully.");
+			refreshEmployeeTable();
+		}	
+		
 		
 		//These methods are to allow user to double click on a cell
 		//and update its value
@@ -272,7 +350,10 @@ public class HomeController implements Initializable {
 		
 		public void generateIdCustomer() {
 			generateIdLbl.setText(Integer.toString(Customer.createId()));
-			messageLbl.setText("Please enter in these fields to add a customer record.");
+		}
+		
+		public void generateIdEmployee() {
+			e_generateIdLbl.setText(Integer.toString(Employee.createId()));
 		}
 		
 		//This method adds a customer record to customer TableView
@@ -284,14 +365,62 @@ public class HomeController implements Initializable {
 				customerTable.getItems().add(customer);
 				
 				generateIdLbl.setText("");
+				messageLbl.setText("Please enter in these fields to add a customer record.");
 			}
 			else {
-				messageLbl.setText("Please fill in the ID field.");
+				messageLbl.setText("Please fill in the necessary fields.");
 			}
 		}
 		
+		//This method adds an employee record to employee TableView
+		//It is not committed to database yet
+		public void addEmployee() {
+			//Only add to table if ID, password, first name, last name are filled out
+			if(e_generateIdLbl.getText() != "") {
+				Employee employee = new Employee(Integer.parseInt(e_generateIdLbl.getText()),
+						e_password.getText(), e_firstName.getText(), e_lastName.getText(),
+						e_phoneNumber.getText(), e_email.getText());
+				employeeTable.getItems().add(employee);
+					
+				e_generateIdLbl.setText("");
+			}
+			else {
+				e_messageLbl.setText("Please fill in the necessary fields.");
+			}
+		}
+		
+		//This method removes selected customers from TableView and database
 		public void removeCustomer() {
+			ObservableList<Customer> selectedCustomers, allCustomers;
+			allCustomers = customerTable.getItems();
+			selectedCustomers = customerTable.getSelectionModel().getSelectedItems();
 			
+			for(Customer customer: selectedCustomers) {
+				//Remove from ObservableList
+				allCustomers.remove(customer);
+				
+				//If the record is in database, delete it
+				if(Customer.hasCustomerId(customer.getCustomerId())) {
+					customer.delete();
+				}
+				
+			}
 		}
 
+		public void removeEmployee() {
+			ObservableList<Employee> selectedEmployees, allEmployees;
+			allEmployees = employeeTable.getItems();
+			selectedEmployees = employeeTable.getSelectionModel().getSelectedItems();
+			
+			for(Employee employee: selectedEmployees) {
+				//Remove from ObservableList
+				allEmployees.remove(employee);
+				
+				//If the record is in database, delete it
+				if(Employee.hasEmployeeId(employee.getEmployeeId())) {
+					employee.delete();
+				}
+				
+			}
+		}
 }

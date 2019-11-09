@@ -39,6 +39,44 @@ public class Inventory {
 	}	
 	
 //******INSTANCE METHODS******
+	public long getProductCode() {
+		return productCode;
+	}
+	
+	public void setProductCode(long code) {
+		productCode = code;
+	}
+	
+	public String getCategory() {
+		return category;
+	}
+	
+	public void setCategory(String aCategory) {
+		category = aCategory;
+	}
+	
+	public String getProductName() {
+		return productName;
+	}
+	
+	public void setProductName(String name) {
+		productName = name;
+	}
+	public double getPrice() {
+		return price;
+	}
+	
+	public void setPrice(double aPrice) {
+		price = aPrice;
+	}
+	
+	public int getStock() {
+		return stock;
+	}
+	
+	public void setStock(int newStock) {
+		stock = newStock;
+	}
 	
 //******MISC METHODS******
 	public static ArrayList<Inventory> ReadFromFile() throws FileNotFoundException {

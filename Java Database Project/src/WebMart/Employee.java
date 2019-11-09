@@ -172,7 +172,20 @@ public class Employee {
 				return 000000;
 			}
 	}
-	
+
+//******DATABASE DELETE METHOD******
+	public void delete() {
+		try {
+			Connection conn = connect();
+			PreparedStatement stmt = conn.prepareStatement("DELETE FROM employees WHERE employeeId = ?");
+			
+			stmt.setInt(1, employeeId);
+			stmt.executeUpdate();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 //******DATABASE UPDATE & INSERT METHODS******
 	//Inserts the data fields of this object into database
 	public void insert() {

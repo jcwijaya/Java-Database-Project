@@ -158,6 +158,20 @@ public class Customer {
 		}
 		 
 	}
+
+//******DATABASE DELETE METHOD******
+	public void delete() {
+		try {
+			Connection conn = connect();
+			PreparedStatement stmt = conn.prepareStatement("DELETE FROM customers WHERE customerId = ?");
+			
+			stmt.setInt(1, customerId);
+			stmt.executeUpdate();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 //******DATABASE UPDATE & INSERT METHODS******
 	/*These methods find the customer record by given customerId

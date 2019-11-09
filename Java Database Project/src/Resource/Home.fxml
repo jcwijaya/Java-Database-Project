@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -29,22 +30,23 @@
                               <TableColumn fx:id="customerEmail" onEditCommit="#changeEmailCustomer" prefWidth="128.0" text="Email" />
                           </columns>
                         </TableView>
-                        <Label fx:id="generateIdLbl" layoutX="105.0" layoutY="94.0" prefHeight="27.0" prefWidth="115.0" style="-fx-background-color: white;" textAlignment="CENTER">
+                        <Label fx:id="generateIdLbl" layoutX="105.0" layoutY="99.0" prefHeight="27.0" prefWidth="115.0" style="-fx-background-color: white;" textAlignment="CENTER">
                            <font>
                               <Font size="18.0" />
                            </font></Label>
-                        <Button fx:id="generateId" layoutX="17.0" layoutY="95.0" mnemonicParsing="false" onAction="#generateIdCustomer" text="Generate ID:" />
-                        <VBox alignment="CENTER" layoutX="32.0" layoutY="135.0" prefHeight="227.0" prefWidth="199.0" spacing="30.0">
+                        <Button fx:id="generateId" layoutX="17.0" layoutY="100.0" mnemonicParsing="false" onAction="#generateIdCustomer" text="Generate ID*:" />
+                        <VBox alignment="CENTER" layoutX="32.0" layoutY="139.0" prefHeight="227.0" prefWidth="199.0" spacing="30.0">
                            <children>
-                              <TextField fx:id="c_firstName" promptText="First Name" />
-                              <TextField fx:id="c_lastName" promptText="Last Name" />
+                              <TextField fx:id="c_firstName" promptText="First Name*" />
+                              <TextField fx:id="c_lastName" promptText="Last Name*" />
                               <TextField fx:id="c_phoneNumber" promptText="Phone Number" />
                               <TextField fx:id="c_email" promptText="Email" />
                               <Button fx:id="insertCustomer" mnemonicParsing="false" onAction="#addCustomer" text="Add New Customer" />
                            </children>
                         </VBox>
                         <Label fx:id="updateLbl" layoutX="58.0" layoutY="424.0" prefHeight="35.0" prefWidth="161.0" textAlignment="CENTER" />
-                        <Label fx:id="messageLbl" layoutX="18.0" layoutY="40.0" prefHeight="53.0" prefWidth="289.0" text="Please enter in these fields to add a customer record." />
+                        <Label fx:id="messageLbl" layoutX="18.0" layoutY="54.0" prefHeight="30.0" prefWidth="289.0" text="Please enter in these fields to add a customer record." />
+                        <Button fx:id="c_delete" layoutX="340.0" layoutY="54.0" mnemonicParsing="false" onAction="#removeCustomer" text="Delete" />
                      </children>
                   </AnchorPane>
             </content>
@@ -53,16 +55,32 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="employeeTable" layoutX="387.0" layoutY="235.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+                        <TableView fx:id="employeeTable" layoutX="387.0" layoutY="235.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
                           <columns>
-                            <TableColumn fx:id="employeeId" prefWidth="75.0" text="ID" />
-                            <TableColumn fx:id="password" onEditCommit="#changePasswordEmployee" prefWidth="75.0" text="Password" />
-                              <TableColumn fx:id="employeeFirst" onEditCommit="#changeFirstNameEmployee" prefWidth="75.0" text="First Name" />
+                            <TableColumn fx:id="employeeId" prefWidth="62.66667175292969" text="ID" />
+                            <TableColumn fx:id="password" onEditCommit="#changePasswordEmployee" prefWidth="79.3333740234375" text="Password" />
+                              <TableColumn fx:id="employeeFirst" onEditCommit="#changeFirstNameEmployee" prefWidth="83.99993896484375" text="First Name" />
                               <TableColumn fx:id="employeeLast" onEditCommit="#changeLastNameEmployee" prefWidth="75.0" text="Last Name" />
-                              <TableColumn fx:id="employeePhone" onEditCommit="#changePhoneEmployee" prefWidth="75.0" text="Phone" />
-                              <TableColumn fx:id="employeeEmail" onEditCommit="#changeEmailEmployee" prefWidth="120.0" text="Email" />
+                              <TableColumn fx:id="employeePhone" minWidth="0.0" onEditCommit="#changePhoneEmployee" prefWidth="68.66668701171875" text="Phone" />
+                              <TableColumn fx:id="employeeEmail" onEditCommit="#changeEmailEmployee" prefWidth="77.33331298828125" text="Email" />
                           </columns>
                         </TableView>
+                        <Label fx:id="e_messageLbl" layoutX="23.0" layoutY="23.0" text="Please enter in these fields to add an employee record." />
+                        <Label fx:id="e_saveLbl" layoutX="50.0" layoutY="421.0" prefHeight="35.0" prefWidth="161.0" textAlignment="CENTER" />
+                        <Label fx:id="e_generateIdLbl" contentDisplay="CENTER" layoutX="110.0" layoutY="53.0" prefHeight="27.0" prefWidth="115.0" style="-fx-background-color: white;" />
+                        <Button fx:id="e_generateId" layoutX="23.0" layoutY="53.0" mnemonicParsing="false" onAction="#generateIdEmployee" text="Generate ID*:" />
+                        <Button fx:id="e_save" layoutX="77.0" layoutY="386.0" mnemonicParsing="false" onAction="#submitEmployees" text="Save to Database" />
+                        <VBox alignment="TOP_CENTER" layoutX="31.0" layoutY="84.0" prefHeight="200.0" prefWidth="199.0" spacing="25.0">
+                           <children>
+                              <TextField fx:id="e_firstName" promptText="First Name*" />
+                              <TextField fx:id="e_lastName" promptText="Last Name*" />
+                              <TextField fx:id="e_phoneNumber" promptText="Phone Number" />
+                              <TextField fx:id="e_email" promptText="Email" />
+                              <PasswordField fx:id="e_password" promptText="Password*" />
+                              <Button fx:id="e_insert" mnemonicParsing="false" onAction="#addEmployee" text="Add New Employee" />
+                           </children>
+                        </VBox>
+                        <Button fx:id="e_delete" layoutX="332.0" layoutY="54.0" mnemonicParsing="false" onAction="#removeEmployee" text="Delete" />
                      </children></AnchorPane>
             </content>
           </Tab>
