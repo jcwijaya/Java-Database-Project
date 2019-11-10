@@ -50,7 +50,7 @@ public class TestCustomer{
 			stock = Integer.parseInt(strStock.trim());
 			
 			Inventory item = new Inventory(productCode, category.trim(), productName.trim(), price, stock);
-			item.insert();
+			//item.insert();
 			System.out.println("Insertion successful.");
 			/*
 			System.out.println(productCode);

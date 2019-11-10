@@ -1,0 +1,97 @@
+#homeTabs {
+	-fx-background-color: darkslateblue;
+}
+
+.button {
+	-fx-background-color: cornflowerblue;
+	-fx-font-weight: bold;
+}
+.tab {
+	-fx-background-color: mediumslateblue;
+	-fx-font-weight: bold;
+}
+
+.label {
+	-fx-font-weight: bold;
+}
+
+#messageLbl {
+	-fx-text-fill: snow;
+}
+
+#customerId {
+	-fx-background-color: darkseagreen;
+}
+
+#customerFirst {
+	-fx-background-color: darkseagreen;
+}
+
+#customerLast {
+	-fx-background-color: darkseagreen;
+}
+
+#customerEmail {
+	-fx-background-color: darkseagreen;
+}
+
+#customerPhone {
+	-fx-background-color: darkseagreen;
+}
+
+#employeeId {
+	-fx-background-color: darkseagreen;
+}
+
+#password {
+	-fx-background-color: darkseagreen;
+}
+
+#employeeFirst {
+	-fx-background-color: darkseagreen;
+}
+
+#employeeLast {
+	-fx-background-color: darkseagreen;
+}
+
+#employeeEmail {
+	-fx-background-color: darkseagreen;
+}
+
+#employeePhone {
+	-fx-background-color: darkseagreen;
+}
+
+#productCode {
+	-fx-background-color: darkseagreen;
+}
+
+#name {
+	-fx-background-color: darkseagreen;
+}
+
+#price {
+	-fx-background-color: darkseagreen;
+}
+
+#stock {
+	-fx-background-color: darkseagreen;
+}
+
+#category {
+	-fx-background-color: darkseagreen;
+}
+
+#login {
+	-fx-background-color: lightgreen;
+}
+
+#titleLabel {
+	-fx-text-fill: navy;
+}
+
+#loginBtn {
+	-fx-background-color: lightsteelblue;
+	-fx-text-fill: midnightblue;
+}

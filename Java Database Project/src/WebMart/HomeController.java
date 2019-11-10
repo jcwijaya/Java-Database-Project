@@ -258,6 +258,18 @@ public class HomeController implements Initializable {
 			employeeTable.setItems(employeeList);
 		}
 		
+		public void refreshInventoryTable() {			
+			ObservableList<Inventory> inventoryList = FXCollections.observableArrayList(Inventory.getTable());
+
+			productCode.setCellValueFactory(new PropertyValueFactory<Inventory, Long>("productCode"));
+			category.setCellValueFactory(new PropertyValueFactory<Inventory, String>("category"));
+			name.setCellValueFactory(new PropertyValueFactory<Inventory, String>("productName"));
+			price.setCellValueFactory(new PropertyValueFactory<Inventory, Double>("price"));
+			stock.setCellValueFactory(new PropertyValueFactory<Inventory, Integer>("stock"));
+			
+			inventoryTable.setItems(inventoryList);
+		}
+		
 		//Submits changes to customers table in database
 		public void submitCustomers() {
 			ArrayList<Customer> list = new ArrayList<Customer>();
@@ -318,6 +330,33 @@ public class HomeController implements Initializable {
 			refreshEmployeeTable();
 		}	
 		
+		//Submits changes to inventory table in database
+		public void submitInventory() {
+			ArrayList<Inventory> list = new ArrayList<Inventory>();
+			ObservableList<Inventory> tableList = inventoryTable.getItems();
+			
+			//Get an ArrayList of objects from the table's ObservableList
+			for(int i = 0; i < tableList.size(); i++) {
+				list.add(tableList.get(i));
+			}
+			
+			//Either insert or update each object into database
+			for(int i = 0; i < list.size(); i++) {
+				//If the inventory record is already there, update it
+				if(Inventory.hasProductCode(list.get(i).getProductCode())) {
+					Inventory.updateExistingItem(list.get(i).getProductCode(), list.get(i).getCategory(),
+					list.get(i).getProductName(), list.get(i).getPrice(), list.get(i).getStock());
+				}
+				//If the inventory record is not found, insert it
+				else if(!Inventory.hasProductCode(list.get(i).getProductCode())) {
+					list.get(i).insert();
+				}
+				
+			}
+			
+			i_saveLbl.setText("Updated successfully.");
+			refreshCustomerTable();
+		}
 		
 		//These methods are to allow user to double click on a cell
 		//and update its value
@@ -349,26 +388,68 @@ public class HomeController implements Initializable {
 		public void changePasswordEmployee(CellEditEvent edittedCell) {
 			Employee selectedEmployee = employeeTable.getSelectionModel().getSelectedItem();
 			selectedEmployee.setPassword(edittedCell.getNewValue().toString());
+			
+			e_saveLbl.setText("");
 		}
 		
 		public void changeFirstNameEmployee(CellEditEvent edittedCell) {
 			Employee selectedEmployee = employeeTable.getSelectionModel().getSelectedItem();
 			selectedEmployee.setFirstName(edittedCell.getNewValue().toString());
+			
+			e_saveLbl.setText("");
+
 		}
 		
 		public void changeLastNameEmployee(CellEditEvent edittedCell) {
 			Employee selectedEmployee = employeeTable.getSelectionModel().getSelectedItem();
 			selectedEmployee.setLastName(edittedCell.getNewValue().toString());
+			
+			e_saveLbl.setText("");
+
 		}
 		
 		public void changePhoneEmployee(CellEditEvent edittedCell) {
 			Employee selectedEmployee = employeeTable.getSelectionModel().getSelectedItem();
 			selectedEmployee.setPhoneNumber(edittedCell.getNewValue().toString());
+			
+			e_saveLbl.setText("");
+
 		}
 		
 		public void changeEmailEmployee(CellEditEvent edittedCell) {
 			Employee selectedEmployee = employeeTable.getSelectionModel().getSelectedItem();
 			selectedEmployee.setEmail(edittedCell.getNewValue().toString());
+			
+			e_saveLbl.setText("");
+
+		}
+		
+		public void changeCategoryInventory(CellEditEvent edittedCell) {
+			Inventory selectedInventory = inventoryTable.getSelectionModel().getSelectedItem();
+			selectedInventory.setCategory(edittedCell.getNewValue().toString());
+			
+			i_saveLbl.setText("");
+		}
+		
+		public void changeProductNameInventory(CellEditEvent edittedCell) {
+			Inventory selectedInventory = inventoryTable.getSelectionModel().getSelectedItem();
+			selectedInventory.setProductName(edittedCell.getNewValue().toString());
+			
+			i_saveLbl.setText("");
+		}
+		
+		public void changePriceInventory(CellEditEvent edittedCell) {
+			Inventory selectedInventory = inventoryTable.getSelectionModel().getSelectedItem();
+			selectedInventory.setPrice(Double.parseDouble(edittedCell.getNewValue().toString()));
+			
+			i_saveLbl.setText("");
+		}
+		
+		public void changeStockInventory(CellEditEvent edittedCell) {
+			Inventory selectedInventory = inventoryTable.getSelectionModel().getSelectedItem();
+			selectedInventory.setStock(Integer.parseInt(edittedCell.getNewValue().toString()));
+			
+			i_saveLbl.setText("");
 		}
 		
 		public void generateIdCustomer() {
@@ -378,6 +459,11 @@ public class HomeController implements Initializable {
 		public void generateIdEmployee() {
 			e_generateIdLbl.setText(Integer.toString(Employee.createId()));
 		}
+		
+		public void generateCodeInventory() {
+			i_generateIdLbl.setText(Long.toString(Inventory.createId()));
+		}
+		
 		
 		//This method adds a customer record to customer TableView
 		//It is not committed to database 
@@ -398,7 +484,7 @@ public class HomeController implements Initializable {
 		//This method adds an employee record to employee TableView
 		//It is not committed to database yet
 		public void addEmployee() {
-			//Only add to table if ID, password, first name, last name are filled out
+			//Only add to table if ID is filled out
 			if(e_generateIdLbl.getText() != "") {
 				Employee employee = new Employee(Integer.parseInt(e_generateIdLbl.getText()),
 						e_password.getText(), e_firstName.getText(), e_lastName.getText(),
@@ -411,6 +497,24 @@ public class HomeController implements Initializable {
 				e_messageLbl.setText("Please fill in the necessary fields.");
 			}
 		}
+		
+		//This method adds an inventory record to inventory TableView
+		//It is not committed to database yet
+		public void addInventory() {
+			//Only add to table if ID is filled out
+			if(i_generateIdLbl.getText() != "") {
+				Inventory inventory = new Inventory(Long.parseLong(i_generateIdLbl.getText()),
+						i_category.getText(), i_productName.getText(), Double.parseDouble(i_price.getText()),
+						Integer.parseInt(i_stock.getText()));
+				inventoryTable.getItems().add(inventory);
+					
+				i_generateIdLbl.setText("");
+			}
+			else {
+				i_messageLbl.setText("Please fill in the necessary fields.");
+			}
+		}
+		
 		
 		//This method removes selected customers from TableView and database
 		public void removeCustomer() {
@@ -446,4 +550,23 @@ public class HomeController implements Initializable {
 				
 			}
 		}
+		
+		//This method removes selected customers from TableView and database
+		public void removeInventory() {
+			ObservableList<Inventory> selectedItems, allItems;
+			allItems = inventoryTable.getItems();
+			selectedItems = inventoryTable.getSelectionModel().getSelectedItems();
+			
+			for(Inventory inventory: selectedItems) {
+				//Remove from ObservableList
+				allItems.remove(inventory);
+				
+				//If the record is in database, delete it
+				if(Inventory.hasProductCode(inventory.getProductCode())) {
+					inventory.delete();
+				}
+				
+			}
+		}
+
 }

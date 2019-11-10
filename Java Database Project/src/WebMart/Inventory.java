@@ -122,10 +122,10 @@ public class Inventory {
 	
 	
 	//This method returns a unique id number for each new Inventory item
-	public static int createId() {
+	public static long createId() {
 		//Randomly generate a 6 digit id
 			Random rand = new Random(System.currentTimeMillis());
-			int id = (int)(rand.nextDouble() * 100000 + 100000);
+			long id = (long)(rand.nextDouble() * 10000000 + 10000000);
 			boolean match = true;
 					
 			try {
@@ -136,12 +136,12 @@ public class Inventory {
 				//Use loop to keep generating id's until you get a unique one
 				while(match) {
 					match = false;
-					id = (int)(rand.nextDouble() * 100000 + 100000);
+					id = (long)(rand.nextDouble() * 10000000 + 10000000);
 					ResultSet result = statement.executeQuery("SELECT * FROM inventory");
 								
 					//Use loop to compare id with ones in database
 					while(result.next()) {
-						if(id == result.getInt("productCode")) {
+						if(id == result.getLong("productCode")) {
 							match = true;
 							break;
 						}
@@ -154,6 +154,20 @@ public class Inventory {
 				System.out.println(e);
 				return 000000;
 			}
+	}
+	
+//******DATABASE DELETE METHOD******
+	public void delete() {
+		try {
+			Connection conn = connect();
+			PreparedStatement stmt = conn.prepareStatement("DELETE FROM inventory WHERE productCode = ?");
+			
+			stmt.setLong(1, productCode);
+			stmt.executeUpdate();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 //******DATABASE UPDATE & INSERT METHODS*****
@@ -177,6 +191,30 @@ public class Inventory {
 	}	
 
 //Methods to update the table
+	public static void updateExistingItem(Long code, String category, String name, double price, int stock) {
+		try {
+			Connection conn = connect();
+			//Search for Inventory record, if successful, update it
+			if(hasProductCode(code) == true) {
+				PreparedStatement stmt = conn.prepareStatement("UPDATE inventory SET " + 
+						"category = ?, productName = ?, price = ?, stock = ? WHERE productCode = ?");
+				stmt.setString(1, category);
+				stmt.setString(2, name);
+				stmt.setDouble(3, price);
+				stmt.setInt(4, stock);
+				stmt.setLong(5, code);
+				
+				stmt.executeUpdate();
+			}
+			else {
+				System.out.println("Item not found.");
+			}
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void updateProductCode(Long oldCode, Long newCode) {
 		try {
 			Connection conn = connect();
@@ -238,13 +276,13 @@ public class Inventory {
 		}
 	}
 	
-	public static void updatePrice(Long code, String newPrice) {
+	public static void updatePrice(Long code, Double newPrice) {
 		try {
 			Connection conn = connect();
 			//Search for Inventory record, if successful, update it
 			if(hasProductCode(code) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE inventory SET price = ? WHERE productCode = ?");
-				stmt.setString(1, newPrice);
+				stmt.setDouble(1, newPrice);
 				stmt.setLong(2, code);
 				
 				stmt.executeUpdate();
@@ -258,13 +296,13 @@ public class Inventory {
 			System.out.println(e);
 		}
 	}
-	public static void updateStock(Long code, String newStock) {
+	public static void updateStock(Long code, int newStock) {
 		try {
 			Connection conn = connect();
 			//Search for Inventory record, if successful, update it
 			if(hasProductCode(code) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE inventory SET stock = ? WHERE productCode = ?");
-				stmt.setString(1, newStock);
+				stmt.setInt(1, newStock);
 				stmt.setLong(2, code);
 				
 				stmt.executeUpdate();

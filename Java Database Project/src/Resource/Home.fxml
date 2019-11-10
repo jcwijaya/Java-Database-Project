@@ -48,7 +48,7 @@
                            </children>
                         </VBox>
                         <Label fx:id="updateLbl" layoutX="51.0" layoutY="381.0" prefHeight="35.0" prefWidth="161.0" textAlignment="CENTER" />
-                        <Label fx:id="messageLbl" layoutX="18.0" layoutY="24.0" prefHeight="30.0" prefWidth="289.0" text="Please enter in these fields to add a customer record." />
+                        <Label fx:id="messageLbl" layoutX="18.0" layoutY="24.0" prefHeight="30.0" prefWidth="315.0" text="Please enter in these fields to add a customer record." />
                         <Button fx:id="c_delete" layoutX="340.0" layoutY="54.0" mnemonicParsing="false" onAction="#removeCustomer" text="Delete" />
                      </children>
                   </AnchorPane>
@@ -106,18 +106,18 @@
                               <TextField fx:id="i_productName" promptText="Product Name" />
                               <TextField fx:id="i_price" promptText="Price" />
                               <TextField fx:id="i_stock" promptText="Amount" />
-                              <Button fx:id="insertInventory" mnemonicParsing="false" text="Add New Item" />
+                              <Button fx:id="insertInventory" mnemonicParsing="false" onAction="#addInventory" text="Add New Item" />
                            </children>
                         </VBox>
-                        <Button fx:id="i_generateId" layoutX="14.0" layoutY="61.0" mnemonicParsing="false" text="Generate ID*:" />
+                        <Button fx:id="i_generateId" layoutX="14.0" layoutY="61.0" mnemonicParsing="false" onAction="#generateCodeInventory" text="Generate ID*:" />
                         <Label fx:id="i_generateIdLbl" layoutX="114.0" layoutY="60.0" prefHeight="27.0" prefWidth="115.0" style="-fx-background-color: white;" textAlignment="CENTER">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
                         <Label fx:id="i_messageLbl" layoutX="21.0" layoutY="14.0" prefHeight="30.0" prefWidth="289.0" text="Please enter in these fields to add a customer record." />
-                        <Button fx:id="i_delete" layoutX="299.0" layoutY="61.0" mnemonicParsing="false" text="Delete" />
-                        <Button fx:id="i_save" layoutX="60.0" layoutY="353.0" mnemonicParsing="false" text="Save to Database" />
+                        <Button fx:id="i_delete" layoutX="299.0" layoutY="61.0" mnemonicParsing="false" onAction="#removeInventory" text="Delete" />
+                        <Button fx:id="i_save" layoutX="60.0" layoutY="353.0" mnemonicParsing="false" onAction="#submitInventory" text="Save to Database" />
                         <Label fx:id="i_saveLbl" layoutX="33.0" layoutY="381.0" prefHeight="35.0" prefWidth="161.0" textAlignment="CENTER" />
                      </children></AnchorPane>
               </content>
@@ -126,7 +126,7 @@
       </TabPane>
       <MenuBar fx:id="homeBar" layoutX="55.0" layoutY="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
-          <Menu fx:id="userMenu" mnemonicParsing="false" text="Menu">
+          <Menu fx:id="userMenu" mnemonicParsing="false" style="-fx-text-fill: white;" text="Menu">
             <items>
               <MenuItem fx:id="logout" mnemonicParsing="false" text="Logout" />
             </items>
