@@ -1,6 +1,7 @@
 package WebMart;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -332,6 +333,7 @@ public class HomeController implements Initializable {
 		
 		//Submits changes to inventory table in database
 		public void submitInventory() {
+			Connection conn = Inventory.connect();
 			ArrayList<Inventory> list = new ArrayList<Inventory>();
 			ObservableList<Inventory> tableList = inventoryTable.getItems();
 			
@@ -343,19 +345,19 @@ public class HomeController implements Initializable {
 			//Either insert or update each object into database
 			for(int i = 0; i < list.size(); i++) {
 				//If the inventory record is already there, update it
-				if(Inventory.hasProductCode(list.get(i).getProductCode())) {
+				if(Inventory.hasProductCode(list.get(i).getProductCode(), conn)) {
 					Inventory.updateExistingItem(list.get(i).getProductCode(), list.get(i).getCategory(),
-					list.get(i).getProductName(), list.get(i).getPrice(), list.get(i).getStock());
+					list.get(i).getProductName(), list.get(i).getPrice(), list.get(i).getStock(), conn);
 				}
 				//If the inventory record is not found, insert it
-				else if(!Inventory.hasProductCode(list.get(i).getProductCode())) {
+				else if(!Inventory.hasProductCode(list.get(i).getProductCode(), conn)) {
 					list.get(i).insert();
 				}
 				
 			}
 			
 			i_saveLbl.setText("Updated successfully.");
-			refreshCustomerTable();
+			refreshInventoryTable();
 		}
 		
 		//These methods are to allow user to double click on a cell
@@ -363,7 +365,6 @@ public class HomeController implements Initializable {
 		public void changeFirstNameCustomer(CellEditEvent edittedCell) {
 			Customer selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
 			selectedCustomer.setFirstName(edittedCell.getNewValue().toString());
-			
 			updateLbl.setText("");
 		}
 		
@@ -553,6 +554,7 @@ public class HomeController implements Initializable {
 		
 		//This method removes selected customers from TableView and database
 		public void removeInventory() {
+			Connection conn = Inventory.connect();
 			ObservableList<Inventory> selectedItems, allItems;
 			allItems = inventoryTable.getItems();
 			selectedItems = inventoryTable.getSelectionModel().getSelectedItems();
@@ -562,7 +564,7 @@ public class HomeController implements Initializable {
 				allItems.remove(inventory);
 				
 				//If the record is in database, delete it
-				if(Inventory.hasProductCode(inventory.getProductCode())) {
+				if(Inventory.hasProductCode(inventory.getProductCode(), conn)) {
 					inventory.delete();
 				}
 				

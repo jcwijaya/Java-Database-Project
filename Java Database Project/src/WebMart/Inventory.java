@@ -191,17 +191,17 @@ public class Inventory {
 	}	
 
 //Methods to update the table
-	public static void updateExistingItem(Long code, String category, String name, double price, int stock) {
+	public static void updateExistingItem(Long code, String aCategory, String aName, double aPrice, int newStock, Connection conn) {
 		try {
-			Connection conn = connect();
+			//Connection conn = connect();
 			//Search for Inventory record, if successful, update it
-			if(hasProductCode(code) == true) {
+			if(hasProductCode(code, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE inventory SET " + 
 						"category = ?, productName = ?, price = ?, stock = ? WHERE productCode = ?");
-				stmt.setString(1, category);
-				stmt.setString(2, name);
-				stmt.setDouble(3, price);
-				stmt.setInt(4, stock);
+				stmt.setString(1, aCategory);
+				stmt.setString(2, aName);
+				stmt.setDouble(3, aPrice);
+				stmt.setInt(4, newStock);
 				stmt.setLong(5, code);
 				
 				stmt.executeUpdate();
@@ -215,11 +215,11 @@ public class Inventory {
 		}
 	}
 	
-	public static void updateProductCode(Long oldCode, Long newCode) {
+	public static void updateProductCode(Long oldCode, Long newCode, Connection conn) {
 		try {
-			Connection conn = connect();
+			//Connection conn = connect();
 			//Search for Inventory record, if successful, update it
-			if(hasProductCode(oldCode) == true) {
+			if(hasProductCode(oldCode, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE inventory SET productCode = ? WHERE productCode = ?");
 				stmt.setLong(1, newCode);
 				stmt.setLong(2, oldCode);
@@ -235,11 +235,11 @@ public class Inventory {
 			System.out.println(e);
 		}
 	}
-	public static void updateCategory(Long code, String newCat) {
+	public static void updateCategory(Long code, String newCat, Connection conn) {
 		try {
-			Connection conn = connect();
+			//Connection conn = connect();
 			//Search for Inventory record, if successful, update it
-			if(hasProductCode(code) == true) {
+			if(hasProductCode(code, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE inventory SET category = ? WHERE productCode = ?");
 				stmt.setString(1, newCat);
 				stmt.setLong(2, code);
@@ -255,11 +255,11 @@ public class Inventory {
 			System.out.println(e);
 		}
 	}
-	public static void updateProductName(Long code, String newName) {
+	public static void updateProductName(Long code, String newName, Connection conn) {
 		try {
-			Connection conn = connect();
+			//Connection conn = connect();
 			//Search for Inventory record, if successful, update it
-			if(hasProductCode(code) == true) {
+			if(hasProductCode(code, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE inventory SET productName = ? WHERE productCode = ?");
 				stmt.setString(1, newName);
 				stmt.setLong(2, code);
@@ -276,11 +276,11 @@ public class Inventory {
 		}
 	}
 	
-	public static void updatePrice(Long code, Double newPrice) {
+	public static void updatePrice(Long code, Double newPrice, Connection conn) {
 		try {
-			Connection conn = connect();
+			//Connection conn = connect();
 			//Search for Inventory record, if successful, update it
-			if(hasProductCode(code) == true) {
+			if(hasProductCode(code, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE inventory SET price = ? WHERE productCode = ?");
 				stmt.setDouble(1, newPrice);
 				stmt.setLong(2, code);
@@ -296,11 +296,11 @@ public class Inventory {
 			System.out.println(e);
 		}
 	}
-	public static void updateStock(Long code, int newStock) {
+	public static void updateStock(Long code, int newStock, Connection conn) {
 		try {
-			Connection conn = connect();
+			//Connection conn = connect();
 			//Search for Inventory record, if successful, update it
-			if(hasProductCode(code) == true) {
+			if(hasProductCode(code, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE inventory SET stock = ? WHERE productCode = ?");
 				stmt.setInt(1, newStock);
 				stmt.setLong(2, code);
@@ -524,9 +524,9 @@ public class Inventory {
 	}
 //******DATABASE BOOLEAN HAS METHODS******
 //Methods that show whether something can be found in the table
-	public static boolean hasProductCode(long code) {
+	public static boolean hasProductCode(long code, Connection conn) {
 		try {
-			Connection conn = connect();
+			//Connection conn = connect();
 			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM inventory where productCode = ?");
 			preparedStmt.setLong(1, code);
 				

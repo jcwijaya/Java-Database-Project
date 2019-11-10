@@ -16,50 +16,33 @@ import java.util.Scanner;
 
 //This program tests the Customer class.
 public class TestCustomer{
-	public static void main(String[] args) throws FileNotFoundException {
+	public  void ReadFromFile(String[] args) throws FileNotFoundException {
 		File file = new File("items");
 		Scanner scanner = new Scanner(file);
-		
 		String strProductCode;
 		String category;
 		String productName;
 		String strPrice;
 		String strStock;
-		
 		double price;
 		int stock;
 		Long productCode;
 		
-		
-		
 		while(scanner.hasNext())
 		{
 			scanner.useDelimiter(";");
-			
 			strProductCode = scanner.next();
 			productCode = Long.parseLong(strProductCode.trim());
-			
 			category = scanner.next();
-			
 			productName = scanner.next();
-			
 			strPrice = scanner.next();
 			price = Double.parseDouble(strPrice.trim());
-			
 			strStock = scanner.next();
 			stock = Integer.parseInt(strStock.trim());
 			
 			Inventory item = new Inventory(productCode, category.trim(), productName.trim(), price, stock);
-			//item.insert();
+			item.insert();
 			System.out.println("Insertion successful.");
-			/*
-			System.out.println(productCode);
-			System.out.println(category.trim());
-			System.out.println(productName.trim());
-			System.out.println(price);
-			System.out.println(stock);
-			System.out.println();
-			*/
 		}
 
 	

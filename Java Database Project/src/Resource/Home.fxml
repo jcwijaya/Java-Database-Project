@@ -91,13 +91,13 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="inventoryTable" layoutX="439.0" layoutY="235.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+                        <TableView fx:id="inventoryTable" editable="true" layoutX="439.0" layoutY="235.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
                           <columns>
                             <TableColumn fx:id="productCode" prefWidth="85.33329772949219" text="Code" />
-                            <TableColumn fx:id="category" prefWidth="106.0" text="Category" />
-                              <TableColumn fx:id="name" prefWidth="138.00003051757812" text="Name" />
-                              <TableColumn fx:id="price" prefWidth="66.6666259765625" text="Price" />
-                              <TableColumn fx:id="stock" prefWidth="75.3333740234375" text="Amount" />
+                            <TableColumn fx:id="category" onEditCommit="#changeCategoryInventory" prefWidth="106.0" text="Category" />
+                              <TableColumn fx:id="name" onEditCommit="#changeProductNameInventory" prefWidth="138.00003051757812" text="Name" />
+                              <TableColumn fx:id="price" onEditCommit="#changePriceInventory" prefWidth="66.6666259765625" text="Price" />
+                              <TableColumn fx:id="stock" onEditCommit="#changeStockInventory" prefWidth="75.3333740234375" text="Amount" />
                           </columns>
                         </TableView>
                         <VBox alignment="CENTER" layoutX="14.0" layoutY="100.0" prefHeight="227.0" prefWidth="199.0" spacing="30.0">
