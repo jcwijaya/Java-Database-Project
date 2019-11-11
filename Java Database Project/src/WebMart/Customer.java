@@ -198,11 +198,33 @@ public class Customer {
 		}
 	}
 	
+	public static void updateExistingCustomer(int id, String first, 
+			String last, String phone, String emailAddress, Connection conn) {
+		try {
+			//Search for customer record, if successful, update it
+			if(hasCustomerId(id, conn) == true) {
+				PreparedStatement stmt = conn.prepareStatement("UPDATE customers SET firstName = ?, " +
+						"lastName = ?, phoneNumber = ?, email = ? WHERE customerId = ?");
+				stmt.setString(1, first);
+				stmt.setString(2, last);
+				stmt.setString(3, phone);
+				stmt.setString(4, emailAddress);
+				stmt.setInt(5, id);
+				
+				stmt.executeUpdate();	
+			}
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	
 	public static void updateCustomerId(int oldId, int newId) {
 		try {
 			Connection conn = connect();
 			//Search for customer record, if successful, update it
-			if(hasCustomerId(oldId) == true) {
+			if(hasCustomerId(oldId, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE customers SET customerId = ? WHERE customerId = ?");
 				stmt.setInt(1, newId);
 				stmt.setInt(2, oldId);
@@ -223,7 +245,7 @@ public class Customer {
 		try {
 			Connection conn = connect();
 			//Search for customer record, if successful, update it
-			if(hasCustomerId(id) == true) {
+			if(hasCustomerId(id, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE customers SET firstName = ? WHERE customerId = ?");
 				stmt.setString(1, first);
 				stmt.setInt(2, id);
@@ -243,7 +265,7 @@ public class Customer {
 		try {
 			Connection conn = connect();
 			//Search for customer record, if successful, update it
-			if(hasCustomerId(id) == true) {
+			if(hasCustomerId(id, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE customers SET lastName = ? WHERE customerId = ?");
 				stmt.setString(1, last);
 				stmt.setInt(2, id);
@@ -263,7 +285,7 @@ public class Customer {
 		try {
 			Connection conn = connect();
 			//Search for customer record, if successful, update it
-			if(hasCustomerId(id) == true) {
+			if(hasCustomerId(id, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE customers SET phoneNumber = ? WHERE customerId = ?");
 				stmt.setString(1, number);
 				stmt.setInt(2, id);
@@ -283,7 +305,7 @@ public class Customer {
 		try {
 			Connection conn = connect();
 			//Search for customer record, if successful, update it
-			if(hasCustomerId(id) == true) {
+			if(hasCustomerId(id, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE customers SET email = ? WHERE customerId = ?");
 				stmt.setString(1, emailAddress);
 				stmt.setInt(2, id);
@@ -303,9 +325,9 @@ public class Customer {
 	//These methods check whether the given data field is found in the customers table
 	//and return a boolean value
 	
-	public static boolean hasCustomerId(int id) {
+	public static boolean hasCustomerId(int id, Connection conn) {
 		try {
-			Connection conn = connect();
+			//Connection conn = connect();
 			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers WHERE customerId = ?");
 			preparedStmt.setInt(1, id);
 			

@@ -273,6 +273,7 @@ public class HomeController implements Initializable {
 		
 		//Submits changes to customers table in database
 		public void submitCustomers() {
+			Connection conn = Customer.connect();
 			ArrayList<Customer> list = new ArrayList<Customer>();
 			ObservableList<Customer> tableList = customerTable.getItems();
 			
@@ -284,14 +285,12 @@ public class HomeController implements Initializable {
 			//Either insert or update each object into database
 			for(int i = 0; i < list.size(); i++) {
 				//If the customer record is already there, update it
-				if(Customer.hasCustomerId(list.get(i).getCustomerId())) {
-					Customer.updateFirstName(list.get(i).getCustomerId(), list.get(i).getFirstName());
-					Customer.updateLastName(list.get(i).getCustomerId(), list.get(i).getLastName());
-					Customer.updatePhoneNumber(list.get(i).getCustomerId(), list.get(i).getPhoneNumber());
-					Customer.updateEmail(list.get(i).getCustomerId(), list.get(i).getEmail());
+				if(Customer.hasCustomerId(list.get(i).getCustomerId(), conn)) {
+					Customer.updateExistingCustomer(list.get(i).getCustomerId(), list.get(i).getFirstName(),
+							list.get(i).getLastName(), list.get(i).getPhoneNumber(), list.get(i).getEmail(), conn);
 				}
 				//If the customer record is not found, insert it
-				else if(!Customer.hasCustomerId(list.get(i).getCustomerId())) {
+				else if(!Customer.hasCustomerId(list.get(i).getCustomerId(), conn)) {
 					list.get(i).insert();
 				}
 				
@@ -303,6 +302,7 @@ public class HomeController implements Initializable {
 		
 		//Submits changes to employees table in database
 		public void submitEmployees() {
+			Connection conn = Employee.connect();
 			ArrayList<Employee> list = new ArrayList<Employee>();
 			ObservableList<Employee> tableList = employeeTable.getItems();
 			
@@ -314,15 +314,12 @@ public class HomeController implements Initializable {
 			//Either insert or update each object into database
 			for(int i = 0; i < list.size(); i++) {
 				//If the employee record is already there, update it
-				if(Employee.hasEmployeeId(list.get(i).getEmployeeId())) {
-					Employee.updateFirstName(list.get(i).getEmployeeId(), list.get(i).getFirstName());
-					Employee.updateLastName(list.get(i).getEmployeeId(), list.get(i).getLastName());
-					Employee.updatePhoneNumber(list.get(i).getEmployeeId(), list.get(i).getPhoneNumber());
-					Employee.updateEmail(list.get(i).getEmployeeId(), list.get(i).getEmail());
-					Employee.updatePassword(list.get(i).getEmployeeId(), list.get(i).getPassword());
+				if(Employee.hasEmployeeId(list.get(i).getEmployeeId(), conn)) {
+					Employee.updateExistingEmployee(list.get(i).getEmployeeId(), list.get(i).getPassword(), 
+					list.get(i).getFirstName(), list.get(i).getLastName(), list.get(i).getPhoneNumber(), list.get(i).getEmail(), conn);
 				}
 				//If the employee record is not found, insert it
-				else if(!Employee.hasEmployeeId(list.get(i).getEmployeeId())) {
+				else if(!Employee.hasEmployeeId(list.get(i).getEmployeeId(), conn)) {
 					list.get(i).insert();
 				}
 			}
@@ -519,6 +516,7 @@ public class HomeController implements Initializable {
 		
 		//This method removes selected customers from TableView and database
 		public void removeCustomer() {
+			Connection conn = Customer.connect();
 			ObservableList<Customer> selectedCustomers, allCustomers;
 			allCustomers = customerTable.getItems();
 			selectedCustomers = customerTable.getSelectionModel().getSelectedItems();
@@ -528,7 +526,7 @@ public class HomeController implements Initializable {
 				allCustomers.remove(customer);
 				
 				//If the record is in database, delete it
-				if(Customer.hasCustomerId(customer.getCustomerId())) {
+				if(Customer.hasCustomerId(customer.getCustomerId(), conn)) {
 					customer.delete();
 				}
 				
@@ -536,6 +534,7 @@ public class HomeController implements Initializable {
 		}
 
 		public void removeEmployee() {
+			Connection conn = Employee.connect();
 			ObservableList<Employee> selectedEmployees, allEmployees;
 			allEmployees = employeeTable.getItems();
 			selectedEmployees = employeeTable.getSelectionModel().getSelectedItems();
@@ -545,7 +544,7 @@ public class HomeController implements Initializable {
 				allEmployees.remove(employee);
 				
 				//If the record is in database, delete it
-				if(Employee.hasEmployeeId(employee.getEmployeeId())) {
+				if(Employee.hasEmployeeId(employee.getEmployeeId(), conn)) {
 					employee.delete();
 				}
 				

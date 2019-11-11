@@ -207,12 +207,34 @@ public class Employee {
 		}
 	}
 	
+	public static void updateExistingEmployee(int id, String pass, String first, String last,
+			String phone, String emailAddress, Connection conn) {
+		try {
+			//Search for customer record, if successful, update it
+			if(hasEmployeeId(id, conn) == true) {
+				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET password = ?, " +
+						"firstName = ?, lastName = ?, phoneNumber = ?, email = ? WHERE employeeId = ?");
+				stmt.setString(1,  pass);
+				stmt.setString(2, first);
+				stmt.setString(3, last);
+				stmt.setString(4, phone);
+				stmt.setString(5, emailAddress);
+				stmt.setInt(6, id);
+				
+				stmt.executeUpdate();	
+			}
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 //Methods to update the table
 	public static void updateEmployeeId(int oldId, int newId) {
 		try {
 			Connection conn = connect();
 			//Search for employee record, if successful, update it
-			if(hasEmployeeId(oldId) == true) {
+			if(hasEmployeeId(oldId, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET employeeId = ? WHERE employeeId = ?");
 				stmt.setInt(1, newId);
 				stmt.setInt(2, oldId);
@@ -233,7 +255,7 @@ public class Employee {
 		try {
 			Connection conn = connect();
 			//Search for employee record, if successful, update it
-			if(hasEmployeeId(id) == true) {
+			if(hasEmployeeId(id, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET password = ? WHERE employeeId = ?");
 				stmt.setString(1, newPass);
 				stmt.setInt(2, id);
@@ -254,7 +276,7 @@ public class Employee {
 		try {
 			Connection conn = connect();
 			//Search for employee record, if successful, update it
-			if(hasEmployeeId(id) == true) {
+			if(hasEmployeeId(id, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET firstName = ? WHERE employeeId = ?");
 				stmt.setString(1, first);
 				stmt.setInt(2, id);
@@ -275,7 +297,7 @@ public class Employee {
 		try {
 			Connection conn = connect();
 			//Search for employee record, if successful, update it
-			if(hasEmployeeId(id) == true) {
+			if(hasEmployeeId(id, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET lastName = ? WHERE employeeId = ?");
 				stmt.setString(1, last);
 				stmt.setInt(2, id);
@@ -296,7 +318,7 @@ public class Employee {
 		try {
 			Connection conn = connect();
 			//Search for employee record, if successful, update it
-			if(hasEmployeeId(id) == true) {
+			if(hasEmployeeId(id, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET phoneNumber = ? WHERE employeeId = ?");
 				stmt.setString(1, number);
 				stmt.setInt(2, id);
@@ -316,7 +338,7 @@ public class Employee {
 		try {
 			Connection conn = connect();
 			//Search for employee record, if successful, update it
-			if(hasEmployeeId(id) == true) {
+			if(hasEmployeeId(id, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET email = ? WHERE employeeId = ?");
 				stmt.setString(1, emailAddress);
 				stmt.setInt(2, id);
@@ -546,9 +568,9 @@ public class Employee {
 	
 //******DATABASE BOOLEAN HAS METHODS******
 //Methods that show whether something can be found in the table
-	public static boolean hasEmployeeId(int id) {
+	public static boolean hasEmployeeId(int id, Connection conn) {
 		try {
-			Connection conn = connect();
+			//Connection conn = connect();
 			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM employees where employeeId = ?");
 			preparedStmt.setInt(1, id);
 			
