@@ -115,7 +115,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="i_messageLbl" layoutX="21.0" layoutY="14.0" prefHeight="30.0" prefWidth="289.0" text="Please enter in these fields to add a customer record." />
+                        <Label fx:id="i_messageLbl" layoutX="21.0" layoutY="14.0" prefHeight="30.0" prefWidth="289.0" text="Please enter in these fields to add an inventory record." />
                         <Button fx:id="i_delete" layoutX="299.0" layoutY="61.0" mnemonicParsing="false" onAction="#removeInventory" text="Delete" />
                         <Button fx:id="i_save" layoutX="60.0" layoutY="353.0" mnemonicParsing="false" onAction="#submitInventory" text="Save to Database" />
                         <Label fx:id="i_saveLbl" layoutX="33.0" layoutY="381.0" prefHeight="35.0" prefWidth="161.0" textAlignment="CENTER" />

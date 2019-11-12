@@ -472,6 +472,7 @@ public class HomeController implements Initializable {
 				customerTable.getItems().add(customer);
 				
 				generateIdLbl.setText("");
+				updateLbl.setText("");
 				messageLbl.setText("Please enter in these fields to add a customer record.");
 			}
 			else {
@@ -490,6 +491,8 @@ public class HomeController implements Initializable {
 				employeeTable.getItems().add(employee);
 					
 				e_generateIdLbl.setText("");
+				e_saveLbl.setText("");
+				e_messageLbl.setText("Please enter in these fields to add an employee record.");
 			}
 			else {
 				e_messageLbl.setText("Please fill in the necessary fields.");
@@ -507,6 +510,8 @@ public class HomeController implements Initializable {
 				inventoryTable.getItems().add(inventory);
 					
 				i_generateIdLbl.setText("");
+				i_saveLbl.setText("");
+				i_messageLbl.setText("Please enter in these fields to add an inventory record.");
 			}
 			else {
 				i_messageLbl.setText("Please fill in the necessary fields.");
@@ -524,7 +529,7 @@ public class HomeController implements Initializable {
 			for(Customer customer: selectedCustomers) {
 				//Remove from ObservableList
 				allCustomers.remove(customer);
-				
+				updateLbl.setText("");
 				//If the record is in database, delete it
 				if(Customer.hasCustomerId(customer.getCustomerId(), conn)) {
 					customer.delete();
@@ -542,7 +547,7 @@ public class HomeController implements Initializable {
 			for(Employee employee: selectedEmployees) {
 				//Remove from ObservableList
 				allEmployees.remove(employee);
-				
+				e_saveLbl.setText("");
 				//If the record is in database, delete it
 				if(Employee.hasEmployeeId(employee.getEmployeeId(), conn)) {
 					employee.delete();
@@ -561,7 +566,7 @@ public class HomeController implements Initializable {
 			for(Inventory inventory: selectedItems) {
 				//Remove from ObservableList
 				allItems.remove(inventory);
-				
+				i_saveLbl.setText("");
 				//If the record is in database, delete it
 				if(Inventory.hasProductCode(inventory.getProductCode(), conn)) {
 					inventory.delete();

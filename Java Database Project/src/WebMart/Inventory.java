@@ -191,9 +191,9 @@ public class Inventory {
 	}	
 
 //Methods to update the table
-	public static void updateExistingItem(Long code, String aCategory, String aName, double aPrice, int newStock, Connection conn) {
+	public static void updateExistingItem(Long code, String aCategory, String aName, double aPrice, 
+			int newStock, Connection conn) {
 		try {
-			//Connection conn = connect();
 			//Search for Inventory record, if successful, update it
 			if(hasProductCode(code, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE inventory SET " + 
