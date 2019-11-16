@@ -65,9 +65,9 @@ public class HomeController implements Initializable {
 		@FXML public Tab EmployeesDeleteTab;
 		*/
 		
-		@FXML private e_messageLbl;
-		@FXML private Button e_save;
-		@FXML private e_saveLbl;
+		@FXML public e_messageLbl;
+		@FXML public Button e_save;
+		@FXML public e_saveLbl;
 		
 		//To add an employee
 		@FXML private Button e_generateId;

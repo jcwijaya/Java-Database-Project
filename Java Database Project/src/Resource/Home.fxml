@@ -36,7 +36,7 @@
                         <Button fx:id="generateId" layoutX="17.0" layoutY="95.0" mnemonicParsing="false" onAction="#generateIdCustomer" text="Generate ID:" />
                         <VBox alignment="CENTER" layoutX="32.0" layoutY="135.0" prefHeight="227.0" prefWidth="199.0" spacing="30.0">
                            <children>
-                              <TextField fx:id="c_firstName" promptText="first" />
+                              <TextField fx:id="c_firstName" promptText="first name" />
                               <TextField fx:id="c_lastName" promptText="Last Name" />
                               <TextField fx:id="c_phoneNumber" promptText="Phone Number" />
                               <TextField fx:id="c_email" promptText="Email" />
