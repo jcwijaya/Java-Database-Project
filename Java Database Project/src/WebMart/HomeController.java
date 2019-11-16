@@ -44,6 +44,9 @@ public class HomeController implements Initializable {
 		@FXML private Label updateLbl;	//Displays message is submit is successful
 		@FXML private Label messageLbl;  //Shows instructions for user
 		@FXML private Button c_delete;
+		@FXML private Button c_searchBtn;
+		@FXML private TextField c_searchTxt;
+		@FXML private Button c_refresh;
 		
 		//To add new customer
 		@FXML private Button insertCustomer; //Adds a new customer object to customer TableView
@@ -84,6 +87,9 @@ public class HomeController implements Initializable {
 		@FXML private Button e_save;
 		@FXML private Label e_saveLbl;
 		@FXML private Button e_delete;
+		@FXML private TextField e_searchTxt;
+		@FXML private Button e_searchBtn;
+		@FXML private Button e_refresh;
 		
 		//To add an employee
 		@FXML private Button e_generateId;
@@ -116,6 +122,9 @@ public class HomeController implements Initializable {
 		@FXML private Button i_save;
 		@FXML private Label i_saveLbl;
 		@FXML private Button i_delete;
+		@FXML private TextField i_searchTxt;
+		@FXML private Button i_seachBtn;
+		@FXML private Button i_refresh;
 		
 		//To add an inventory item
 		@FXML private Button i_generateId;
@@ -246,6 +255,18 @@ public class HomeController implements Initializable {
 			
 		}
 		
+		public void setCustomerTable(ArrayList<Customer> list) {
+			ObservableList<Customer> customerList = FXCollections.observableArrayList(list);
+			
+			customerId.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("customerId"));
+			customerFirst.setCellValueFactory(new PropertyValueFactory<Customer, String>("firstName"));
+			customerLast.setCellValueFactory(new PropertyValueFactory<Customer, String>("lastName"));
+			customerPhone.setCellValueFactory(new PropertyValueFactory<Customer, String>("phoneNumber"));
+			customerEmail.setCellValueFactory(new PropertyValueFactory<Customer, String>("email"));
+			
+			customerTable.setItems(customerList);
+		}
+		
 		public void refreshEmployeeTable() {
 			ObservableList<Employee> employeeList = FXCollections.observableArrayList(Employee.getTable());
 
@@ -259,8 +280,33 @@ public class HomeController implements Initializable {
 			employeeTable.setItems(employeeList);
 		}
 		
+		public void setEmployeeTable(ArrayList<Employee> list) {
+			ObservableList<Employee> employeeList = FXCollections.observableArrayList(list);
+
+			employeeId.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("employeeId"));
+			password.setCellValueFactory(new PropertyValueFactory<Employee, String>("password"));
+			employeeFirst.setCellValueFactory(new PropertyValueFactory<Employee, String>("firstName"));
+			employeeLast.setCellValueFactory(new PropertyValueFactory<Employee, String>("lastName"));
+			employeePhone.setCellValueFactory(new PropertyValueFactory<Employee, String>("phoneNumber"));
+			employeeEmail.setCellValueFactory(new PropertyValueFactory<Employee, String>("email"));
+			
+			employeeTable.setItems(employeeList);
+		}
+		
 		public void refreshInventoryTable() {			
 			ObservableList<Inventory> inventoryList = FXCollections.observableArrayList(Inventory.getTable());
+
+			productCode.setCellValueFactory(new PropertyValueFactory<Inventory, Long>("productCode"));
+			category.setCellValueFactory(new PropertyValueFactory<Inventory, String>("category"));
+			name.setCellValueFactory(new PropertyValueFactory<Inventory, String>("productName"));
+			price.setCellValueFactory(new PropertyValueFactory<Inventory, Double>("price"));
+			stock.setCellValueFactory(new PropertyValueFactory<Inventory, Integer>("stock"));
+			
+			inventoryTable.setItems(inventoryList);
+		}
+		
+		public void setInventoryTable(ArrayList<Inventory> list) {
+			ObservableList<Inventory> inventoryList = FXCollections.observableArrayList(list);
 
 			productCode.setCellValueFactory(new PropertyValueFactory<Inventory, Long>("productCode"));
 			category.setCellValueFactory(new PropertyValueFactory<Inventory, String>("category"));
@@ -573,6 +619,67 @@ public class HomeController implements Initializable {
 				}
 				
 			}
+		}
+		
+		//This method allows the user to search for a word in customersTable
+		public void searchCustomers() {
+			refreshCustomerTable();
+			ObservableList<Customer> list = customerTable.getItems();
+			ArrayList<Customer> found = new ArrayList<Customer>();
+			String str = c_searchTxt.getText();
+			
+			//Check if str is a substring in each record
+			for(int i = 0; i < list.size(); i++) {
+				if(Integer.toString(list.get(i).getCustomerId()).toLowerCase().contains(str.toLowerCase()) ||
+					list.get(i).getFirstName().toLowerCase().contains(str.toLowerCase()) ||
+					list.get(i).getLastName().toLowerCase().contains(str.toLowerCase()) ||
+					list.get(i).getPhoneNumber().toLowerCase().contains(str.toLowerCase()) ||
+					list.get(i).getEmail().toLowerCase().contains(str.toLowerCase())) {
+					found.add(list.get(i));
+				}
+			}
+			//Put found onto tableview
+			setCustomerTable(found);
+
+		}
+		public void searchEmployees() {
+			refreshEmployeeTable();
+			ObservableList<Employee> list = employeeTable.getItems();
+			ArrayList<Employee> found = new ArrayList<Employee>();
+			String str = e_searchTxt.getText();
+			
+			//Check if str is a substring in each record
+			for(int i = 0; i < list.size(); i++) {
+				if(Integer.toString(list.get(i).getEmployeeId()).toLowerCase().contains(str.toLowerCase()) ||
+					list.get(i).getFirstName().toLowerCase().contains(str.toLowerCase()) ||
+					list.get(i).getLastName().toLowerCase().contains(str.toLowerCase()) ||
+					list.get(i).getPhoneNumber().toLowerCase().contains(str.toLowerCase()) ||
+					list.get(i).getEmail().toLowerCase().contains(str.toLowerCase())) {
+					found.add(list.get(i));
+				}
+			}
+			//Put found onto tableview
+			setEmployeeTable(found);
+
+		}		
+		
+		public void searchInventory() {
+			refreshInventoryTable();
+			ObservableList<Inventory> list = inventoryTable.getItems();
+			ArrayList<Inventory> found = new ArrayList<Inventory>();
+			String str = i_searchTxt.getText();
+		
+			for(int i = 0; i < list.size(); i++) {
+				if(Long.toString(list.get(i).getProductCode()).toLowerCase().contains(str.toLowerCase()) ||
+					list.get(i).getCategory().toLowerCase().contains(str.toLowerCase()) ||
+					list.get(i).getProductName().toLowerCase().contains(str.toLowerCase()) ||
+					Double.toString(list.get(i).getPrice()).toLowerCase().contains(str.toLowerCase()) ||
+					Integer.toString(list.get(i).getStock()).toLowerCase().contains(str.toLowerCase())){
+					found.add(list.get(i));
+					
+				}
+			}
+			setInventoryTable(found);
 		}
 
 }

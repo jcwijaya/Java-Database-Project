@@ -23,7 +23,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                      <Button fx:id="updateCustomer" layoutX="71.0" layoutY="356.0" mnemonicParsing="false" onAction="#submitCustomers" text="Submit to Database" />
+                      <Button fx:id="updateCustomer" layoutX="78.0" layoutY="355.0" mnemonicParsing="false" onAction="#submitCustomers" text="Save to Database" />
                         <TableView fx:id="customerTable" layoutX="244.0" layoutY="-60.0" prefHeight="371.0" prefWidth="456.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
                           <columns>
                             <TableColumn fx:id="customerId" prefWidth="75.0" text="ID" />
@@ -49,7 +49,10 @@
                         </VBox>
                         <Label fx:id="updateLbl" layoutX="51.0" layoutY="381.0" prefHeight="35.0" prefWidth="161.0" textAlignment="CENTER" />
                         <Label fx:id="messageLbl" layoutX="18.0" layoutY="24.0" prefHeight="30.0" prefWidth="315.0" text="Please enter in these fields to add a customer record." />
-                        <Button fx:id="c_delete" layoutX="340.0" layoutY="54.0" mnemonicParsing="false" onAction="#removeCustomer" text="Delete" />
+                        <Button fx:id="c_delete" layoutX="313.0" layoutY="66.0" mnemonicParsing="false" onAction="#removeCustomer" text="Delete" />
+                        <TextField fx:id="c_searchTxt" layoutX="369.0" layoutY="26.0" prefHeight="25.0" prefWidth="228.0" promptText="Search" />
+                        <Button fx:id="c_searchBtn" layoutX="313.0" layoutY="26.0" mnemonicParsing="false" onAction="#searchCustomers" text="Search" />
+                        <Button fx:id="c_refresh" layoutX="598.0" layoutY="26.0" mnemonicParsing="false" onAction="#refreshCustomerTable" text="Refresh Table" />
                      </children>
                   </AnchorPane>
             </content>
@@ -84,6 +87,9 @@
                            </children>
                         </VBox>
                         <Button fx:id="e_delete" layoutX="332.0" layoutY="54.0" mnemonicParsing="false" onAction="#removeEmployee" text="Delete" />
+                        <TextField fx:id="e_searchTxt" layoutX="391.0" layoutY="19.0" prefHeight="25.0" prefWidth="215.0" />
+                        <Button fx:id="e_searchBtn" layoutX="331.0" layoutY="19.0" mnemonicParsing="false" onAction="#searchEmployees" text="Search" />
+                        <Button fx:id="e_refresh" layoutX="607.0" layoutY="19.0" mnemonicParsing="false" onAction="#refreshEmployeeTable" text="Refresh Table" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -116,9 +122,12 @@
                            </font>
                         </Label>
                         <Label fx:id="i_messageLbl" layoutX="21.0" layoutY="14.0" prefHeight="30.0" prefWidth="289.0" text="Please enter in these fields to add an inventory record." />
-                        <Button fx:id="i_delete" layoutX="299.0" layoutY="61.0" mnemonicParsing="false" onAction="#removeInventory" text="Delete" />
+                        <Button fx:id="i_delete" layoutX="338.0" layoutY="61.0" mnemonicParsing="false" onAction="#removeInventory" text="Delete" />
                         <Button fx:id="i_save" layoutX="60.0" layoutY="353.0" mnemonicParsing="false" onAction="#submitInventory" text="Save to Database" />
                         <Label fx:id="i_saveLbl" layoutX="33.0" layoutY="381.0" prefHeight="35.0" prefWidth="161.0" textAlignment="CENTER" />
+                        <TextField fx:id="i_searchTxt" layoutX="396.0" layoutY="19.0" prefHeight="25.0" prefWidth="215.0" />
+                        <Button fx:id="i_searchBtn" layoutX="338.0" layoutY="19.0" mnemonicParsing="false" onAction="#searchInventory" text="Search" />
+                        <Button fx:id="i_refresh" layoutX="611.0" layoutY="19.0" mnemonicParsing="false" onAction="#refreshInventoryTable" text="Refresh Table" />
                      </children></AnchorPane>
               </content>
             </Tab>
