@@ -1,5 +1,6 @@
 package WebMart;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -7,7 +8,10 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
@@ -22,6 +26,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
@@ -57,15 +62,6 @@ public class HomeController implements Initializable {
 		@FXML private Button generateId; //This button calls createId method and displays the ID in a label
 		@FXML private Label generateIdLbl;
 		
-		/*
-		//CustomersTabPane
-		@FXML public TabPane CustomersTabPane;
-		@FXML public Tab CustomersInsertTab;
-		@FXML public Tab CustomersSearchTab;
-		@FXML public Tab CustomersUpdateTab;
-		@FXML public Tab CustomersDeleteTab;
-		*/
-		
 		//Make TableView for Customer class
 		@FXML private TableView<Customer> customerTable;
 		@FXML private TableColumn<Customer, Integer> customerId;
@@ -74,14 +70,8 @@ public class HomeController implements Initializable {
 		@FXML private TableColumn<Customer, String> customerPhone;
 		@FXML private TableColumn<Customer, String> customerEmail;
 		
-		/*
+	
 //******Employees Tab
-		@FXML public TabPane EmployeesTabPane;
-		@FXML public Tab EmployeesInsertTab;
-		@FXML public Tab EmployeesSearchTab;
-		@FXML public Tab EmployeesUpdateTab;
-		@FXML public Tab EmployeesDeleteTab;
-		*/
 		
 		@FXML private Label e_messageLbl;
 		@FXML private Button e_save;
@@ -109,14 +99,8 @@ public class HomeController implements Initializable {
 		@FXML private TableColumn<Employee, String> employeePhone;
 		@FXML private TableColumn<Employee, String> employeeEmail;
 		
-		/*
+		
 //******Inventory Tab
-		@FXML public TabPane InventoryTabPane;
-		@FXML public Tab InventoryInsertTab;
-		@FXML public Tab InventorySearchTab;
-		@FXML public Tab InventoryUpdateTab;
-		@FXML public Tab InventoryDeleteTab;
-		*/
 		
 		@FXML private Label i_messageLbl;
 		@FXML private Button i_save;
@@ -680,6 +664,22 @@ public class HomeController implements Initializable {
 				}
 			}
 			setInventoryTable(found);
+		}
+		
+		public void logout() {
+			try {
+			Parent loginRoot = FXMLLoader.load(getClass().getResource("/Resource/PracticeSceneBuilder.fxml"));
+			Scene loginScene = new Scene(loginRoot);
+			Stage loginStage = new Stage();
+			loginStage.setTitle("WebMart");
+			loginStage.setScene(loginScene);
+			loginStage.show();
+			Stage homeStage = (Stage) homeBar.getScene().getWindow();
+			homeStage.close();
+			}
+			catch(IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 }

@@ -137,7 +137,7 @@
         <menus>
           <Menu fx:id="userMenu" mnemonicParsing="false" style="-fx-text-fill: white;" text="Menu">
             <items>
-              <MenuItem fx:id="logout" mnemonicParsing="false" text="Logout" />
+              <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#logout" text="Logout" />
             </items>
           </Menu>
           <Menu fx:id="cartMenu" mnemonicParsing="false" text="Shopping Cart">

@@ -5,6 +5,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -59,6 +60,23 @@ public class MainController {
 		}
 	}
 	
+	public void toSetupPage() {
+		try {
+		Stage setupStage = new Stage();
+		Parent setupRoot = FXMLLoader.load(getClass().getResource("/Resource/Setup.fxml"));
+		Scene setupScene = new Scene(setupRoot);
+		setupStage.setTitle("WebMart");
+		setupStage.setScene(setupScene);
+		setupStage.show();
+		Stage loginStage = (Stage) loginBtn.getScene().getWindow();
+		loginStage.close();
+		
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	//This function checks if a string only contains digits
 	public boolean isInteger(String aString) {
 		if(aString.trim().isEmpty()) {
@@ -74,5 +92,6 @@ public class MainController {
 			return true;
 		}
 	}
+	
 	
 }

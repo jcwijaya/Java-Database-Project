@@ -32,7 +32,7 @@
          <font>
             <Font name="System Bold" size="18.0" />
          </font></Label>
-      <Label fx:id="message" layoutX="93.0" layoutY="363.0" prefHeight="62.0" prefWidth="187.0" textFill="WHITE">
+      <Label fx:id="message" layoutX="202.0" layoutY="110.0" prefHeight="62.0" prefWidth="187.0" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font></Label>
@@ -50,5 +50,15 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
+      <Button fx:id="createBtn" layoutX="119.0" layoutY="375.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="135.0" style="-fx-background-color: RoyalBlue;" text="Create new user" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="setupBtn" layoutX="119.0" layoutY="425.0" mnemonicParsing="false" onAction="#toSetupPage" prefHeight="37.0" prefWidth="135.0" style="-fx-background-color: RoyalBlue;" text="Database Setup" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
