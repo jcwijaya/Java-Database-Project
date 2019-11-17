@@ -16,36 +16,46 @@ import java.util.Scanner;
 
 //This program tests the Customer class.
 public class TestCustomer{
-	public  void ReadFromFile(String[] args) throws FileNotFoundException {
-		File file = new File("items");
-		Scanner scanner = new Scanner(file);
-		String strProductCode;
-		String category;
-		String productName;
-		String strPrice;
-		String strStock;
-		double price;
-		int stock;
-		Long productCode;
-		
-		while(scanner.hasNext())
-		{
-			scanner.useDelimiter(";");
-			strProductCode = scanner.next();
-			productCode = Long.parseLong(strProductCode.trim());
-			category = scanner.next();
-			productName = scanner.next();
-			strPrice = scanner.next();
-			price = Double.parseDouble(strPrice.trim());
-			strStock = scanner.next();
-			stock = Integer.parseInt(strStock.trim());
+	public static void main(String[] args) throws FileNotFoundException {
+		try {
+			File file = new File("/Resource/items");
+			Scanner scanner = new Scanner(file);
+			String strProductCode;
+			String category;
+			String productName;
+			String strPrice;
+			String strStock;
+			double price;
+			int stock;
+			Long productCode;
+			while(scanner.hasNext())
+			{
+				scanner.useDelimiter(";");
+				strProductCode = scanner.next();
+				productCode = Long.parseLong(strProductCode.trim());
+				category = scanner.next();
+				productName = scanner.next();
+				strPrice = scanner.next();
+				price = Double.parseDouble(strPrice.trim());
+				strStock = scanner.next();
+				stock = Integer.parseInt(strStock.trim());
+				System.out.printf("%-15d%-15s%-15s%-15d%-15s%d", productCode, category, productName, price, stock);
 			
+			/*
 			Inventory item = new Inventory(productCode, category.trim(), productName.trim(), price, stock);
 			item.insert();
-			System.out.println("Insertion successful.");
+			*/
+			//System.out.println("Insertion successful.");
+			}
+			scanner.close();
 		}
-
-	
+		catch(FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return;
+	}
+}
 	
 	//Main method
 		//public static void main(String[] args) {
@@ -131,8 +141,9 @@ public class TestCustomer{
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
-			*/
+			
 			return;
 			
 		}
 }
+*/

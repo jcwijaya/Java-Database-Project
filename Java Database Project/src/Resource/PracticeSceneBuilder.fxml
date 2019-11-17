@@ -13,7 +13,7 @@
    <children>
       <ImageView fitHeight="412.0" fitWidth="421.0" layoutX="-11.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-7.0" AnchorPane.leftAnchor="-11.0" AnchorPane.rightAnchor="-10.0" AnchorPane.topAnchor="95.0">
          <image>
-            <Image url="@../../../../../../Java%20Group%20Project%20Data/background%20groceries.jpg" />
+            <Image url="@background%20groceries.jpg" />
          </image>
       </ImageView>
       <Button fx:id="loginBtn" layoutX="155.0" layoutY="310.0" mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="63.0" style="-fx-background-color: RoyalBlue;" text="Login" textFill="WHITE">
