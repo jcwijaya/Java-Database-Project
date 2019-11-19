@@ -668,7 +668,7 @@ public class HomeController implements Initializable {
 		
 		public void logout() {
 			try {
-			Parent loginRoot = FXMLLoader.load(getClass().getResource("/Resource/PracticeSceneBuilder.fxml"));
+			Parent loginRoot = FXMLLoader.load(getClass().getResource("/Resource/Login.fxml"));
 			Scene loginScene = new Scene(loginRoot);
 			Stage loginStage = new Stage();
 			loginStage.setTitle("WebMart");

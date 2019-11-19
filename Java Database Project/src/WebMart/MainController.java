@@ -93,5 +93,12 @@ public class MainController {
 		}
 	}
 	
+	/*
+	 * Also use this as controller for NewUser.fxml that creates new users
+	 * for webmart.
+	 */
 	
+	public void toNewUserPage() {
+		
+	}
 }

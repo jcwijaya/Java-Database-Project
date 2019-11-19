@@ -18,7 +18,7 @@ import java.util.Scanner;
 public class TestCustomer{
 	public static void main(String[] args) throws FileNotFoundException {
 		try {
-			File file = new File("/Resource/items");
+			File file = new File("items");
 			Scanner scanner = new Scanner(file);
 			String strProductCode;
 			String category;
@@ -39,13 +39,13 @@ public class TestCustomer{
 				price = Double.parseDouble(strPrice.trim());
 				strStock = scanner.next();
 				stock = Integer.parseInt(strStock.trim());
-				System.out.printf("%-15d%-15s%-15s%-15d%-15s%d", productCode, category, productName, price, stock);
+				//System.out.printf("%-15d%-15s%-15s%-15f%-15s%d", productCode, category, productName, price, stock);
 			
 			/*
 			Inventory item = new Inventory(productCode, category.trim(), productName.trim(), price, stock);
 			item.insert();
 			*/
-			//System.out.println("Insertion successful.");
+			System.out.println("Insertion successful.");
 			}
 			scanner.close();
 		}
