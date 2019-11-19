@@ -77,6 +77,11 @@ public class MainController {
 		}
 	}
 	
+	public void toNewUserPage() {
+		
+	}
+	
+	
 	//This function checks if a string only contains digits
 	public boolean isInteger(String aString) {
 		if(aString.trim().isEmpty()) {
