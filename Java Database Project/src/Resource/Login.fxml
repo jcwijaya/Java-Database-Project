@@ -16,7 +16,7 @@
             <Image url="@background%20groceries.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="loginBtn" layoutX="155.0" layoutY="310.0" mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="63.0" style="-fx-background-color: RoyalBlue;" text="Login" textFill="WHITE">
+      <Button fx:id="loginBtn" layoutX="151.0" layoutY="311.0" mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="63.0" style="-fx-background-color: RoyalBlue;" text="Login" textFill="WHITE">
          <font>
             <Font size="16.0" />
          </font></Button>
@@ -50,7 +50,7 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Button fx:id="createBtn" layoutX="119.0" layoutY="375.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="135.0" style="-fx-background-color: RoyalBlue;" text="Create new user" textFill="WHITE">
+      <Button fx:id="createBtn" layoutX="102.0" layoutY="372.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="161.0" style="-fx-background-color: RoyalBlue;" text="Create new user" textFill="WHITE">
          <font>
             <Font size="16.0" />
          </font>
