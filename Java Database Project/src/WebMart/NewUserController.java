@@ -11,5 +11,5 @@ import javafx.scene.control.TextField;
 public class NewUserController {
 	@FXML private Label randomID; 	//displays randomly generated employee ID
 	@FXML Button enterBtn; 			//enters data typed in by user and creates new employee in database
-
+	
 }
