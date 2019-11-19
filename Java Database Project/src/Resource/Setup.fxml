@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="427.0" prefWidth="599.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SetupController">
+<AnchorPane prefHeight="427.0" prefWidth="599.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WebMart.SetupController">
    <children>
       <VBox layoutX="131.0" layoutY="114.0" prefHeight="200.0" prefWidth="379.0" spacing="26.0">
          <children>
