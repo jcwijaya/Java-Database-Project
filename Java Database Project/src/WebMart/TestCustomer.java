@@ -45,6 +45,7 @@ public class TestCustomer{
 			Inventory item = new Inventory(productCode, category.trim(), productName.trim(), price, stock);
 			item.insert();
 			*/
+				
 			System.out.println("Insertion successful.");
 			}
 			scanner.close();
