@@ -77,9 +77,6 @@ public class MainController {
 		}
 	}
 	
-	public void toNewUserPage() {
-		
-	}
 	
 	
 	//This function checks if a string only contains digits
@@ -103,6 +100,7 @@ public class MainController {
 	 * for webmart.
 	 */
 	
+	//HANNAH FINISH THIS
 	public void toNewUserPage() {
 		
 	}
