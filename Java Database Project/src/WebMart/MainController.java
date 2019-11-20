@@ -87,9 +87,9 @@ public class MainController {
 	//this opens the NewUser window and closes the login screen
 	public void toNewUserPage() {
 		try {
-		Stage newUserStage = new Stage();
 		Parent newUserRoot = FXMLLoader.load(getClass().getResource("/Resource/NewUser.fxml"));
 		Scene newUserScene = new Scene(newUserRoot);
+		Stage newUserStage = new Stage();
 		newUserStage.setTitle("WebMart");
 		newUserStage.setScene(newUserScene);
 		newUserStage.show();

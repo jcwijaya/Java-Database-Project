@@ -66,6 +66,7 @@ public class NewUserController {
 			passTxt.setText("");
 			rePassTxt.setText("");
 		}
+		//otherwise failure message is displayed
 		else {
 			statusLabel.setText("Status: Registration failed");
 		}
