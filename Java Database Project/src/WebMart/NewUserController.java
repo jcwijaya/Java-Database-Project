@@ -1,7 +1,6 @@
 package WebMart;
 
 import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,8 +12,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
-//this is the controller for the page that registers new users
 
 /*
  * This controller must be able to register and employee and store their data in the database.
@@ -78,14 +75,14 @@ public class NewUserController {
 	//this takes the user back to the login page when pressing the button
 	public void toLoginPage() {
 		try {
-			Stage setupStage = new Stage();
-			Parent setupRoot = FXMLLoader.load(getClass().getResource("/Resource/Login.fxml"));
-			Scene setupScene = new Scene(setupRoot);
-			setupStage.setTitle("WebMart");
-			setupStage.setScene(setupScene);
-			setupStage.show();
-			Stage loginStage = (Stage) returnBtn.getScene().getWindow();
-			loginStage.close();
+			Stage loginStage = new Stage();
+			Parent loginRoot = FXMLLoader.load(getClass().getResource("/Resource/Login.fxml"));
+			Scene loginScene = new Scene(loginRoot);
+			loginStage.setTitle("WebMart");
+			loginStage.setScene(loginScene);
+			loginStage.show();
+			Stage newUserStage = (Stage) returnBtn.getScene().getWindow();
+			newUserStage.close();
 			
 			}
 			catch(IOException e) {
