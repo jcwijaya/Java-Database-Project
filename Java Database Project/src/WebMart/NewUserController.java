@@ -8,6 +8,13 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 //this is the controller for the page that registers new users
+
+/*
+ * This controller must be able to register and employee and store their data in the database.
+ * The password and reenter password must match.
+ * All fields must be filled in.
+ * A random employee ID should be generated
+ */
 public class NewUserController {
 	@FXML private Label randomID; 			//displays randomly generated employee ID
 	@FXML Button enterBtn; 					//enters data typed in by user and creates new employee in database
