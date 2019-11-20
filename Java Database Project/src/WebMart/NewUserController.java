@@ -24,4 +24,15 @@ public class NewUserController {
 	@FXML private TextField emailTxt;		//text field to enter email
 	@FXML private PasswordField passTxt;	//password field to enter password
 	@FXML private PasswordField rePassTxt;	//password field to reenter password
+	
+	//variable declarations
+	String firstName;
+	String lastName;
+	String phoneNum;
+	String email;
+	String pass;
+	String rePass;
+	
+	
+	
 }
