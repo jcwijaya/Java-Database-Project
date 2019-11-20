@@ -26,12 +26,12 @@ public class NewUserController {
 	@FXML private PasswordField rePassTxt;	//password field to reenter password
 	
 	//variable declarations
-	String firstName;
-	String lastName;
-	String phoneNum;
-	String email;
-	String pass;
-	String rePass;
+	String firstName = firstTxt.getText();
+	String lastName = lastTxt.getText();
+	String phoneNum = phoneTxt.getText();
+	String email = emailTxt.getText();
+	String pass = passTxt.getText();
+	String rePass = rePassTxt.getText();
 	
 	
 	
