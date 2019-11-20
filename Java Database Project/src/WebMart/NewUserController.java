@@ -28,19 +28,21 @@ public class NewUserController {
 	@FXML private PasswordField passTxt;	//password field to enter password
 	@FXML private PasswordField rePassTxt;	//password field to reenter password
 	
-	public void login(ActionEvent event) throws Exception{
+	public void register(ActionEvent event) throws Exception{
+		//variable declarations and assignments
+		String firstName = firstTxt.getText();
+		String lastName = lastTxt.getText();
+		String phoneNum = phoneTxt.getText();
+		String email = emailTxt.getText();
+		String pass = passTxt.getText();
+		String rePass = rePassTxt.getText();
+		if (notEmpty(firstName, lastName, phoneNum, email, pass, rePass)) {
+			
+		}
 		
 	}
 	
 	
-	
-	//variable declarations
-	String firstName = firstTxt.getText();
-	String lastName = lastTxt.getText();
-	String phoneNum = phoneTxt.getText();
-	String email = emailTxt.getText();
-	String pass = passTxt.getText();
-	String rePass = rePassTxt.getText();
 	
 
 	//this method returns true if the passwords match
@@ -53,7 +55,25 @@ public class NewUserController {
 		}
 	}
 	
-	
+	public boolean notEmpty(String f, String l, String p, String e, String pass, String rpass) {
+		if ((f != null) &&
+			(l != null) &&
+			(p != null) &&
+			(e != null) &&
+			(pass != null) &&
+			(rpass != null) &&
+			(!f.isEmpty()) &&
+			(!l.isEmpty()) &&
+			(!p.isEmpty()) &&
+			(!e.isEmpty()) &&
+			(!pass.isEmpty()) &&
+			(!rpass.isEmpty())) {
+				return true;
+		}
+		else {
+			return false;
+		}
+	}
 	
 	
 }
