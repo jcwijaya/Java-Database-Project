@@ -84,7 +84,7 @@ public class MainController {
 	 * for webmart.
 	 */
 	
-	//HANNAH FINISH THIS
+	//this opens the NewUser window and closes the login screen
 	public void toNewUserPage() {
 		try {
 		Stage setupStage = new Stage();
