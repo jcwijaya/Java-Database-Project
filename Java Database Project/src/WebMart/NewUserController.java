@@ -1,5 +1,6 @@
 package WebMart;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,6 +26,12 @@ public class NewUserController {
 	@FXML private PasswordField passTxt;	//password field to enter password
 	@FXML private PasswordField rePassTxt;	//password field to reenter password
 	
+	public void login(ActionEvent event) throws Exception{
+		
+	}
+	
+	
+	
 	//variable declarations
 	String firstName = firstTxt.getText();
 	String lastName = lastTxt.getText();
@@ -33,6 +40,20 @@ public class NewUserController {
 	String pass = passTxt.getText();
 	String rePass = rePassTxt.getText();
 	
+
+	//this method returns true if the passwords match
+	public boolean passMatch(String p, String rp) {
+		if (p == rp) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	
 	
 	
 }
+
+
