@@ -18,7 +18,9 @@ import javafx.scene.control.TextField;
  */
 public class NewUserController {
 	@FXML private Label randomID; 			//displays randomly generated employee ID
+	@FXML private Label statusLabel;		//this label will show if the registration is successful or not
 	@FXML Button enterBtn; 					//enters data typed in by user and creates new employee in database
+	@FXML Button returnBtn;					//this button returns to the login screen when clicked
 	@FXML private TextField firstTxt;		//text field to enter first name
 	@FXML private TextField lastTxt;		//text field to enter last name
 	@FXML private TextField phoneTxt;		//text field to enter phone number
