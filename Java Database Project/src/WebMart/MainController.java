@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -32,11 +33,13 @@ public class MainController {
 	that incorrect login information was given.
 	*/
 	public void login(ActionEvent event) throws Exception{
+		MySql.readInfoFromFile();
+		Connection conn = MySql.connect();
 		//check for valid username
 		if(isInteger(usernameText.getText())) {
 			int username = Integer.parseInt(usernameText.getText());
 			String password = passwordText.getText();
-			boolean canLogin = Employee.hasLogin(username, password);
+			boolean canLogin = Employee.hasLogin(username, password, conn);
 			
 			//If it is a valid username and password
 			if(canLogin) {

@@ -64,7 +64,13 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Button fx:id="connectBtn" layoutX="166.0" layoutY="337.0" mnemonicParsing="false" text="Test Connection" />
-      <Button fx:id="defaultBtn" layoutX="287.0" layoutY="337.0" mnemonicParsing="false" text="Reset to Default" />
+      <Button fx:id="connectBtn" layoutX="169.0" layoutY="349.0" mnemonicParsing="false" text="Test Connection">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+      <Button fx:id="defaultBtn" layoutX="309.0" layoutY="349.0" mnemonicParsing="false" text="Reset to Default">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
    </children>
 </AnchorPane>

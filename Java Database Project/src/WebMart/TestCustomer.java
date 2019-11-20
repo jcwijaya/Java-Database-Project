@@ -16,7 +16,17 @@ import java.util.Scanner;
 
 //This program tests the Customer class.
 public class TestCustomer{
+	
 	public static void main(String[] args) throws FileNotFoundException {
+		MySql.readInfoFromFile();
+		System.out.println(MySql.getDriver());
+		System.out.println(MySql.getUrl());
+		System.out.println(MySql.getDbUser());
+		System.out.println(MySql.getDbPassword());
+		MySql.connect();
+		System.out.print("Connection success");
+	}
+		/*
 		try {
 			File file = new File("items");
 			Scanner scanner = new Scanner(file);
@@ -44,7 +54,7 @@ public class TestCustomer{
 			/*
 			Inventory item = new Inventory(productCode, category.trim(), productName.trim(), price, stock);
 			item.insert();
-			*/
+			
 			System.out.println("Insertion successful.");
 			}
 			scanner.close();
@@ -55,6 +65,7 @@ public class TestCustomer{
 		
 		return;
 	}
+	*/
 }
 	
 	//Main method

@@ -122,14 +122,13 @@ public class Inventory {
 	
 	
 	//This method returns a unique id number for each new Inventory item
-	public static long createId() {
+	public static long createId(Connection conn) {
 		//Randomly generate a 6 digit id
 			Random rand = new Random(System.currentTimeMillis());
 			long id = (long)(rand.nextDouble() * 10000000 + 10000000);
 			boolean match = true;
 					
 			try {
-				Connection conn = connect();
 				//Compare the id with the ones in database to ensure uniqueness
 				Statement statement = conn.createStatement();
 						
@@ -157,9 +156,8 @@ public class Inventory {
 	}
 	
 //******DATABASE DELETE METHOD******
-	public void delete() {
+	public void delete(Connection conn) {
 		try {
-			Connection conn = connect();
 			PreparedStatement stmt = conn.prepareStatement("DELETE FROM inventory WHERE productCode = ?");
 			
 			stmt.setLong(1, productCode);
@@ -172,9 +170,8 @@ public class Inventory {
 	
 //******DATABASE UPDATE & INSERT METHODS*****
 //Inserts the data fields of this object into database
-	public void insert() {
+	public void insert(Connection conn) {
 		try {
-			Connection conn = connect();
 			PreparedStatement stmt = conn.prepareStatement("INSERT INTO inventory " +
 			"(productCode, category, productName, price, stock) VALUES(?, ?, ?, ?, ?);");
 			stmt.setLong(1, productCode);
@@ -320,10 +317,9 @@ public class Inventory {
 	
 	//This returns a list of Inventory objects in
 	//ascending order by category, then by productName
-	public static ArrayList<Inventory> getTableAscCategory() {
+	public static ArrayList<Inventory> getTableAscCategory(Connection conn) {
 		ArrayList<Inventory> list = new ArrayList<Inventory>();
 		try {
-			Connection conn = connect();
 			Statement statement = conn.createStatement();
 				
 			boolean hasResult = statement.execute("SELECT * FROM inventory ORDER BY category, productName ASC");
@@ -348,10 +344,9 @@ public class Inventory {
 	}
 	
 	//This method returns list of Inventory objects in order of entry
-	public static ArrayList<Inventory> getTable() {
+	public static ArrayList<Inventory> getTable(Connection conn) {
 		ArrayList<Inventory> list = new ArrayList<Inventory>();
 		try {
-			Connection conn = connect();
 			Statement statement = conn.createStatement();
 				
 			boolean hasResult = statement.execute("SELECT * FROM inventory");
@@ -375,10 +370,9 @@ public class Inventory {
 	}
 	
 	//This method returns list of Inventory objects in order of productCode
-	public static ArrayList<Inventory> getTableAscProductCode() {
+	public static ArrayList<Inventory> getTableAscProductCode(Connection conn) {
 		ArrayList<Inventory> list = new ArrayList<Inventory>();
 		try {
-			Connection conn = connect();
 			Statement statement = conn.createStatement();
 					
 			boolean hasResult = statement.execute("SELECT * FROM inventory ORDER BY productCode ASC");
@@ -404,10 +398,9 @@ public class Inventory {
 //******DATABASE SEARCH METHODS******	
 	//These methods take in a data field as parameter
 	// and returns ArrayList of Inventory objects that match the parameter
-	public static ArrayList<Inventory> searchProductCode(Long code) {
+	public static ArrayList<Inventory> searchProductCode(Long code, Connection conn) {
 		ArrayList<Inventory> list = new ArrayList<Inventory>();
 		try {
-		Connection conn = connect();
 		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM inventory where productCode = ?");
 		preparedStmt.setLong(1, code);
 			
@@ -428,10 +421,9 @@ public class Inventory {
 		return list;
 	}
 	
-	public static ArrayList<Inventory> searchCategory(String aCat) {
+	public static ArrayList<Inventory> searchCategory(String aCat, Connection conn) {
 		ArrayList<Inventory> list = new ArrayList<Inventory>();
 		try {
-		Connection conn = connect();
 		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM inventory where category = ?");
 		preparedStmt.setString(1, aCat);
 			
@@ -451,10 +443,9 @@ public class Inventory {
 		return list;
 	}
 	
-	public static ArrayList<Inventory> searchProductName(String name) {
+	public static ArrayList<Inventory> searchProductName(String name, Connection conn) {
 		ArrayList<Inventory> list = new ArrayList<Inventory>();
 		try {
-		Connection conn = connect();
 		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM inventory where productName = ?");
 		preparedStmt.setString(1, name);
 			
@@ -475,10 +466,9 @@ public class Inventory {
 	}
 	
 //Searches for specific price and sorts by category in alphabetical order
-	public static ArrayList<Inventory> searchPrice(int aPrice) {
+	public static ArrayList<Inventory> searchPrice(int aPrice, Connection conn) {
 		ArrayList<Inventory> list = new ArrayList<Inventory>();
 		try {
-		Connection conn = connect();
 		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM inventory where price = ? ORDER BY category ASC");
 		preparedStmt.setDouble(1, aPrice);
 			
@@ -499,10 +489,9 @@ public class Inventory {
 	}
 	
 //This returns items in a range of prices with secondary ordering by price then by category
-	public static ArrayList<Inventory> searchPriceRange(double low, double high) {
+	public static ArrayList<Inventory> searchPriceRange(double low, double high, Connection conn) {
 		ArrayList<Inventory> list = new ArrayList<Inventory>();
 		try {
-		Connection conn = connect();
 		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM inventory WHERE price BETWEEN ? AND ? ORDER BY price, category ASC");
 		preparedStmt.setDouble(1, low);
 		preparedStmt.setDouble(2, high);
@@ -544,6 +533,7 @@ public class Inventory {
 //******DATABASE CONNECT METHOD******
 	//This method creates a connection to the database
 	//and returns a Connection object
+	/*
 	public static Connection connect() {
 		try {										 
 			Class.forName("com.mysql.jdbc.Driver");   
@@ -554,5 +544,5 @@ public class Inventory {
 			return null;
 			}
 		}
-
+	*/
 }
