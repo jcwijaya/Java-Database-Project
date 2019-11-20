@@ -327,6 +327,15 @@ public class HomeController implements Initializable {
 			}
 			
 			updateLbl.setText("Updated successfully.");
+			
+			//blanking out text fields
+			c_firstName.setText("");
+			c_lastName.setText("");
+			c_phoneNumber.setText("");
+			c_email.setText("");
+			generateIdLbl.setText("");
+			
+			
 			refreshCustomerTable();
 		}
 		
@@ -355,6 +364,15 @@ public class HomeController implements Initializable {
 			}
 			
 			e_saveLbl.setText("Updated successfully.");
+			
+			//blanking out text fields
+			e_generateIdLbl.setText("");
+			e_firstName.setText("");
+			e_lastName.setText("");
+			e_phoneNumber.setText("");
+			e_email.setText("");
+			e_password.setText("");
+			
 			refreshEmployeeTable();
 		}	
 		
@@ -384,6 +402,10 @@ public class HomeController implements Initializable {
 			}
 			
 			i_saveLbl.setText("Updated successfully.");
+			
+			//blanking out text fields
+			
+			
 			refreshInventoryTable();
 		}
 		
