@@ -36,8 +36,22 @@ public class NewUserController {
 		String email = emailTxt.getText();
 		String pass = passTxt.getText();
 		String rePass = rePassTxt.getText();
-		if (notEmpty(firstName, lastName, phoneNum, email, pass, rePass)) {
+		int newID;
+		String strNewID;
+		
+		if (notEmpty(firstName, lastName, phoneNum, email, pass, rePass) && passMatch(pass, rePass)) {
+			newID = Employee.createId();
+			strNewID = Integer.toString(newID);
+			randomID.setText(strNewID);
 			
+			//inserting employee into database
+			Employee newEmployee = new Employee(newID, pass, firstName, lastName, phoneNum, email);
+			newEmployee.insert();
+			
+			statusLabel.setText("Status: Registration successful");
+		}
+		else {
+			statusLabel.setText("Status: Registration failed");
 		}
 		
 	}
