@@ -404,7 +404,11 @@ public class HomeController implements Initializable {
 			i_saveLbl.setText("Updated successfully.");
 			
 			//blanking out text fields
-			
+			i_generateIdLbl.setText("");
+			i_category.setText("");
+			i_productName.setText("");
+			i_price.setText("");
+			i_stock.setText("");
 			
 			refreshInventoryTable();
 		}
