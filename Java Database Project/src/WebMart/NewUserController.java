@@ -104,6 +104,8 @@ public class NewUserController {
 			return true;
 		}
 		else {
+			passTxt.setText("");
+			rePassTxt.setText("");
 			return false;
 		}
 	}
