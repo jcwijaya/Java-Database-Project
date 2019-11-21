@@ -24,6 +24,7 @@ public class NewUserController {
 	@FXML private Label statusLabel;		//this label will show if the registration is successful or not
 	@FXML Button enterBtn; 					//enters data typed in by user and creates new employee in database
 	@FXML Button returnBtn;					//this button returns to the login screen when clicked
+	@FXML Button resetBtn;					//resets all the labels and textfields
 	@FXML private TextField firstTxt;		//text field to enter first name
 	@FXML private TextField lastTxt;		//text field to enter last name
 	@FXML private TextField phoneTxt;		//text field to enter phone number
@@ -31,7 +32,7 @@ public class NewUserController {
 	@FXML private PasswordField passTxt;	//password field to enter password
 	@FXML private PasswordField rePassTxt;	//password field to reenter password
 	
-	public void register(ActionEvent event) throws Exception{
+	public void register() {
 		//variable declarations and assignments
 		String firstName = firstTxt.getText();
 		String lastName = lastTxt.getText();
@@ -57,20 +58,25 @@ public class NewUserController {
 			
 			//status is updated
 			statusLabel.setText("Status: Registration successful");
-			
-			//blanking text fields
-			firstTxt.setText("");
-			lastTxt.setText("");
-			phoneTxt.setText("");
-			emailTxt.setText("");
-			passTxt.setText("");
-			rePassTxt.setText("");
+	
 		}
 		//otherwise failure message is displayed
 		else {
 			statusLabel.setText("Status: Registration failed");
 		}
 		
+	}
+	
+	public void reset() {
+		//resetting objects on page
+		firstTxt.setText("");
+		lastTxt.setText("");
+		phoneTxt.setText("");
+		emailTxt.setText("");
+		passTxt.setText("");
+		rePassTxt.setText("");
+		statusLabel.setText("Status:");
+		randomID.setText("");
 	}
 	
 	//this takes the user back to the login page when pressing the button
@@ -94,7 +100,7 @@ public class NewUserController {
 
 	//this method returns true if the passwords match
 	public boolean passMatch(String p, String rp) {
-		if (p == rp) {
+		if (p.equals(rp)) {
 			return true;
 		}
 		else {

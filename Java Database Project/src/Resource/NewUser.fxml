@@ -49,12 +49,12 @@
             </Label>
          </children>
       </VBox>
-      <Label fx:id="randomID" layoutX="300.0" layoutY="486.0" prefHeight="33.0" prefWidth="189.0" style="-fx-background-color: white;" text="                      " textFill="WHITE">
+      <Label fx:id="randomID" layoutX="300.0" layoutY="486.0" prefHeight="33.0" prefWidth="150.0" style="-fx-background-color: white;" text="                      ">
          <font>
             <Font name="Constantia Bold" size="28.0" />
          </font>
       </Label>
-      <Button fx:id="enterBtn" layoutX="203.0" layoutY="411.0" mnemonicParsing="false" style="-fx-background-color: white;" text="Enter">
+      <Button fx:id="enterBtn" layoutX="203.0" layoutY="411.0" mnemonicParsing="false" onAction="#register" style="-fx-background-color: white;" text="Enter">
          <font>
             <Font name="Constantia Bold" size="28.0" />
          </font>
@@ -90,14 +90,19 @@
             <PasswordField fx:id="rePassTxt" prefHeight="65.0" prefWidth="249.0" />
          </children>
       </VBox>
-      <Button fx:id="returnBtn" layoutX="152.0" layoutY="602.0" mnemonicParsing="false" text="Return to Login">
+      <Button fx:id="returnBtn" layoutX="89.0" layoutY="602.0" mnemonicParsing="false" onAction="#toLoginPage" style="-fx-background-color: white;" text="Return to Login">
          <font>
             <Font name="Constantia Bold" size="24.0" />
          </font></Button>
-      <Label fx:id="statusLabel" layoutX="130.0" layoutY="543.0" text="Status:" textFill="WHITE">
+      <Label fx:id="statusLabel" layoutX="99.0" layoutY="540.0" text="Status:" textFill="WHITE">
          <font>
             <Font name="Constantia Bold" size="28.0" />
          </font>
       </Label>
+      <Button fx:id="resetBtn" layoutX="331.0" layoutY="602.0" mnemonicParsing="false" onAction="#reset" style="-fx-background-color: white;" text="Reset">
+         <font>
+            <Font name="Constantia Bold" size="24.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
