@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -89,6 +90,7 @@ public class HomeController implements Initializable {
 		@FXML private TextField e_phoneNumber;
 		@FXML private TextField e_email;
 		@FXML private TextField e_password;
+		@FXML private PasswordField e_repass;
 		
 		//Make TableView for Employee class
 		@FXML private TableView<Employee> employeeTable;
@@ -372,6 +374,7 @@ public class HomeController implements Initializable {
 			e_phoneNumber.setText("");
 			e_email.setText("");
 			e_password.setText("");
+			e_repass.setText("");
 			
 			refreshEmployeeTable();
 		}	
@@ -540,7 +543,9 @@ public class HomeController implements Initializable {
 		//It is not committed to database yet
 		public void addEmployee() {
 			//Only add to table if ID is filled out
-			if(e_generateIdLbl.getText() != "") {
+			String pass = e_password.getText();
+			String repass = e_repass.getText();
+			if((e_generateIdLbl.getText() != "") && (passMatch(pass, repass))) {
 				Employee employee = new Employee(Integer.parseInt(e_generateIdLbl.getText()),
 						e_password.getText(), e_firstName.getText(), e_lastName.getText(),
 						e_phoneNumber.getText(), e_email.getText());
@@ -705,6 +710,18 @@ public class HomeController implements Initializable {
 			}
 			catch(IOException e) {
 				e.printStackTrace();
+			}
+		}
+		
+		//this method returns true if the passwords match
+		public boolean passMatch(String p, String rp) {
+			if (p.equals(rp)) {
+				return true;
+			}
+			else {
+				e_password.setText("");
+				e_repass.setText("");
+				return false;
 			}
 		}
 
