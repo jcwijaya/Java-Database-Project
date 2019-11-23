@@ -18,6 +18,7 @@ import java.util.Scanner;
 public class TestCustomer{
 	
 	public static void main(String[] args) throws FileNotFoundException {
+		/*
 		MySql.readInfoFromFile();
 		System.out.println(MySql.getDriver());
 		System.out.println(MySql.getUrl());
@@ -25,6 +26,14 @@ public class TestCustomer{
 		System.out.println(MySql.getDbPassword());
 		MySql.connect();
 		System.out.print("Connection success");
+		*/
+		String aDriver = "a123";
+		String aUrl = "bdefg";
+		String user = "c5";
+		String pass = "d345";
+		MySql.writeInfoToFile(aDriver, aUrl, user, pass);
+		System.out.print("finished writing");
+		
 	}
 		/*
 		try {

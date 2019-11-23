@@ -30,7 +30,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Menu">
             <items>
-              <MenuItem fx:id="back" mnemonicParsing="false" text="Back to login page" />
+              <MenuItem fx:id="back" mnemonicParsing="false" onAction="#logout" text="Back to login page" />
             </items>
           </Menu>
         </menus>
@@ -59,18 +59,23 @@
             </Label>
          </children>
       </VBox>
-      <Label layoutX="96.0" layoutY="54.0" text="Please enter in your database information or use default.">
+      <Label fx:id="dbMessageLbl" layoutX="96.0" layoutY="54.0" text="Please enter in your database information or use default.">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Button fx:id="connectBtn" layoutX="169.0" layoutY="349.0" mnemonicParsing="false" text="Test Connection">
+      <Button fx:id="connectBtn" layoutX="133.0" layoutY="349.0" mnemonicParsing="false" onAction="#testConnection" text="Test Connection">
          <font>
             <Font size="14.0" />
          </font></Button>
-      <Button fx:id="defaultBtn" layoutX="309.0" layoutY="349.0" mnemonicParsing="false" text="Reset to Default">
+      <Button fx:id="defaultBtn" layoutX="386.0" layoutY="349.0" mnemonicParsing="false" onAction="#resetDefault" text="Reset to Default">
          <font>
             <Font size="14.0" />
          </font></Button>
+      <Button fx:id="saveDbLoginBtn" layoutX="288.0" layoutY="351.0" mnemonicParsing="false" onAction="#setDatabaseLogin" text="Save">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

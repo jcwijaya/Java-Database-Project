@@ -530,6 +530,8 @@ public class Inventory {
 			}
 	}
 	
+	
+	
 //******DATABASE CONNECT METHOD******
 	//This method creates a connection to the database
 	//and returns a Connection object

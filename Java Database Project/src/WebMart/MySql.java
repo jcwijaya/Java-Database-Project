@@ -2,6 +2,8 @@ package WebMart;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -56,6 +58,7 @@ public class MySql {
 			setUrl(scanner.next().trim());
 			setDbUser(scanner.next().trim());
 			setDbPassword(scanner.next().trim());
+			scanner.close();
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -64,8 +67,18 @@ public class MySql {
 	
 	//This method will write database info into a text file to save it
 	//It will write the private data fields
-	public static void writeInfoToFile() {
-		
+	public static void writeInfoToFile(String aDriver, String aUrl, String user, String pass) {
+		try {
+			FileWriter writer = new FileWriter("mysql_info");
+			writer.write(aDriver + "\n");
+			writer.write(aUrl + "\n");
+			writer.write(user + "\n");
+			writer.write(pass + "\n");
+			writer.close();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static Connection connect() {
@@ -74,7 +87,6 @@ public class MySql {
 			return DriverManager.getConnection(url, dbUser, dbPassword );
 		}
 		catch(SQLException | ClassNotFoundException e) {
-			e.printStackTrace();
 			return null;
 		}
 	}
