@@ -17,6 +17,7 @@ public class AddController implements Initializable {
 	@FXML private TextField amountTxt;
 	@FXML private Button addToCartBtn;
 	@FXML private Label stockLbl;
+	@FXML private Label lbl;
 	@FXML private Label totalStockLbl;
 	
 	public static Inventory selectedItem;
