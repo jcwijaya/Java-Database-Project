@@ -75,8 +75,31 @@ public class Inventory {
 	}
 	
 	public void setStock(int newStock) {
-		stock = newStock;
+		//Make sure stock is not negative
+		if(newStock < 0) {
+			stock = 0;
+		}
+		else {
+			stock = newStock;
+		}
 	}
+	
+	public void decrementStock() {
+		//decrement if stock is > 0
+		if(stock > 0) {
+			stock--;
+		}
+	}
+	
+	public boolean inStock() {
+		if(stock > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 	
 //******MISC METHODS******
 	public static ArrayList<Inventory> ReadFromFile() throws FileNotFoundException {
