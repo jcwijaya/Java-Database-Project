@@ -34,6 +34,10 @@ public class ShoppingCart{
 		return total;
 	}
 	
+	public static ArrayList<Inventory> getCart(){
+		return cart;
+	}
+	
 	//Returns the number of items in the cart
 	public static int getSize() {
 		return size;

@@ -40,7 +40,7 @@ public class HomeController implements Initializable {
 		@FXML private Tab inventoryTab;
 		@FXML private MenuBar homeBar;
 		@FXML private Menu userMenu;
-		@FXML private Menu cartMenu;
+		@FXML public Menu cartMenu;
 		@FXML private MenuItem logout;
 		@FXML private MenuItem viewCart;
 		@FXML private MenuItem addItem;
@@ -121,26 +121,17 @@ public class HomeController implements Initializable {
 		@FXML private TextField i_stock;
 		
 		//Make TableView for Inventory class
-		@FXML private TableView<Inventory> inventoryTable;
+		@FXML public TableView<Inventory> inventoryTable;
 		@FXML private TableColumn<Inventory, Long> productCode;
 		@FXML private TableColumn<Inventory, String> category;
 		@FXML private TableColumn<Inventory, String> name;
 		@FXML private TableColumn<Inventory, Double> price;
 		@FXML private TableColumn<Inventory, Integer> stock;
 		
-//****** AddToCart page
-		@FXML private Label itemLbl;
-		@FXML private TextField amountTxt;
-		@FXML private Button addToCartBtn;
-		@FXML private Label stockLbl;
-		@FXML private Label totalStockLbl;
-		
 		Connection conn = MySql.connect();
 		
 		@Override
 		public void initialize(URL location, ResourceBundle resources) {
-		 cartMenu.setText("Shopping Cart" + "(" + ShoppingCart.getSize() + ")");
-			
 		//Make ObservableList from getTable method that returns ArrayList
 		 ObservableList<Customer> customerList = FXCollections.observableArrayList(Customer.getTable(conn));
 		 ObservableList<Employee> employeeList = FXCollections.observableArrayList(Employee.getTable(conn));
@@ -678,35 +669,20 @@ public class HomeController implements Initializable {
 		//amount if not enough in stock.
 		public void showAddToCartPage() {
 			try {
-				Inventory item = inventoryTable.getSelectionModel().getSelectedItem();
-				Parent root = FXMLLoader.load(getClass().getResource("/Resource/AddToCart.fxml"));
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(getClass().getResource("/Resource/AddToCart.fxml"));
+				Parent root = loader.load();
 				Scene scene = new Scene(root);
+				
+				AddController addController = loader.getController();
+				addController.initData(inventoryTable.getSelectionModel().getSelectedItem());
+				
 				Stage stage = new Stage();
 				stage.setTitle("WebMart");
 				stage.setScene(scene);
 				stage.show();
-				//Problem here
-				itemLbl.setText(item.getProductName());
-				totalStockLbl.setText("Total stock: " + item.getStock());
 			} catch (IOException e) {
 				e.printStackTrace();
-			}
-		}
-		
-		public void addToCart() {
-			Inventory item = inventoryTable.getSelectionModel().getSelectedItem();
-			//check if there is enough in stock
-			if(Integer.parseInt(amountTxt.getText()) <= item.getStock()) {
-				//Add items to cart list
-				for(int i = 0; i < Integer.parseInt(amountTxt.getText()); i++) {
-					ShoppingCart.add(item);
-				}
-				cartMenu.setText("Shopping Cart" + "(" + ShoppingCart.getSize() + ")");
-				Stage stage = (Stage) amountTxt.getScene().getWindow();
-				stage.close();
-			}
-			else {
-				stockLbl.setText("Out of stock");
 			}
 		}
 		
