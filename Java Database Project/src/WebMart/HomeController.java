@@ -45,7 +45,6 @@ public class HomeController implements Initializable {
 		@FXML private MenuItem logout;
 		@FXML private MenuItem viewCart;
 		@FXML private MenuItem addItem;
-		@FXML private MenuItem removeItem;
 		
 //******Customers tab
 		@FXML private Button updateCustomer; //Submits changes to database customers table
