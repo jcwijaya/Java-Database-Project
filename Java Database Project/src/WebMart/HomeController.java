@@ -556,7 +556,8 @@ public class HomeController implements Initializable {
 			allCustomers = customerTable.getItems();
 			selectedCustomers = customerTable.getSelectionModel().getSelectedItems();
 			
-			for(Customer customer: selectedCustomers) {
+			for(int i = 0; i < selectedCustomers.size(); i++) {
+				Customer customer = selectedCustomers.get(i);
 				//Remove from ObservableList
 				allCustomers.remove(customer);
 				updateLbl.setText("");
@@ -573,7 +574,8 @@ public class HomeController implements Initializable {
 			allEmployees = employeeTable.getItems();
 			selectedEmployees = employeeTable.getSelectionModel().getSelectedItems();
 			
-			for(Employee employee: selectedEmployees) {
+			for(int i = 0; i < selectedEmployees.size(); i++) {
+				Employee employee = selectedEmployees.get(i);
 				//Remove from ObservableList
 				allEmployees.remove(employee);
 				e_saveLbl.setText("");
@@ -591,7 +593,8 @@ public class HomeController implements Initializable {
 			allItems = inventoryTable.getItems();
 			selectedItems = inventoryTable.getSelectionModel().getSelectedItems();
 			
-			for(Inventory inventory: selectedItems) {
+			for(int i = 0; i < selectedItems.size(); i++) {
+				Inventory inventory = selectedItems.get(i);
 				//Remove from ObservableList
 				allItems.remove(inventory);
 				i_saveLbl.setText("");
