@@ -67,6 +67,8 @@ public class TestCustomer{
 			System.out.println("Insertion successful.");
 			}
 			scanner.close();
+			
+			
 		}
 		catch(FileNotFoundException e) {
 			e.printStackTrace();
