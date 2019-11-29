@@ -34,7 +34,7 @@
             <Font name="Constantia" size="24.0" />
          </font>
       </Label>
-      <Button fx:id="btnCheckout" layoutX="80.0" layoutY="434.0" mnemonicParsing="false" text="Checkout">
+      <Button fx:id="btnCheckout" layoutX="80.0" layoutY="434.0" mnemonicParsing="false" onAction="#checkout" text="Checkout">
          <font>
             <Font name="Constantia" size="24.0" />
          </font>

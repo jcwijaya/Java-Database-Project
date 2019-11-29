@@ -63,14 +63,12 @@ public class CartController implements Initializable{
 	}
 	
 	
-	
-
-	
-	//This method will update the inventory stock of the items
-	//in the shopping cart
-	//Must make methods in Inventory class to update stock
-	//and give notification if out of stock
+	//empties shopping cart to simulate checkout
 	public void checkout() {
+		ShoppingCart.DeleteAll();
 		
+		ObservableList<Inventory> empty = FXCollections.observableArrayList(ShoppingCart.getCart());
+		
+		cart.setItems(empty);
 	}
 }
