@@ -36,14 +36,30 @@ public class CartController implements Initializable{
 	//items on cart page
 	@FXML private MenuBar menu;
 	@FXML private Menu cartMenu;
-	@FXML public Menu back;
+	@FXML public MenuItem back;
 	@FXML private Label total_lbl;
-	@FXML private TableView<ShoppingCart> cart;
-	@FXML private TableColumn<ShoppingCart, Integer> cartCode;
-	@FXML private TableColumn<ShoppingCart, String> cartCat;
-	@FXML private TableColumn<ShoppingCart, String> cartName;
-	@FXML private TableColumn<ShoppingCart, String> cartPrice;
+	@FXML private TableView<Inventory> cart;
+	@FXML private TableColumn<Inventory, Integer> cartCode;
+	@FXML private TableColumn<Inventory, String> cartCat;
+	@FXML private TableColumn<Inventory, String> cartName;
+	@FXML private TableColumn<Inventory, String> cartPrice;
 
+	
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		//Make ObservableList from getTable method that returns ArrayList
+		ObservableList<Inventory> shoppingList = FXCollections.observableArrayList(ShoppingCart.getCart());
+	
+		//Initialize cart table
+		cartCode.setCellValueFactory(new PropertyValueFactory<Inventory, Integer>("productCode"));
+		cartCat.setCellValueFactory(new PropertyValueFactory<Inventory, String>("category"));
+		cartName.setCellValueFactory(new PropertyValueFactory<Inventory, String>("productName"));
+		cartPrice.setCellValueFactory(new PropertyValueFactory<Inventory, String>("price"));
+		
+		cart.setItems(shoppingList);
+	}
+	
+	
 	
 	//This method removes the selected item from the cart
 	public void removeFromCart() {
