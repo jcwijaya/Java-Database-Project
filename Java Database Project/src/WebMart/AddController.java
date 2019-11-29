@@ -68,10 +68,11 @@ public class AddController {
 	 * Initializes the labels on AddToCart page and passes in
 	 * the Inventory object that is selected
 	 */
-	public void initData(Inventory item) {
+	public void initData(Inventory item) {		
 		itemLbl.setText(item.getProductName());
 		totalStockLbl.setText(Integer.toString(item.getStock()));
 		selectedItem = item;
+		
 	}
 	
 }
