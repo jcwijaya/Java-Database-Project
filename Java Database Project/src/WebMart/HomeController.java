@@ -122,11 +122,11 @@ public class HomeController implements Initializable {
 		
 		//Make TableView for Inventory class
 		@FXML public TableView<Inventory> inventoryTable;
-		@FXML private TableColumn<Inventory, Long> productCode;
-		@FXML private TableColumn<Inventory, String> category;
-		@FXML private TableColumn<Inventory, String> name;
-		@FXML private TableColumn<Inventory, Double> price;
-		@FXML private TableColumn<Inventory, Integer> stock;
+		@FXML public TableColumn<Inventory, Long> productCode;
+		@FXML public TableColumn<Inventory, String> category;
+		@FXML public TableColumn<Inventory, String> name;
+		@FXML public TableColumn<Inventory, Double> price;
+		@FXML public TableColumn<Inventory, Integer> stock;
 		
 		Connection conn = MySql.connect();
 		
@@ -193,7 +193,6 @@ public class HomeController implements Initializable {
 		
 		//Allow multiple rows to be selected
 		inventoryTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-		
 		
 	}
 		//Make refresh for each table individually
@@ -606,7 +605,7 @@ public class HomeController implements Initializable {
 			}
 		}
 		
-		//This method allows the user to search for a word in customersTable
+//The following three methods allow the user to search for a word in each of the tableviews
 		public void searchCustomers() {
 			refreshCustomerTable();
 			ObservableList<Customer> list = customerTable.getItems();

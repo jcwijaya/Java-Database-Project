@@ -9,12 +9,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+//This class is to handle the database connection information
 public class MySql {
 	private static String driver;
 	private static String url;
 	private static String dbUser;
 	private static String dbPassword;
 	
+//The following are set methods
 	public static void setDriver(String aDriver) {
 		driver = aDriver;
 	}
@@ -31,6 +33,7 @@ public class MySql {
 		dbPassword = pass;
 	}
 	
+//The following are get methods
 	public static String getDriver() {
 		return driver;
 	}
@@ -81,6 +84,7 @@ public class MySql {
 		}
 	}
 	
+	//This method creates and returns a Connection object
 	public static Connection connect() {
 		try {										 
 			Class.forName(driver); 

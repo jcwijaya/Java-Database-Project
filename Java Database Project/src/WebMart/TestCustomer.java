@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 import java.util.Scanner;
 
-//This program tests the Customer class.
+//This program tests the classes and is for debugging purposes.
 public class TestCustomer{
 	
 	public static void main(String[] args) throws FileNotFoundException {

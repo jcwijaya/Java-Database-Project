@@ -34,13 +34,7 @@ public class SetupController implements Initializable{
 	/*
 	 * Must allow user to enter in their own database info and save it
 	 * in a text file so they won't have to type it in every time.
-	 * Make the values public for the connect methods.
 	 */
-	
-	//Make initalize method that puts into the textfields the custom db info
-	//the user previously put in.
-	//!!!May need to make method inside of customer etc. classes to change login
-	//or make a new class for logging in.
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -53,7 +47,7 @@ public class SetupController implements Initializable{
 		
 	}
 	
-	//This method changes the database login information
+	//This method changes the database login information and saves it to the file
 	public void setDatabaseLogin() {
 		MySql.setDriver(driverTxt.getText());
 		MySql.setUrl(urlTxt.getText());
@@ -67,7 +61,7 @@ public class SetupController implements Initializable{
 	} 
 	
 	//This method resets the database login information to the default
-	//values given with the program
+	//values given with the program and saves it to the file
 	public void resetDefault() {
 		driverTxt.setText("com.mysql.jdbc.Driver");
 		urlTxt.setText("jdbc:mysql://localhost/test?autoReconnect=true&useSSL=false");
@@ -93,6 +87,7 @@ public class SetupController implements Initializable{
 	
 	}
 	
+	//Returns to login page
 	public void logout() {
 		try {
 			Parent loginRoot = FXMLLoader.load(getClass().getResource("/Resource/Login.fxml"));

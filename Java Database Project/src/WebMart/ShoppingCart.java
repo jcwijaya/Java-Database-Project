@@ -2,11 +2,13 @@ package WebMart;
 
 import java.util.ArrayList;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class ShoppingCart{
 
 	private static ArrayList<Inventory> cart = new ArrayList<Inventory>();	//list of Inventory objects
 	private static int size = 0;			//The number of items in the cart
-	
 	
 	//Takes in an Inventory object as parameter and adds it to the cart
 	public static void add(Inventory item) {
