@@ -43,6 +43,7 @@ public class CartController implements Initializable{
 	@FXML private TableColumn<Inventory, String> cartCat;
 	@FXML private TableColumn<Inventory, String> cartName;
 	@FXML private TableColumn<Inventory, String> cartPrice;
+	@FXML private Button btnCheckout;
 
 	
 	@Override
@@ -57,14 +58,13 @@ public class CartController implements Initializable{
 		cartPrice.setCellValueFactory(new PropertyValueFactory<Inventory, String>("price"));
 		
 		cart.setItems(shoppingList);
-	}
-	
-	
-	
-	//This method removes the selected item from the cart
-	public void removeFromCart() {
 		
+		total_lbl.setText("Total: " + ShoppingCart.getTotal());
 	}
+	
+	
+	
+
 	
 	//This method will update the inventory stock of the items
 	//in the shopping cart

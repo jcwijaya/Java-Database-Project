@@ -24,7 +24,7 @@ public class ShoppingCart{
 	
 	//Adds up the price of all of the items in the cart and returns it
 	public static double getTotal() {
-		double total = 0.0;
+		double total = 0.00;
 
 		//Needs Inventory.getPrice();
 		Inventory cartItem = new Inventory();
@@ -33,6 +33,8 @@ public class ShoppingCart{
 			cartItem = cart.get(i);
 			total += cartItem.getPrice();
 		}
+		total = (Math.round(total * 100.0) / 100.0);
+		
 		return total;
 	}
 	
