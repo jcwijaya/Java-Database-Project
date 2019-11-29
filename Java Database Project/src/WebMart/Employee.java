@@ -103,7 +103,7 @@ public class Employee {
 		phoneNumber = input.next();
 		System.out.print("Email: ");
 		email = input.next();
-		employeeId = createId();
+		employeeId = createId(conn);
 		System.out.print("Password: ");
 		password = input.next();
 		saveData(conn);
@@ -139,14 +139,13 @@ public class Employee {
 	}
 		
 	//This method returns a unique id number for each new employee
-	public static int createId() {
+	public static int createId(Connection conn) {
 		//Randomly generate a 6 digit id
 			Random rand = new Random(System.currentTimeMillis());
 			int id = (int)(rand.nextDouble() * 100000 + 100000);
 			boolean match = true;
 				
 			try {
-				Connection conn = connect();
 				//Compare the id with the ones in database to ensure uniqueness
 				Statement statement = conn.createStatement();
 					
@@ -174,9 +173,8 @@ public class Employee {
 	}
 
 //******DATABASE DELETE METHOD******
-	public void delete() {
+	public void delete(Connection conn) {
 		try {
-			Connection conn = connect();
 			PreparedStatement stmt = conn.prepareStatement("DELETE FROM employees WHERE employeeId = ?");
 			
 			stmt.setInt(1, employeeId);
@@ -188,9 +186,8 @@ public class Employee {
 	}
 //******DATABASE UPDATE & INSERT METHODS******
 	//Inserts the data fields of this object into database
-	public void insert() {
+	public void insert(Connection conn) {
 		try {
-			Connection conn = connect();
 			PreparedStatement stmt = conn.prepareStatement("INSERT INTO employees " +
 			"(employeeId, password, firstName, lastName, phoneNumber, email) VALUES(?, ?, ?, ?, ?, ?);");
 			stmt.setInt(1, employeeId);
@@ -230,9 +227,8 @@ public class Employee {
 	}
 	
 //Methods to update the table
-	public static void updateEmployeeId(int oldId, int newId) {
+	public static void updateEmployeeId(int oldId, int newId, Connection conn) {
 		try {
-			Connection conn = connect();
 			//Search for employee record, if successful, update it
 			if(hasEmployeeId(oldId, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET employeeId = ? WHERE employeeId = ?");
@@ -251,9 +247,8 @@ public class Employee {
 		}
 	}
 	
-	public static void updatePassword(int id, String newPass) {
+	public static void updatePassword(int id, String newPass, Connection conn) {
 		try {
-			Connection conn = connect();
 			//Search for employee record, if successful, update it
 			if(hasEmployeeId(id, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET password = ? WHERE employeeId = ?");
@@ -272,9 +267,8 @@ public class Employee {
 		}
 	}
 	
-	public static void updateFirstName(int id, String first) {
+	public static void updateFirstName(int id, String first, Connection conn) {
 		try {
-			Connection conn = connect();
 			//Search for employee record, if successful, update it
 			if(hasEmployeeId(id, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET firstName = ? WHERE employeeId = ?");
@@ -293,9 +287,8 @@ public class Employee {
 		}
 	}
 	
-	public static void updateLastName(int id, String last) {
+	public static void updateLastName(int id, String last, Connection conn) {
 		try {
-			Connection conn = connect();
 			//Search for employee record, if successful, update it
 			if(hasEmployeeId(id, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET lastName = ? WHERE employeeId = ?");
@@ -314,9 +307,8 @@ public class Employee {
 		}
 	}
 	
-	public static void updatePhoneNumber(int id, String number) {
+	public static void updatePhoneNumber(int id, String number, Connection conn) {
 		try {
-			Connection conn = connect();
 			//Search for employee record, if successful, update it
 			if(hasEmployeeId(id, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET phoneNumber = ? WHERE employeeId = ?");
@@ -334,9 +326,8 @@ public class Employee {
 		}
 	}
 	
-	public static void updateEmail(int id, String emailAddress) {
+	public static void updateEmail(int id, String emailAddress, Connection conn) {
 		try {
-			Connection conn = connect();
 			//Search for employee record, if successful, update it
 			if(hasEmployeeId(id, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET email = ? WHERE employeeId = ?");
@@ -359,10 +350,9 @@ public class Employee {
 	
 	//This returns a list of Employee objects in
 	//ascending order by first name, then by last name
-	public static ArrayList<Employee> getTableAscFirstName() {
+	public static ArrayList<Employee> getTableAscFirstName(Connection conn) {
 		ArrayList<Employee> list = new ArrayList<Employee>();
 		try {
-			Connection conn = connect();
 			Statement statement = conn.createStatement();
 				
 			boolean hasResult = statement.execute("SELECT * FROM employees ORDER BY firstName, lastName ASC");
@@ -388,10 +378,9 @@ public class Employee {
 		
 	//This method returns list of Employee table 
 	//by ascending last name, then by first name
-	public static ArrayList<Employee> getTableAscLastName() {
+	public static ArrayList<Employee> getTableAscLastName(Connection conn) {
 		ArrayList<Employee> list = new ArrayList<Employee>();
 		try {
-			Connection conn = connect();
 			Statement statement = conn.createStatement();
 				
 			boolean hasResult = statement.execute("SELECT * FROM employees ORDER BY lastName, firstName ASC");
@@ -416,10 +405,9 @@ public class Employee {
 	}
 		
 	//This method returns list of Employee objects in order of entry
-	public static ArrayList<Employee> getTable() {
+	public static ArrayList<Employee> getTable(Connection conn) {
 		ArrayList<Employee> list = new ArrayList<Employee>();
 		try {
-			Connection conn = connect();
 			Statement statement = conn.createStatement();
 				
 			boolean hasResult = statement.execute("SELECT * FROM employees");
@@ -445,10 +433,9 @@ public class Employee {
 //******DATABASE SEARCH METHODS******
 //These methods take in a data field as parameter
 // and returns ArrayList of Employee objects that match the parameter
-	public static ArrayList<Employee> searchEmployeeId(int id) {
+	public static ArrayList<Employee> searchEmployeeId(int id, Connection conn) {
 		ArrayList<Employee> list = new ArrayList<Employee>();
 		try {
-		Connection conn = connect();
 		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM employees where employeeId = ?");
 		preparedStmt.setInt(1, id);
 		
@@ -471,10 +458,9 @@ public class Employee {
 	
 	//This method searches for employees with a first name
 	//matching the passed in parameter.
-	public static ArrayList<Employee> searchFirstName(String first) {
+	public static ArrayList<Employee> searchFirstName(String first, Connection conn) {
 		ArrayList<Employee> list = new ArrayList<Employee>();
 		try {
-		Connection conn = connect();
 		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM employees where firstName = ?");
 		preparedStmt.setString(1, first);
 		
@@ -494,10 +480,9 @@ public class Employee {
 		return list;
 	}
 	
-	public static ArrayList<Employee> searchLastName(String last) {
+	public static ArrayList<Employee> searchLastName(String last, Connection conn) {
 		ArrayList<Employee> list = new ArrayList<Employee>();
 		try {
-		Connection conn = connect();
 		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM employees where lastName = ?");
 		preparedStmt.setString(1, last);
 		
@@ -518,10 +503,9 @@ public class Employee {
 	
 	//This method searches for employees with a phone number
 	//matching the passed in number
-	public static ArrayList<Employee> searchPhoneNumber(String number) {
+	public static ArrayList<Employee> searchPhoneNumber(String number, Connection conn) {
 		ArrayList<Employee> list = new ArrayList<Employee>();
 		try {
-		Connection conn = connect();
 		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM employees where phoneNumber = ?");
 		preparedStmt.setString(1, number);
 			
@@ -543,10 +527,9 @@ public class Employee {
 	
 	//This method searches for employees with an email
 	//matching the passed in emailAdress
-	public static ArrayList<Employee> searchEmail(String emailAddress) {
+	public static ArrayList<Employee> searchEmail(String emailAddress, Connection conn) {
 		ArrayList<Employee> list = new ArrayList<Employee>();
 		try {
-		Connection conn = connect();
 		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM employees where email = ?");
 		preparedStmt.setString(1, emailAddress);
 		
@@ -585,9 +568,9 @@ public class Employee {
 			}
 	}
 	
-	public static boolean hasLogin(int id, String pass) {
+	public static boolean hasLogin(int id, String pass, Connection conn) {
 		try {
-			Connection conn = connect();
+			//Connection conn = connect();
 			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM employees WHERE employeeId = ? AND password = ?");
 			preparedStmt.setInt(1, id);
 			preparedStmt.setString(2,  pass);
@@ -603,9 +586,8 @@ public class Employee {
 			}
 	}
 	
-	public static boolean hasName(String first, String last) {
+	public static boolean hasName(String first, String last, Connection conn) {
 		try {
-			Connection conn = connect();
 			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM employees WHERE firstName = ? AND lastName = ?");
 			preparedStmt.setString(1, first);
 			preparedStmt.setString(2, last);
@@ -619,9 +601,8 @@ public class Employee {
 		}
 	}
 	
-	public static boolean hasPhoneNumber(String number) {
+	public static boolean hasPhoneNumber(String number, Connection conn) {
 		try {
-			Connection conn = connect();
 			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM employees where phoneNumber = ?");
 			preparedStmt.setString(1, number);
 			
@@ -634,9 +615,8 @@ public class Employee {
 		}
 	}
 	
-	public static boolean hasEmail(String emailAddress) {
+	public static boolean hasEmail(String emailAddress, Connection conn) {
 		try {
-			Connection conn = connect();
 			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM employees where email = ?");
 			preparedStmt.setString(1, emailAddress);
 			
@@ -651,9 +631,11 @@ public class Employee {
 //******DATABASE CONNECT METHOD******
 	//This method creates a connection to the database
 		//and returns a Connection object
+	/*
 	public static Connection connect() {
 		try {										 
-			Class.forName("com.mysql.jdbc.Driver");   
+			//Class.forName("com.mysql.jdbc.Driver");   
+			Class.forName(MySql.getDriver());
 			return DriverManager.getConnection("jdbc:mysql://localhost/test?autoReconnect=true&useSSL=false", "customer1", "#mtsu" );
 			}
 		catch(SQLException | ClassNotFoundException exception) {
@@ -661,6 +643,6 @@ public class Employee {
 			return null;
 			}
 		}
-	
+	*/
 	
 }

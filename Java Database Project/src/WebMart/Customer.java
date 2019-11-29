@@ -91,7 +91,7 @@ public class Customer {
 		phoneNumber = input.next();
 		System.out.print("Email: ");
 		email = input.next();
-		customerId = createId();
+		customerId = createId(conn);
 		saveData(conn);
 		
 		input.close();
@@ -124,14 +124,13 @@ public class Customer {
 	}
 	
 	//This method returns a unique id number for each new customer
-	public static int createId() {
+	public static int createId(Connection conn) {
 		//Randomly generate a 6 digit id
 		Random rand = new Random(System.currentTimeMillis());
 		int id = (int)(rand.nextDouble() * 100000 + 100000);
 		boolean match = true;
 		
 		try {
-			Connection conn = connect();
 			//Compare the id with the ones in database to ensure uniqueness
 			Statement statement = conn.createStatement();
 			
@@ -160,9 +159,8 @@ public class Customer {
 	}
 
 //******DATABASE DELETE METHOD******
-	public void delete() {
+	public void delete(Connection conn) {
 		try {
-			Connection conn = connect();
 			PreparedStatement stmt = conn.prepareStatement("DELETE FROM customers WHERE customerId = ?");
 			
 			stmt.setInt(1, customerId);
@@ -180,9 +178,8 @@ public class Customer {
 	 */
 	
 	//Inserts the data fields of this object into database
-	public void insert() {
+	public void insert(Connection conn) {
 		try {
-			Connection conn = connect();
 			PreparedStatement stmt = conn.prepareStatement("INSERT INTO customers " +
 			"(customerId, firstName, lastName, phoneNumber, email) VALUES(?, ?, ?, ?, ?);");
 			stmt.setInt(1, customerId);
@@ -220,9 +217,8 @@ public class Customer {
 	}
 
 	
-	public static void updateCustomerId(int oldId, int newId) {
+	public static void updateCustomerId(int oldId, int newId, Connection conn) {
 		try {
-			Connection conn = connect();
 			//Search for customer record, if successful, update it
 			if(hasCustomerId(oldId, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE customers SET customerId = ? WHERE customerId = ?");
@@ -241,9 +237,8 @@ public class Customer {
 		}
 	}
 	
-	public static void updateFirstName(int id, String first) {
+	public static void updateFirstName(int id, String first, Connection conn) {
 		try {
-			Connection conn = connect();
 			//Search for customer record, if successful, update it
 			if(hasCustomerId(id, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE customers SET firstName = ? WHERE customerId = ?");
@@ -261,9 +256,8 @@ public class Customer {
 		}
 	}
 	
-	public static void updateLastName(int id, String last) {
+	public static void updateLastName(int id, String last, Connection conn) {
 		try {
-			Connection conn = connect();
 			//Search for customer record, if successful, update it
 			if(hasCustomerId(id, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE customers SET lastName = ? WHERE customerId = ?");
@@ -281,9 +275,8 @@ public class Customer {
 		}
 	}
 	
-	public static void updatePhoneNumber(int id, String number) {
+	public static void updatePhoneNumber(int id, String number, Connection conn) {
 		try {
-			Connection conn = connect();
 			//Search for customer record, if successful, update it
 			if(hasCustomerId(id, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE customers SET phoneNumber = ? WHERE customerId = ?");
@@ -301,9 +294,8 @@ public class Customer {
 		}
 	}
 	
-	public static void updateEmail(int id, String emailAddress) {
+	public static void updateEmail(int id, String emailAddress, Connection conn) {
 		try {
-			Connection conn = connect();
 			//Search for customer record, if successful, update it
 			if(hasCustomerId(id, conn) == true) {
 				PreparedStatement stmt = conn.prepareStatement("UPDATE customers SET email = ? WHERE customerId = ?");
@@ -342,9 +334,8 @@ public class Customer {
 			}
 	}
 	
-	public static boolean hasName(String first, String last) {
+	public static boolean hasName(String first, String last, Connection conn) {
 		try {
-			Connection conn = connect();
 			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers WHERE firstName = ? AND lastName = ?");
 			preparedStmt.setString(1, first);
 			preparedStmt.setString(2, last);
@@ -358,9 +349,8 @@ public class Customer {
 		}
 	}
 	
-	public static boolean hasPhoneNumber(String number) {
+	public static boolean hasPhoneNumber(String number, Connection conn) {
 		try {
-			Connection conn = connect();
 			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where phoneNumber = ?");
 			preparedStmt.setString(1, number);
 			
@@ -373,9 +363,8 @@ public class Customer {
 		}
 	}
 	
-	public static boolean hasEmail(String emailAddress) {
+	public static boolean hasEmail(String emailAddress, Connection conn) {
 		try {
-			Connection conn = connect();
 			PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where email = ?");
 			preparedStmt.setString(1, emailAddress);
 			
@@ -391,10 +380,9 @@ public class Customer {
 //*****DATABASE SEARCH METHODS*******
 	//This method searches the database for a customer with
 	//the passed in customerId and returns Customer object
-	public static ArrayList<Customer> searchCustomerId(int id) {
+	public static ArrayList<Customer> searchCustomerId(int id, Connection conn) {
 		ArrayList<Customer> list = new ArrayList<Customer>();
 		try {
-		Connection conn = connect();
 		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where customerId = ?");
 		preparedStmt.setInt(1, id);
 		
@@ -417,10 +405,9 @@ public class Customer {
 	
 	//This method searches for customers with a first and last name
 	//matching the passed in parameters.
-	public static ArrayList<Customer> searchFirstName(String first) {
+	public static ArrayList<Customer> searchFirstName(String first, Connection conn) {
 		ArrayList<Customer> list = new ArrayList<Customer>();
 		try {
-		Connection conn = connect();
 		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where firstName = ?");
 		preparedStmt.setString(1, first);
 		
@@ -440,10 +427,9 @@ public class Customer {
 		return list;
 	}
 	
-	public static ArrayList<Customer> searchLastName(String last) {
+	public static ArrayList<Customer> searchLastName(String last, Connection conn) {
 		ArrayList<Customer> list = new ArrayList<Customer>();
 		try {
-		Connection conn = connect();
 		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where lastName = ?");
 		preparedStmt.setString(1, last);
 		
@@ -464,10 +450,9 @@ public class Customer {
 	
 	//This method searches for customers with a phone number
 	//matching the passed in number
-	public static ArrayList<Customer> searchPhoneNumber(String number) {
+	public static ArrayList<Customer> searchPhoneNumber(String number, Connection conn) {
 		ArrayList<Customer> list = new ArrayList<Customer>();
 		try {
-		Connection conn = connect();
 		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where phoneNumber = ?");
 		preparedStmt.setString(1, number);
 		
@@ -489,10 +474,9 @@ public class Customer {
 	
 	//This method searches for customers with an email
 	//matching the passed in emailAdress
-	public static ArrayList<Customer> searchEmail(String emailAddress) {
+	public static ArrayList<Customer> searchEmail(String emailAddress, Connection conn) {
 		ArrayList<Customer> list = new ArrayList<Customer>();
 		try {
-		Connection conn = connect();
 		PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM customers where email = ?");
 		preparedStmt.setString(1, emailAddress);
 		
@@ -515,10 +499,9 @@ public class Customer {
 //******DATABASE GET TABLE METHODS******
 	//This returns a list of Customer objects in
 	//ascending order by first name, then by last name
-	public static ArrayList<Customer> getTableAscFirstName() {
+	public static ArrayList<Customer> getTableAscFirstName(Connection conn) {
 		ArrayList<Customer> list = new ArrayList<Customer>();
 		try {
-			Connection conn = connect();
 			Statement statement = conn.createStatement();
 			
 			boolean hasResult = statement.execute("SELECT * FROM customers ORDER BY firstName, lastName ASC");
@@ -544,10 +527,9 @@ public class Customer {
 	
 	//This method returns list of Customer table 
 	//by ascending last name, then by first name
-	public static ArrayList<Customer> getTableAscLastName() {
+	public static ArrayList<Customer> getTableAscLastName(Connection conn) {
 		ArrayList<Customer> list = new ArrayList<Customer>();
 		try {
-			Connection conn = connect();
 			Statement statement = conn.createStatement();
 			
 			boolean hasResult = statement.execute("SELECT * FROM customers ORDER BY lastName, firstName ASC");
@@ -572,10 +554,9 @@ public class Customer {
 	}
 	
 	//This method returns list of Customer obj in order of entry
-	public static ArrayList<Customer> getTable() {
+	public static ArrayList<Customer> getTable(Connection conn) {
 		ArrayList<Customer> list = new ArrayList<Customer>();
 		try {
-			Connection conn = connect();
 			Statement statement = conn.createStatement();
 			
 			boolean hasResult = statement.execute("SELECT * FROM customers");
@@ -601,9 +582,10 @@ public class Customer {
 //******DATABASE CONNECT METHOD******
 	//This method creates a connection to the database
 	//and returns a Connection object
+	/*
 	public static Connection connect() {
 		try {										 
-			Class.forName("com.mysql.jdbc.Driver");   
+			Class.forName("com.mysql.jdbc.Driver"); 
 			return DriverManager.getConnection("jdbc:mysql://localhost/test?autoReconnect=true&useSSL=false", "customer1", "#mtsu" );
 		}
 		catch(SQLException | ClassNotFoundException exception) {
@@ -611,26 +593,6 @@ public class Customer {
 			return null;
 		}
 	}
-	
-	/* Syntax for ResultSetMetaData
-	 * ResultSetMetaData meta = result.getMetaData();
-		//Find number of columns in table
-		int columnCount = meta.getColumnCount();
-		
-		//use loop to print column names
-		for(int i = 1; i <= columnCount; i++) {
-			//print out column names (later can give labels)
-			System.out.printf("%-15s", meta.getColumnLabel(i));
-		}
-		System.out.println();
-		
-		//print out the table
-		while(result.next()) {
-			System.out.printf("%-15d%-15s%-15s%-15s%-15s%n",
-					result.getInt("customerId"), result.getString("firstName"),
-					result.getString("lastName"), result.getString("phoneNumber"),
-					result.getString("email"));
-		}
 	*/
 }
 

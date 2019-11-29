@@ -27,6 +27,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
@@ -39,7 +41,7 @@ public class HomeController implements Initializable {
 		@FXML private Tab inventoryTab;
 		@FXML private MenuBar homeBar;
 		@FXML private Menu userMenu;
-		@FXML private Menu cartMenu;
+		@FXML public Menu cartMenu;
 		@FXML private MenuItem logout;
 		@FXML private MenuItem viewCart;
 		@FXML private MenuItem addItem;
@@ -121,19 +123,21 @@ public class HomeController implements Initializable {
 		@FXML private TextField i_stock;
 		
 		//Make TableView for Inventory class
-		@FXML private TableView<Inventory> inventoryTable;
-		@FXML private TableColumn<Inventory, Long> productCode;
-		@FXML private TableColumn<Inventory, String> category;
-		@FXML private TableColumn<Inventory, String> name;
-		@FXML private TableColumn<Inventory, Double> price;
-		@FXML private TableColumn<Inventory, Integer> stock;
+		@FXML public TableView<Inventory> inventoryTable;
+		@FXML public TableColumn<Inventory, Long> productCode;
+		@FXML public TableColumn<Inventory, String> category;
+		@FXML public TableColumn<Inventory, String> name;
+		@FXML public TableColumn<Inventory, Double> price;
+		@FXML public TableColumn<Inventory, Integer> stock;
+		
+		Connection conn = MySql.connect();
 		
 		@Override
 		public void initialize(URL location, ResourceBundle resources) {
 		//Make ObservableList from getTable method that returns ArrayList
-		 ObservableList<Customer> customerList = FXCollections.observableArrayList(Customer.getTable());
-		 ObservableList<Employee> employeeList = FXCollections.observableArrayList(Employee.getTable());
-		 ObservableList<Inventory> inventoryList = FXCollections.observableArrayList(Inventory.getTable());	
+		 ObservableList<Customer> customerList = FXCollections.observableArrayList(Customer.getTable(conn));
+		 ObservableList<Employee> employeeList = FXCollections.observableArrayList(Employee.getTable(conn));
+		 ObservableList<Inventory> inventoryList = FXCollections.observableArrayList(Inventory.getTable(conn));	
 		
 		 //Initialize Customer table
 		customerId.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("customerId"));
@@ -192,14 +196,13 @@ public class HomeController implements Initializable {
 		//Allow multiple rows to be selected
 		inventoryTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		
-		
 	}
 		//Make refresh for each table individually
 		public void refreshTables() {
 			//Make ObservableList from getTable method that returns ArrayList
-			ObservableList<Customer> customerList = FXCollections.observableArrayList(Customer.getTable());
-			ObservableList<Employee> employeeList = FXCollections.observableArrayList(Employee.getTable());
-			ObservableList<Inventory> inventoryList = FXCollections.observableArrayList(Inventory.getTable());
+			ObservableList<Customer> customerList = FXCollections.observableArrayList(Customer.getTable(conn));
+			ObservableList<Employee> employeeList = FXCollections.observableArrayList(Employee.getTable(conn));
+			ObservableList<Inventory> inventoryList = FXCollections.observableArrayList(Inventory.getTable(conn));
 			
 			customerId.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("customerId"));
 			customerFirst.setCellValueFactory(new PropertyValueFactory<Customer, String>("firstName"));
@@ -229,7 +232,7 @@ public class HomeController implements Initializable {
 		
 		public void refreshCustomerTable() {
 			//Make ObservableList from getTable method that returns ArrayList
-			ObservableList<Customer> customerList = FXCollections.observableArrayList(Customer.getTable());
+			ObservableList<Customer> customerList = FXCollections.observableArrayList(Customer.getTable(conn));
 			
 			customerId.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("customerId"));
 			customerFirst.setCellValueFactory(new PropertyValueFactory<Customer, String>("firstName"));
@@ -254,7 +257,7 @@ public class HomeController implements Initializable {
 		}
 		
 		public void refreshEmployeeTable() {
-			ObservableList<Employee> employeeList = FXCollections.observableArrayList(Employee.getTable());
+			ObservableList<Employee> employeeList = FXCollections.observableArrayList(Employee.getTable(conn));
 
 			employeeId.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("employeeId"));
 			password.setCellValueFactory(new PropertyValueFactory<Employee, String>("password"));
@@ -280,7 +283,7 @@ public class HomeController implements Initializable {
 		}
 		
 		public void refreshInventoryTable() {			
-			ObservableList<Inventory> inventoryList = FXCollections.observableArrayList(Inventory.getTable());
+			ObservableList<Inventory> inventoryList = FXCollections.observableArrayList(Inventory.getTable(conn));
 
 			productCode.setCellValueFactory(new PropertyValueFactory<Inventory, Long>("productCode"));
 			category.setCellValueFactory(new PropertyValueFactory<Inventory, String>("category"));
@@ -305,7 +308,6 @@ public class HomeController implements Initializable {
 		
 		//Submits changes to customers table in database
 		public void submitCustomers() {
-			Connection conn = Customer.connect();
 			ArrayList<Customer> list = new ArrayList<Customer>();
 			ObservableList<Customer> tableList = customerTable.getItems();
 			
@@ -323,7 +325,7 @@ public class HomeController implements Initializable {
 				}
 				//If the customer record is not found, insert it
 				else if(!Customer.hasCustomerId(list.get(i).getCustomerId(), conn)) {
-					list.get(i).insert();
+					list.get(i).insert(conn);
 				}
 				
 			}
@@ -343,7 +345,6 @@ public class HomeController implements Initializable {
 		
 		//Submits changes to employees table in database
 		public void submitEmployees() {
-			Connection conn = Employee.connect();
 			ArrayList<Employee> list = new ArrayList<Employee>();
 			ObservableList<Employee> tableList = employeeTable.getItems();
 			
@@ -361,7 +362,7 @@ public class HomeController implements Initializable {
 				}
 				//If the employee record is not found, insert it
 				else if(!Employee.hasEmployeeId(list.get(i).getEmployeeId(), conn)) {
-					list.get(i).insert();
+					list.get(i).insert(conn);
 				}
 			}
 			
@@ -381,7 +382,6 @@ public class HomeController implements Initializable {
 		
 		//Submits changes to inventory table in database
 		public void submitInventory() {
-			Connection conn = Inventory.connect();
 			ArrayList<Inventory> list = new ArrayList<Inventory>();
 			ObservableList<Inventory> tableList = inventoryTable.getItems();
 			
@@ -399,7 +399,7 @@ public class HomeController implements Initializable {
 				}
 				//If the inventory record is not found, insert it
 				else if(!Inventory.hasProductCode(list.get(i).getProductCode(), conn)) {
-					list.get(i).insert();
+					list.get(i).insert(conn);
 				}
 				
 			}
@@ -510,15 +510,15 @@ public class HomeController implements Initializable {
 		}
 		
 		public void generateIdCustomer() {
-			generateIdLbl.setText(Integer.toString(Customer.createId()));
+			generateIdLbl.setText(Integer.toString(Customer.createId(conn)));
 		}
 		
 		public void generateIdEmployee() {
-			e_generateIdLbl.setText(Integer.toString(Employee.createId()));
+			e_generateIdLbl.setText(Integer.toString(Employee.createId(conn)));
 		}
 		
 		public void generateCodeInventory() {
-			i_generateIdLbl.setText(Long.toString(Inventory.createId()));
+			i_generateIdLbl.setText(Long.toString(Inventory.createId(conn)));
 		}
 		
 		
@@ -582,36 +582,36 @@ public class HomeController implements Initializable {
 		
 		//This method removes selected customers from TableView and database
 		public void removeCustomer() {
-			Connection conn = Customer.connect();
 			ObservableList<Customer> selectedCustomers, allCustomers;
 			allCustomers = customerTable.getItems();
 			selectedCustomers = customerTable.getSelectionModel().getSelectedItems();
 			
-			for(Customer customer: selectedCustomers) {
+			for(int i = 0; i < selectedCustomers.size(); i++) {
+				Customer customer = selectedCustomers.get(i);
 				//Remove from ObservableList
 				allCustomers.remove(customer);
 				updateLbl.setText("");
 				//If the record is in database, delete it
 				if(Customer.hasCustomerId(customer.getCustomerId(), conn)) {
-					customer.delete();
+					customer.delete(conn);
 				}
 				
 			}
 		}
 
 		public void removeEmployee() {
-			Connection conn = Employee.connect();
 			ObservableList<Employee> selectedEmployees, allEmployees;
 			allEmployees = employeeTable.getItems();
 			selectedEmployees = employeeTable.getSelectionModel().getSelectedItems();
 			
-			for(Employee employee: selectedEmployees) {
+			for(int i = 0; i < selectedEmployees.size(); i++) {
+				Employee employee = selectedEmployees.get(i);
 				//Remove from ObservableList
 				allEmployees.remove(employee);
 				e_saveLbl.setText("");
 				//If the record is in database, delete it
 				if(Employee.hasEmployeeId(employee.getEmployeeId(), conn)) {
-					employee.delete();
+					employee.delete(conn);
 				}
 				
 			}
@@ -619,24 +619,24 @@ public class HomeController implements Initializable {
 		
 		//This method removes selected customers from TableView and database
 		public void removeInventory() {
-			Connection conn = Inventory.connect();
 			ObservableList<Inventory> selectedItems, allItems;
 			allItems = inventoryTable.getItems();
 			selectedItems = inventoryTable.getSelectionModel().getSelectedItems();
 			
-			for(Inventory inventory: selectedItems) {
+			for(int i = 0; i < selectedItems.size(); i++) {
+				Inventory inventory = selectedItems.get(i);
 				//Remove from ObservableList
 				allItems.remove(inventory);
 				i_saveLbl.setText("");
 				//If the record is in database, delete it
 				if(Inventory.hasProductCode(inventory.getProductCode(), conn)) {
-					inventory.delete();
+					inventory.delete(conn);
 				}
 				
 			}
 		}
 		
-		//This method allows the user to search for a word in customersTable
+//The following three methods allow the user to search for a word in each of the tableviews
 		public void searchCustomers() {
 			refreshCustomerTable();
 			ObservableList<Customer> list = customerTable.getItems();
@@ -695,6 +695,28 @@ public class HomeController implements Initializable {
 				}
 			}
 			setInventoryTable(found);
+		}
+		
+		//This method adds the selected inventory item to the shopping cart
+		//It should make a dialog box pop up to ask for amount to add and limit
+		//amount if not enough in stock.
+		public void showAddToCartPage() {
+			try {
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(getClass().getResource("/Resource/AddToCart.fxml"));
+				Parent root = loader.load();
+				Scene scene = new Scene(root);
+				
+				AddController addController = loader.getController();
+				addController.initData(inventoryTable.getSelectionModel().getSelectedItem());
+				
+				Stage stage = new Stage();
+				stage.setTitle("WebMart");
+				stage.setScene(scene);
+				stage.show();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		public void logout() {
