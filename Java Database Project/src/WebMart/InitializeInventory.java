@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class InitializeInventory {
 
-	//This method will read and insert a list of inventory items from a text file
+	//This method will read and insert a list of inventory items from text file
 	public static void main(String[] args) {
 		try {
 			MySql.readInfoFromFile();
