@@ -720,14 +720,14 @@ public class HomeController implements Initializable {
 		
 		public void logout() {
 			try {
-			Parent loginRoot = FXMLLoader.load(getClass().getResource("/Resource/Login.fxml"));
-			Scene loginScene = new Scene(loginRoot);
-			Stage loginStage = new Stage();
-			loginStage.setTitle("WebMart");
-			loginStage.setScene(loginScene);
-			loginStage.show();
-			Stage homeStage = (Stage) homeBar.getScene().getWindow();
-			homeStage.close();
+				Parent loginRoot = FXMLLoader.load(getClass().getResource("/Resource/Login.fxml"));
+				Scene loginScene = new Scene(loginRoot);
+				Stage loginStage = new Stage();
+				loginStage.setTitle("WebMart");
+				loginStage.setScene(loginScene);
+				loginStage.show();
+				Stage homeStage = (Stage) homeBar.getScene().getWindow();
+				homeStage.close();
 			}
 			catch(IOException e) {
 				e.printStackTrace();
@@ -746,4 +746,23 @@ public class HomeController implements Initializable {
 			}
 		}
 
+		//changes to cart page
+		public void toCartPage() {
+			try {
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(getClass().getResource("/Resource/Cart.fxml"));
+				Parent root = loader.load();
+				Scene scene = new Scene(root);			
+				Stage stage = new Stage();
+				stage.setTitle("WebMart");
+				stage.setScene(scene);
+				stage.show();
+				
+				Stage homeStage = (Stage) homeBar.getScene().getWindow();
+				homeStage.close();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 }

@@ -8,7 +8,7 @@ import javafx.collections.ObservableList;
 public class ShoppingCart{
 
 	private static ArrayList<Inventory> cart = new ArrayList<Inventory>();	//list of Inventory objects
-	private static int size = 0;			//The number of items in the cart
+	private static int size = 0;											//The number of items in the cart
 	
 	//Takes in an Inventory object as parameter and adds it to the cart
 	public static void add(Inventory item) {
@@ -24,7 +24,7 @@ public class ShoppingCart{
 	
 	//Adds up the price of all of the items in the cart and returns it
 	public static double getTotal() {
-		double total = 0.0;
+		double total = 0.00;
 
 		//Needs Inventory.getPrice();
 		Inventory cartItem = new Inventory();
@@ -33,6 +33,8 @@ public class ShoppingCart{
 			cartItem = cart.get(i);
 			total += cartItem.getPrice();
 		}
+		total = (Math.round(total * 100.0) / 100.0);
+		
 		return total;
 	}
 	
