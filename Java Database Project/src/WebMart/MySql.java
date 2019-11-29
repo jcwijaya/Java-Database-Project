@@ -86,8 +86,8 @@ public class MySql {
 	
 	//This method creates and returns a Connection object
 	public static Connection connect() {
-		try {										 
-			Class.forName(driver); 
+		try {						 
+			Class.forName(driver);
 			return DriverManager.getConnection(url, dbUser, dbPassword );
 		}
 		catch(SQLException | ClassNotFoundException e) {
