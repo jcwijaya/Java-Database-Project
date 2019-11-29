@@ -746,4 +746,21 @@ public class HomeController implements Initializable {
 			}
 		}
 
+		//changes to cart page
+		public void toCartPage() {
+			try {
+				Parent cartRoot = FXMLLoader.load(getClass().getResource("/Resource/Cart.fxml"));
+				Scene cartScene = new Scene(cartRoot);
+				Stage cartStage = new Stage();
+				cartStage.setTitle("WebMart");
+				cartStage.setScene(cartScene);
+				cartStage.show();
+				
+				Stage homeStage = (Stage) viewCart.getScene().getWindow();
+				homeStage.close();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 }
