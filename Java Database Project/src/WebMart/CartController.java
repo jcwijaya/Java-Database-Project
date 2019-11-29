@@ -31,7 +31,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class CartController implements initializeable{
+public class CartController implements Initializable{
 
 	//items on cart page
 	@FXML private MenuBar menu;
