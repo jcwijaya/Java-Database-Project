@@ -25,6 +25,7 @@ public class MainController {
 	@FXML public PasswordField passwordText;
 	@FXML public Label message;
 	@FXML public Button loginBtn;
+	@FXML public Button createBtn;
 	
 	
 	/*This method will use the hasLogin(int id, String pass) method of Employee class to check
@@ -80,6 +81,30 @@ public class MainController {
 		}
 	}
 	
+	
+	/*
+	 * Also use this as controller for NewUser.fxml that creates new users
+	 * for webmart.
+	 */
+	
+	//this opens the NewUser window and closes the login screen
+	public void toNewUserPage() {
+		try {
+		Parent newUserRoot = FXMLLoader.load(getClass().getResource("/Resource/NewUser.fxml"));
+		Scene newUserScene = new Scene(newUserRoot);
+		Stage newUserStage = new Stage();
+		newUserStage.setTitle("WebMart");
+		newUserStage.setScene(newUserScene);
+		newUserStage.show();
+		Stage loginStage = (Stage) createBtn.getScene().getWindow();
+		loginStage.close();
+		
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	//This function checks if a string only contains digits
 	public boolean isInteger(String aString) {
 		if(aString.trim().isEmpty()) {
@@ -94,14 +119,5 @@ public class MainController {
 			
 			return true;
 		}
-	}
-	
-	/*
-	 * Also use this as controller for NewUser.fxml that creates new users
-	 * for webmart.
-	 */
-	
-	public void toNewUserPage() {
-		
 	}
 }
