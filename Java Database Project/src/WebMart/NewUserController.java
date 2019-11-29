@@ -1,6 +1,8 @@
 package WebMart;
 
 import java.io.IOException;
+import java.sql.Connection;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,6 +34,8 @@ public class NewUserController {
 	@FXML private PasswordField passTxt;	//password field to enter password
 	@FXML private PasswordField rePassTxt;	//password field to reenter password
 	
+	Connection conn = MySql.connect();
+	
 	public void register() {
 		//variable declarations and assignments
 		String firstName = firstTxt.getText();
@@ -48,13 +52,13 @@ public class NewUserController {
 		//text fields are made blank after
 		if (notEmpty(firstName, lastName, phoneNum, email, pass, rePass) && passMatch(pass, rePass)) {
 			//employee ID is generated and displayed
-			newID = Employee.createId();
+			newID = Employee.createId(conn);
 			strNewID = Integer.toString(newID);
 			randomID.setText(strNewID);
 			
 			//inserting employee into database
 			Employee newEmployee = new Employee(newID, pass, firstName, lastName, phoneNum, email);
-			newEmployee.insert();
+			newEmployee.insert(conn);
 			
 			//status is updated
 			statusLabel.setText("Status: Registration successful");
