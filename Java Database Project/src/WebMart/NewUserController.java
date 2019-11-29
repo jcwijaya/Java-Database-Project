@@ -34,9 +34,11 @@ public class NewUserController {
 	@FXML private PasswordField passTxt;	//password field to enter password
 	@FXML private PasswordField rePassTxt;	//password field to reenter password
 	
-	Connection conn = MySql.connect();
 	
 	public void register() {
+		MySql.readInfoFromFile();
+		Connection dbConn = MySql.connect();
+		
 		//variable declarations and assignments
 		String firstName = firstTxt.getText();
 		String lastName = lastTxt.getText();
@@ -52,13 +54,13 @@ public class NewUserController {
 		//text fields are made blank after
 		if (notEmpty(firstName, lastName, phoneNum, email, pass, rePass) && passMatch(pass, rePass)) {
 			//employee ID is generated and displayed
-			newID = Employee.createId(conn);
+			newID = Employee.createId(dbConn);
 			strNewID = Integer.toString(newID);
 			randomID.setText(strNewID);
 			
 			//inserting employee into database
 			Employee newEmployee = new Employee(newID, pass, firstName, lastName, phoneNum, email);
-			newEmployee.insert(conn);
+			newEmployee.insert(dbConn);
 			
 			//status is updated
 			statusLabel.setText("Status: Registration successful");
