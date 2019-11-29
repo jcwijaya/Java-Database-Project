@@ -70,5 +70,26 @@ public class CartController implements Initializable{
 		ObservableList<Inventory> empty = FXCollections.observableArrayList(ShoppingCart.getCart());
 		
 		cart.setItems(empty);
+		
+		total_lbl.setText("Total: ");
+	}
+	
+	public void toHomePage() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(getClass().getResource("/Resource/Home.fxml"));
+			Parent root = loader.load();
+			Scene scene = new Scene(root);			
+			Stage stage = new Stage();
+			stage.setTitle("WebMart");
+			stage.setScene(scene);
+			stage.show();
+			
+			Stage homeStage = (Stage) menu.getScene().getWindow();
+			homeStage.close();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

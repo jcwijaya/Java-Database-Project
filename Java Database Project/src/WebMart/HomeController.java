@@ -758,6 +758,9 @@ public class HomeController implements Initializable {
 				stage.setScene(scene);
 				stage.show();
 				
+				Stage homeStage = (Stage) homeBar.getScene().getWindow();
+				homeStage.close();
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

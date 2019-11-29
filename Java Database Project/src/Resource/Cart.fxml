@@ -16,7 +16,7 @@
         <menus>
           <Menu fx:id="cartMenu" mnemonicParsing="false" text="Menu">
             <items>
-              <MenuItem fx:id="back" mnemonicParsing="false" text="Back" />
+              <MenuItem fx:id="back" mnemonicParsing="false" onAction="#toHomePage" text="Back" />
             </items>
           </Menu>
         </menus>
