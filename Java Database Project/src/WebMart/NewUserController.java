@@ -36,7 +36,6 @@ public class NewUserController {
 	
 	Connection conn = MySql.connect();
 	
-	
 	public void register() {
 		//variable declarations and assignments
 		String firstName = firstTxt.getText();
