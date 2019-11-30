@@ -59,7 +59,9 @@ public class CartController implements Initializable{
 		
 		cart.setItems(shoppingList);
 		
-		total_lbl.setText("Total: " + ShoppingCart.getTotal());
+		String totalPrice = String.format("%.02f", ShoppingCart.getTotal());
+		
+		total_lbl.setText("Total: " + totalPrice);
 	}
 	
 	
