@@ -20,3 +20,4 @@ This project was made using Eclipse, SceneBuilder, MySql server 8, and MySql Wor
 WebMart is a program that allows you to manage a local SQL database with grocery store information. The database contains three tables: customers, employees, and inventory. This program lets you insert, delete, and update the information on these tables. It also has a feature to create a shopping cart that will update the amount in stock and show the total price.
 # Bugs
 -After adding an item to the shopping cart you may have to press 'refresh table' to see the changes of the amount on the GUI.
+-The program will run normally but the stack trace may be printed in the console if you try to press delete or add to cart without anything selected.
