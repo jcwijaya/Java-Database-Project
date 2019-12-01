@@ -1,4 +1,4 @@
 com.mysql.jdbc.Driver
-jdbc:mysql://localhost/test?autoReconnect=true&useSSL=false
+jdbc:mysql://localhost/webmart?autoReconnect=true&useSSL=false
 customer1
 #mtsu

@@ -129,14 +129,6 @@ public class Employee {
 			System.out.println(exception);
 			}
 	}
-	
-	//This method reads employee info from a
-	//text file and inserts it into the database
-	//Pre-condition: Must check for duplicate entries
-	//Maybe create a method to check database for duplicates in future
-	public void readEmployeeInfo() {
-			
-	}
 		
 	//This method returns a unique id number for each new employee
 	public static int createId(Connection conn) {
@@ -628,21 +620,5 @@ public class Employee {
 			return false;
 		}
 	}
-//******DATABASE CONNECT METHOD******
-	//This method creates a connection to the database
-		//and returns a Connection object
-	/*
-	public static Connection connect() {
-		try {										 
-			//Class.forName("com.mysql.jdbc.Driver");   
-			Class.forName(MySql.getDriver());
-			return DriverManager.getConnection("jdbc:mysql://localhost/test?autoReconnect=true&useSSL=false", "customer1", "#mtsu" );
-			}
-		catch(SQLException | ClassNotFoundException exception) {
-			System.out.println(exception);
-			return null;
-			}
-		}
-	*/
 	
 }

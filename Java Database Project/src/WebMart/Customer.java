@@ -115,14 +115,6 @@ public class Customer {
 		}
 	}
 	
-	//This method reads customer into from a
-	//text file and inserts it into the database
-	//Pre-condition: Must check for duplicate entries
-	//Maybe create a method to check database for duplicates in future
-	public void readCustomerInfo() {
-		
-	}
-	
 	//This method returns a unique id number for each new customer
 	public static int createId(Connection conn) {
 		//Randomly generate a 6 digit id
@@ -579,20 +571,5 @@ public class Customer {
 		return list;
 	}
 	
-//******DATABASE CONNECT METHOD******
-	//This method creates a connection to the database
-	//and returns a Connection object
-	/*
-	public static Connection connect() {
-		try {										 
-			Class.forName("com.mysql.jdbc.Driver"); 
-			return DriverManager.getConnection("jdbc:mysql://localhost/test?autoReconnect=true&useSSL=false", "customer1", "#mtsu" );
-		}
-		catch(SQLException | ClassNotFoundException exception) {
-			System.out.println(exception);
-			return null;
-		}
-	}
-	*/
 }
 

@@ -31,11 +31,6 @@ public class SetupController implements Initializable{
 	@FXML private Button saveDbLoginBtn;
 	@FXML private MenuItem back; //To go back to login page
 	
-	/*
-	 * Must allow user to enter in their own database info and save it
-	 * in a text file so they won't have to type it in every time.
-	 */
-	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//get database info that is saved inside of mysql_info text file
@@ -64,7 +59,7 @@ public class SetupController implements Initializable{
 	//values given with the program and saves it to the file
 	public void resetDefault() {
 		driverTxt.setText("com.mysql.jdbc.Driver");
-		urlTxt.setText("jdbc:mysql://localhost/test?autoReconnect=true&useSSL=false");
+		urlTxt.setText("jdbc:mysql://localhost/webmart?autoReconnect=true&useSSL=false");
 		userTxt.setText("customer1");
 		passwordTxt.setText("#mtsu");
 		

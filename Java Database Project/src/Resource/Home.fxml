@@ -157,7 +157,6 @@
             <items>
               <MenuItem fx:id="viewCart" mnemonicParsing="false" onAction="#toCartPage" text="View Cart" />
                   <MenuItem fx:id="addItem" mnemonicParsing="false" onAction="#showAddToCartPage" text="Add to Cart" />
-                  <MenuItem fx:id="removeItem" mnemonicParsing="false" text="Remove Item" />
             </items>
           </Menu>
         </menus>

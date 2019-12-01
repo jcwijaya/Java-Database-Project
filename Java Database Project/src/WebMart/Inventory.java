@@ -553,21 +553,4 @@ public class Inventory {
 			}
 	}
 	
-	
-	
-//******DATABASE CONNECT METHOD******
-	//This method creates a connection to the database
-	//and returns a Connection object
-	/*
-	public static Connection connect() {
-		try {										 
-			Class.forName("com.mysql.jdbc.Driver");   
-			return DriverManager.getConnection("jdbc:mysql://localhost/test?autoReconnect=true&useSSL=false", "customer1", "#mtsu" );
-			}
-		catch(SQLException | ClassNotFoundException exception) {
-			System.out.println(exception);
-			return null;
-			}
-		}
-	*/
 }

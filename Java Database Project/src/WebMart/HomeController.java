@@ -33,6 +33,7 @@ import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
+//This is the controller for the home page
 public class HomeController implements Initializable {
 	//Home screen
 		@FXML private TabPane homeTabs;

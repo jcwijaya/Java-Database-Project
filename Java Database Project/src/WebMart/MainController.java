@@ -81,12 +81,6 @@ public class MainController {
 		}
 	}
 	
-	
-	/*
-	 * Also use this as controller for NewUser.fxml that creates new users
-	 * for webmart.
-	 */
-	
 	//this opens the NewUser window and closes the login screen
 	public void toNewUserPage() {
 		try {
